@@ -58,7 +58,7 @@ export default function Login() {
             <Form onSubmit={handleSubmit}>
                 {/* equivalent du if/else */}
                 {errortext !== "" ? (
-                    <FormText>{errortext}</FormText>
+                    <FormText id="errorLabel">{errortext}</FormText>
                 ) : null}
                 <Form.Group size="lg" controlId="email">
                     <Form.Label>Email</Form.Label>

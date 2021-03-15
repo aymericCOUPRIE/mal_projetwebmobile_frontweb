@@ -13,3 +13,7 @@
     background-color:#002065;
     border-color: #002065;
 }
+
+#errorLabel{
+    color: red;
+}
