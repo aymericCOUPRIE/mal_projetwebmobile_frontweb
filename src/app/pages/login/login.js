@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, {useEffect, useState} from "react";
+import Axios from "axios"
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -10,6 +10,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errortext, setErrortext] = useState("");
+    const [loggedIn, setLoginStatus] = useState(false);
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
@@ -32,26 +33,35 @@ export default function Login() {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-        })
-            .then((res) => {
-                // If response was successful parse the json and dispatch an update
-                if (res.ok) {
-                    res.json().then((responseJson) => {
-                        if (responseJson.token) {
-                            console.log(responseJson.token)
-                            //stock le token en local
-                            //localStorage.getItem("userToken") pour y acceder
-                            localStorage.setItem("userToken", responseJson.token)
-                        } else {
-                            setErrortext(responseJson.error);
-                            console.log(responseJson.error)
-                        }
-                    })
-                }
-
-            });
+        }).then((res) => {
+            // If response was successful parse the json and dispatch an update
+            if (res.ok) {
+                res.json().then((responseJson) => {
+                    if (responseJson.token) {
+                        //stock le token en local
+                        //localStorage.getItem("userToken") pour y acceder
+                        localStorage.setItem("userToken", responseJson.token)
+                    } else {
+                        setErrortext(responseJson.error);
+                        //console.log(responseJson.error)
+                    }
+                })
+            }
+        });
         event.preventDefault();
     }
+
+
+    useEffect(() => {
+        Axios.get('http://localhost:3000/server/isUserAuth', {
+            headers: {
+                "x-access-token": localStorage.getItem("userToken")
+            }
+        }).then((response) => {
+            setLoginStatus(response.data.auth)
+        })
+    }, [])
+
 
     return (
         <div className="Login">
@@ -80,6 +90,8 @@ export default function Login() {
                 <Button id="btn-connexion" block size="lg" type="submit" disabled={!validateForm()}>
                     Connexion
                 </Button>
+
+                <label> Login status : {loggedIn.toString()} </label>
             </Form>
         </div>
     );
