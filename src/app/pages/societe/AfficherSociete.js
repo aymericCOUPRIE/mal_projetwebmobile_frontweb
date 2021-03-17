@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
-import TableContainer from "../../components/TableContainer";
-import {SelectColumnFilter} from "../../components/Filters";
+import TableContainer from "../../components/Tables/TableContainer";
+import {SelectColumnFilter} from "../../components/Tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import {Card} from "react-bootstrap";
 

@@ -1,5 +1,5 @@
 import {Navbar, Nav, Container} from 'react-bootstrap';
-import {isAdmin, isLogin} from "../utils/utils";
+import {isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import './navigation.css';
 
