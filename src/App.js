@@ -5,17 +5,19 @@ import Navigation from "./app/components/navigation";
 
 //les pages accessibles depuis la navbar
 import Login from './app/pages/login/login';
+import AfficherSociete from './app/pages/societe/afficherSociete'
 // DANS LE SWITCH
 //  <Route exact path='/' component={Home}/>  exact permet de dire que c'est la page par defaut
 //
 function App() {
-    return(
+    return (
         <>
             <div className="App">
-                <Navigation/>
+                {/*                <Navigation/>
                 <Switch>
                     <Route path='/login' component={Login}/>
-                </Switch>
+                </Switch>*/}
+                <Route path='/societes' component={AfficherSociete}/>
             </div>
 
         </>
