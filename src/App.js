@@ -10,6 +10,7 @@ import AfficherSociete from './app/pages/societe/afficherSociete'
 //  <Route exact path='/' component={Home}/>  exact permet de dire que c'est la page par defaut
 //
 function App() {
+
     return (
         <>
             <div className="App">
@@ -19,7 +20,9 @@ function App() {
                     <Route path='/login' component={Login}/>
                     <Route path='/societes' component={AfficherSociete}/>
                 </Switch>
+
             </div>
+
 
         </>
     );
