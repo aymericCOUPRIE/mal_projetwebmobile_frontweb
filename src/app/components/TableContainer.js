@@ -55,6 +55,8 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
     return (
         <Fragment>
             <Table bordered hover {...getTableProps()}>
+
+                {/* En-tete du tableau (avec les menu de recherches/tris)*/}
                 <thead>
                 {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
@@ -71,11 +73,15 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                 ))}
                 </thead>
 
+
+                {/* Affichage des données*/}
                 <tbody {...getTableBodyProps()}>
                 {page.map((row) => {
                     prepareRow(row);
                     return (
                         <Fragment key={row.getRowProps().key}>
+
+                            {/* Contenu pour chaque ligne*/}
                             <tr>
                                 {row.cells.map((cell) => {
                                     return (
@@ -83,6 +89,8 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                                     );
                                 })}
                             </tr>
+
+                            {/* TODO */}
                             {row.isExpanded && (
                                 <tr>
                                     <td colSpan={visibleColumns.length}>
@@ -90,12 +98,17 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                                     </td>
                                 </tr>
                             )}
+
                         </Fragment>
                     );
                 })}
                 </tbody>
+
+
             </Table>
 
+
+            {/* Bas du tableau (changement de pages)*/}
             <Row style={{maxWidth: 1000, margin: '0 auto', textAlign: 'center'}}>
                 <Col md={3}>
                     <Button

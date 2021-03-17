@@ -13,11 +13,12 @@ function App() {
     return (
         <>
             <div className="App">
-                {/*                <Navigation/>
+
+                <Navigation/>
                 <Switch>
                     <Route path='/login' component={Login}/>
-                </Switch>*/}
-                <Route path='/societes' component={AfficherSociete}/>
+                    <Route path='/societes' component={AfficherSociete}/>
+                </Switch>
             </div>
 
         </>
