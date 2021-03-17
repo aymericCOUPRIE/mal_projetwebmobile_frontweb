@@ -9,13 +9,14 @@ export const Filter = ({column}) => {
     );
 };
 
-export const DefaultColumnFilter = ({
-                                        column: {
-                                            filterValue,
-                                            setFilter,
-                                            preFilteredRows: {length},
-                                        },
-                                    }) => {
+export const DefaultColumnFilter = (
+    {
+        column: {
+            filterValue,
+            setFilter,
+            preFilteredRows: {length},
+        },
+    }) => {
     return (
         <Input
             value={filterValue || ''}
@@ -27,9 +28,10 @@ export const DefaultColumnFilter = ({
     );
 };
 
-export const SelectColumnFilter = ({
-                                       column: {filterValue, setFilter, preFilteredRows, id},
-                                   }) => {
+export const SelectColumnFilter = (
+    {
+        column: {filterValue, setFilter, preFilteredRows, id},
+    }) => {
     const options = React.useMemo(() => {
         const options = new Set();
         preFilteredRows.forEach((row) => {

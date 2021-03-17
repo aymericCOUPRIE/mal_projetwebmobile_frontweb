@@ -1,11 +1,10 @@
 import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
-import ReactTable from "react-table"
 import TableContainer from "../../components/TableContainer";
 import {SelectColumnFilter} from "../../components/Filters";
 
 
-export default function afficherSociete() {
+export default function AfficherSociete() {
 
     const [societe, setListSociete] = useState([])
 
@@ -23,8 +22,8 @@ export default function afficherSociete() {
 
     const updateMyData = (rowIndex, columnId, value) => {
         Axios.put("http://localhost:3000/societe/updateStatus", {
-            soc_id: rowIndex,
-            soc_estInactif: value
+            soc_id: rowIndex + 1, //row id=0 <==> soc_id = 1 --> d'où le +1
+            soc_estInactif: value //'true' or 'false'
         })
     }
 
@@ -33,6 +32,7 @@ export default function afficherSociete() {
             {
                 Header: "Nom",
                 accessor: "soc_nom",
+
             },
             {
                 id: "inactif",
@@ -70,7 +70,9 @@ export default function afficherSociete() {
     )
 
     return (
-        <TableContainer columns={columns} data={societe}/>
+        <div style={{ marginTop: `50px` }}>
+            <TableContainer columns={columns} data={societe}/>
+        </div>
     )
 }
 
