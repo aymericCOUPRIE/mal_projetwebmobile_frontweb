@@ -2,6 +2,8 @@ import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
 import TableContainer from "../../components/TableContainer";
 import {SelectColumnFilter} from "../../components/Filters";
+import {CardBody, CardText, CardTitle} from "reactstrap";
+import {Card} from "react-bootstrap";
 
 
 export default function AfficherSociete() {
@@ -30,9 +32,17 @@ export default function AfficherSociete() {
     const columns = useMemo(
         () => [
             {
+                Header: () => null,
+                id: 'expander', // 'id' is required
+                Cell: ({row}) => (
+                    <span {...row.getToggleRowExpandedProps()}>
+                        {row.isExpanded ? 'v' : '>'}
+                    </span>
+                ),
+            },
+            {
                 Header: "Nom",
                 accessor: "soc_nom",
-
             },
             {
                 id: "inactif",
@@ -50,28 +60,39 @@ export default function AfficherSociete() {
                                 defaultChecked={row.value == "true" ? true : false}
                                 onChange={(event) => updateMyData(parseInt(row.row.id), row.column.id, event.target.checked ? "true" : "false")}/>
                         </div>)
-                }
-            },
-            {
-                Header: "Ville",
-                accessor: "soc_ville",
-            },
-            {
-                Header: "Rue",
-                accessor: "soc_rue",
-            },
-            {
-                Header: "Code Postal",
-                accessor: "soc_codePostal",
-            },
+                },
 
+            },
         ],
         []
     )
 
+    const renderRowSubComponent = (row) => {
+        const {
+            soc_nom,
+            soc_rue,
+            soc_ville,
+            soc_codePostal
+        } = row.original;
+        return (
+            <Card style={{width: '18rem', margin: '0 auto'}}>
+                <CardBody>
+                    <CardTitle>
+                        <strong>{`${soc_nom}`} </strong>
+                    </CardTitle>
+                    <CardText>
+                        <strong>Address:</strong>{' '}
+                        {`${soc_rue} ${soc_ville} - ${soc_codePostal}`}
+                    </CardText>
+                </CardBody>
+            </Card>
+        );
+    };
+
+
     return (
-        <div style={{ marginTop: `50px` }}>
-            <TableContainer columns={columns} data={societe}/>
+        <div style={{marginTop: `50px`}}>
+            <TableContainer columns={columns} data={societe} renderRowSubComponent={renderRowSubComponent}/>
         </div>
     )
 }
