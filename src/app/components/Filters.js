@@ -9,6 +9,15 @@ export const Filter = ({column}) => {
     );
 };
 
+/**
+ * Default filter --> Search menu
+ *
+ * @param filterValue
+ * @param setFilter
+ * @param length
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const DefaultColumnFilter = (
     {
         column: {
@@ -28,6 +37,17 @@ export const DefaultColumnFilter = (
     );
 };
 
+/**
+ * Type selector filter
+*        --> Selection between different types in column
+ *
+ * @param filterValue
+ * @param setFilter
+ * @param preFilteredRows
+ * @param id
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const SelectColumnFilter = (
     {
         column: {filterValue, setFilter, preFilteredRows, id},

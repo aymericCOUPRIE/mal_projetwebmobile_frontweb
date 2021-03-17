@@ -11,32 +11,32 @@ const Navigation = () => {
     }
 
     return (
-            <header>
-                <Navbar collapseOnSelect fixed='top' expand='sm' bg='dark' variant='dark'>
-                    <Container>
-                        <Navbar.Toggle aria-cpntrols='responsive-navbar-nav'/>
-                        <Navbar.Collapse id='responsive-navbar-nav'>
-                            {isLogin() ? (
-                                <Button  variant="link" onClick={logout}>Se déconnecter</Button>
-                            ) : (
-                                <Nav>
-                                    <Nav.Link href='/login'>Se connecter</Nav.Link>
-                                </Nav>
-                            )}
+        <header>
+            <Navbar collapseOnSelect fixed='top' expand='sm' bg='dark' variant='dark'>
+                <Container>
+                    <Navbar.Toggle aria-cpntrols='responsive-navbar-nav'/>
+                    <Navbar.Collapse id='responsive-navbar-nav'>
+                        {isLogin() ? (
+                            <Button variant="link" onClick={logout}>Se déconnecter</Button>
+                        ) : (
+                            <Nav>
+                                <Nav.Link href='/login'>Se connecter</Nav.Link>
+                            </Nav>
+                        )}
 
 
+                        <Nav>
+                            <Nav.Link href='/societes'>Societes</Nav.Link>
+                        </Nav>
+                        {isAdmin() ? (
                             <Nav>
                                 <Nav.Link href='/societes'>Societes</Nav.Link>
                             </Nav>
-                            {isAdmin() ? (
-                                <Nav>
-                                    <Nav.Link href='/societes'>Societes</Nav.Link>
-                                </Nav>
-                            ) : null}
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-            </header>
+                        ) : null}
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        </header>
     );
 }
 
