@@ -90,8 +90,6 @@ export default function Login() {
                 <Button id="btn-connexion" block size="lg" type="submit" disabled={!validateForm()}>
                     Connexion
                 </Button>
-
-                <label> Login status : {loggedIn.toString()} </label>
             </Form>
         </div>
     );
