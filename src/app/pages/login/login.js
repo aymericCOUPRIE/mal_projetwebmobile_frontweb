@@ -55,7 +55,7 @@ export default function Login() {
         event.preventDefault();
     }
 
-
+/*
     useEffect(() => {
         Axios.get('http://localhost:3000/server/isUserAuth', {
             headers: {
@@ -65,7 +65,7 @@ export default function Login() {
             setLoginStatus(response.data.auth)
         })
     }, [])
-
+*/
 
     return (
         <>
