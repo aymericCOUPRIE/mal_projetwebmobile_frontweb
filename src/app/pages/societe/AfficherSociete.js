@@ -29,12 +29,30 @@ export default function AfficherSociete() {
      * @param columnId
      * @param value
      */
-    const updateStatusInactif = (rowIndex, columnId, value) => {
-        Axios.put("http://localhost:3000/societe/updateStatus", {
-            soc_id: rowIndex + 1, //row id=0 <==> soc_id = 1 --> d'où le +1
+    const updateStatusInactif = (rowIndex, data, value) => {
+        Axios.put("http://localhost:3000/societe/updateStatusInactif", {
+            soc_id: data[rowIndex].soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             soc_estInactif: value //'true' or 'false'
         })
     }
+
+    const updateStatusEditeur = (rowIndex, data, value) => {
+        Axios.put("http://localhost:3000/societe/updateStatusEditeur", {
+            soc_id: data[rowIndex].soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            fes_id: data[rowIndex].fes_id,
+            rolF_estEditeur: value //'true' or 'false'
+        })
+    }
+
+
+    const updateStatusExposant = (rowIndex, data, value) => {
+        Axios.put("http://localhost:3000/societe/updateStatusExposant", {
+            soc_id: data[rowIndex].soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            fes_id: data[rowIndex].fes_id,
+            rolF_estExposant: value //'true' or 'false'
+        })
+    }
+
 
     /**
      * This method is declaring all the columns for the table
@@ -74,7 +92,7 @@ export default function AfficherSociete() {
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value == "true" ? true : false}
-                                onChange={(event) => updateStatusInactif(parseInt(row.row.id), row.column.id, event.target.checked ? "true" : "false")}/>
+                                onChange={(event) => updateStatusInactif(parseInt(row.row.id), row.data, event.target.checked ? true : false)}/>
                         </div>)
                 },
             },
@@ -94,32 +112,32 @@ export default function AfficherSociete() {
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value == 1 ? true : false}
-                                disabled={true}
+                                onChange={(event) => updateStatusExposant(parseInt(row.row.id), row.data, event.target.checked ? true : false)}
                             />
                         </div>)
                 },
             },
-        {
-            id: "estEditeur",
-            Header: "Editeur",
-            accessor: d => d.rolF_estEditeur.toString(), //required cast from boolea to string
+            {
+                id: "estEditeur",
+                Header: "Editeur",
+                accessor: d => d.rolF_estEditeur.toString(), //required cast from boolea to string
 
-            //Allows column to be sorted depending on all content type (true/false)
-            disableSortBy: true,
-            Filter: SelectColumnFilter,
-            filter: 'equals',
+                //Allows column to be sorted depending on all content type (true/false)
+                disableSortBy: true,
+                Filter: SelectColumnFilter,
+                filter: 'equals',
 
-            Cell: row => {
-                return (
-                    <div style={{'text-align': 'center'}}>
-                        <input
-                            type="checkbox"
-                            defaultChecked={row.value == 1 ? true : false}
-                            disabled={true}
-                        />
-                    </div>)
+                Cell: row => {
+                    return (
+                        <div style={{'text-align': 'center'}}>
+                            <input
+                                type="checkbox"
+                                defaultChecked={row.value == 1 ? true : false}
+                                onChange={(event) => updateStatusEditeur(parseInt(row.row.id), row.data, event.target.checked ? true : false)}
+                            />
+                        </div>)
+                },
             },
-        },
         ], []
     )
 
