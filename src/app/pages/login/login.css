@@ -17,3 +17,11 @@
 #errorLabel{
     color: red;
 }
+
+#logo{
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10em;
+    display: block;
+}

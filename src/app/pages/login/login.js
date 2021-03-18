@@ -3,8 +3,12 @@ import Axios from "axios"
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+
 import "./login.css";
 import FormText from "react-bootstrap/FormText";
+
+import logo from "../../../assets/img/logo.png";
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -64,33 +68,39 @@ export default function Login() {
 
 
     return (
-        <div className="Login">
-            <Form onSubmit={handleSubmit}>
-                {/* equivalent du if/else */}
-                {errortext !== "" ? (
-                    <FormText id="errorLabel">{errortext}</FormText>
-                ) : null}
-                <Form.Group size="lg" controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="password">
-                    <Form.Label>Mot de passe</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
-                <Button id="btn-connexion" block size="lg" type="submit" disabled={!validateForm()}>
-                    Connexion
-                </Button>
-            </Form>
-        </div>
+        <>
+            <img id="logo" src={logo} />
+            <div className="Login">
+                <Form onSubmit={handleSubmit}>
+                    {/* equivalent du if/else */}
+                    {errortext !== "" ? (
+                        <FormText id="errorLabel">{errortext}</FormText>
+                    ) : null}
+                    <Form.Group size="lg" controlId="email">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            autoFocus
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group size="lg" controlId="password">
+                        <Form.Label>Mot de passe</Form.Label>
+                        <Form.Control
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Button id="btn-connexion" block size="lg" type="submit" disabled={!validateForm()}>
+                        Connexion
+                    </Button>
+
+                    <label> Login status : {loggedIn.toString()} </label>
+                </Form>
+            </div>
+
+        </>
     );
 }
