@@ -8,14 +8,12 @@ import "./login.css";
 import FormText from "react-bootstrap/FormText";
 
 import logo from "../../../assets/img/logo.png";
-import {Redirect} from "react-router-dom";
 
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errortext, setErrortext] = useState("");
-    const [loggedIn, setLoginStatus] = useState(false);
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
@@ -53,7 +51,7 @@ export default function Login() {
                 })
             }
         });
-        //event.preventDefault();
+        event.preventDefault();
     }
 
 /*
@@ -98,7 +96,6 @@ export default function Login() {
                         Connexion
                     </Button>
 
-                    <label> Login status : {loggedIn.toString()} </label>
                 </Form>
             </div>
 
