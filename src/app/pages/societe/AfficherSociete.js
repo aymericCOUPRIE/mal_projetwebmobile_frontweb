@@ -16,7 +16,7 @@ export default function AfficherSociete() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await Axios.get("http://localhost:3000/societe/affichage");
-            setListSociete(response.data.societes)
+            setListSociete(response.data.res)
         };
         fetchData();
     }, [setListSociete])
@@ -54,12 +54,12 @@ export default function AfficherSociete() {
             },
             {
                 Header: "Nom",
-                accessor: "soc_nom",
+                accessor: "societe.soc_nom",
             },
             {
                 id: "inactif",
                 Header: "Inactif",
-                accessor: d => d.soc_estInactif.toString(), //required cast from boolea to string
+                accessor: d => d.societe.soc_estInactif.toString(), //required cast from boolea to string
 
                 //Allows column to be sorted depending on all content type (true/false)
                 disableSortBy: true,
@@ -77,8 +77,49 @@ export default function AfficherSociete() {
                                 onChange={(event) => updateStatusInactif(parseInt(row.row.id), row.column.id, event.target.checked ? "true" : "false")}/>
                         </div>)
                 },
-
             },
+            {
+                id: "estExposant",
+                Header: "Exposant",
+                accessor: d => d.rolF_estExposant.toString(), //required cast from boolea to string
+
+                //Allows column to be sorted depending on all content type (true/false)
+                disableSortBy: true,
+                Filter: SelectColumnFilter,
+                filter: 'equals',
+
+                Cell: row => {
+                    return (
+                        <div style={{'text-align': 'center'}}>
+                            <input
+                                type="checkbox"
+                                defaultChecked={row.value == 1 ? true : false}
+                                disabled={true}
+                            />
+                        </div>)
+                },
+            },
+        {
+            id: "estEditeur",
+            Header: "Editeur",
+            accessor: d => d.rolF_estEditeur.toString(), //required cast from boolea to string
+
+            //Allows column to be sorted depending on all content type (true/false)
+            disableSortBy: true,
+            Filter: SelectColumnFilter,
+            filter: 'equals',
+
+            Cell: row => {
+                return (
+                    <div style={{'text-align': 'center'}}>
+                        <input
+                            type="checkbox"
+                            defaultChecked={row.value == 1 ? true : false}
+                            disabled={true}
+                        />
+                    </div>)
+            },
+        },
         ], []
     )
 
@@ -90,24 +131,22 @@ export default function AfficherSociete() {
      * @returns {JSX.Element}
      */
     const detailsSociete = (row) => {
+
         //Name of the attributes in a societe
         const {
-            soc_nom,
-            soc_rue,
-            soc_ville,
-            soc_codePostal
+            societe,
         } = row.original;
 
         //Display the cards (more details)
         return (
-            <Card style={{width: '18rem', margin: '0 auto'}}>
+            <Card style={{width: '50rem', margin: '0 auto'}}>
                 <CardBody>
                     <CardTitle>
-                        <strong>{`${soc_nom}`} </strong>
+                        <strong>{`${societe.soc_nom}`} </strong>
                     </CardTitle>
                     <CardText>
                         <strong>Address:</strong>{' '}
-                        {`${soc_rue} ${soc_ville} - ${soc_codePostal}`}
+                        {`${societe.soc_rue} ${societe.soc_ville} - ${societe.soc_codePostal}`}
                     </CardText>
                 </CardBody>
             </Card>

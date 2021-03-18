@@ -8,6 +8,7 @@ import "./login.css";
 import FormText from "react-bootstrap/FormText";
 
 import logo from "../../../assets/img/logo.png";
+import {Redirect} from "react-router-dom";
 
 
 export default function Login() {
@@ -52,7 +53,7 @@ export default function Login() {
                 })
             }
         });
-        event.preventDefault();
+        //event.preventDefault();
     }
 
 /*
