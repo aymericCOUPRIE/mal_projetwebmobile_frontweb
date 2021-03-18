@@ -20,5 +20,5 @@ export function isLogin() {
 
 export function email(){
     const token = localStorage.getItem("userToken");
-   return token ? jwt_decode(token).user_email : null
+    return token ? jwt_decode(token).user_email : null
 }

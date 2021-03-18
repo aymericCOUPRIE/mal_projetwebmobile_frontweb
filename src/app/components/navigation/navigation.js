@@ -31,9 +31,7 @@ const Navigation = () => {
 
                             {isLogin() ? (
                                 <NavDropdown title={email()} id="who">
-                                    <NavDropdown.Item href={"/"}>
                                         <Button variant="link" onClick={logout}>Se déconnecter</Button>
-                                    </NavDropdown.Item>
                                 </NavDropdown>
 
                             ) : (

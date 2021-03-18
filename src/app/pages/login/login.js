@@ -15,7 +15,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errortext, setErrortext] = useState("");
-    const [loggedIn, setLoginStatus] = useState(false);
+    //const [loggedIn, setLoginStatus] = useState(false);
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
@@ -98,7 +98,6 @@ export default function Login() {
                         Connexion
                     </Button>
 
-                    <label> Login status : {loggedIn.toString()} </label>
                 </Form>
             </div>
 
