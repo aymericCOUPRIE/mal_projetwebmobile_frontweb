@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Navigation from "./app/components/navigation/navigation";
 
 //les pages accessibles depuis la navbar
-import Login from './app/pages/login/login';
+import Login from './app/pages/login/Login';
 import AfficherSociete from './app/pages/societe/AfficherSociete'
 import Home from './app/pages/home/home'
 // DANS LE SWITCH
