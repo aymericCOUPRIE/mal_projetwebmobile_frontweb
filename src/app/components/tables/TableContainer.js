@@ -90,7 +90,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                                 })}
                             </tr>
 
-                            {/* TODO */}
+                            {/* Affichage du contenu supplémentaire (details) */}
                             {row.isExpanded && (
                                 <tr>
                                     <td colSpan={visibleColumns.length}>
@@ -110,6 +110,9 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
 
             {/* Bas du tableau (changement de pages)*/}
             <Row style={{maxWidth: 1000, margin: '0 auto', textAlign: 'center'}}>
+                {/* Most Left button --> Go back to page 0*/}
+
+                {/* go back buttons*/}
                 <Col md={3}>
                     <Button
                         color='primary'
@@ -118,6 +121,8 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                     >
                         {'<<'}
                     </Button>
+
+                    {/* Left button --> Go to previous page*/}
                     <Button
                         color='primary'
                         onClick={previousPage}
@@ -126,12 +131,17 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                         {'<'}
                     </Button>
                 </Col>
+
+
+                {/* Display the current page number*/}
                 <Col md={2} style={{marginTop: 7}}>
                     Page{' '}
                     <strong>
                         {pageIndex + 1} of {pageOptions.length}
                     </strong>
                 </Col>
+
+                {/* TextField for selecting the page number*/}
                 <Col md={2}>
                     <Input
                         type='number'
@@ -142,13 +152,14 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                         onChange={onChangeInInput}
                     />
                 </Col>
+
+                {/* Slector for changing the number of items displayed per page */}
                 <Col md={2}>
                     <CustomInput
                         type='select'
                         value={pageSize}
                         onChange={onChangeInSelect}
                     >
-                        >
                         {[10, 20, 30, 40, 50].map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
                                 Show {pageSize}
@@ -156,10 +167,16 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                         ))}
                     </CustomInput>
                 </Col>
+
+
+                {/*Go forward buttons*/}
                 <Col md={3}>
+                    {/* Right button --> Go to next page*/}
                     <Button color='primary' onClick={nextPage} disabled={!canNextPage}>
                         {'>'}
                     </Button>
+
+                    {/* Go to last page*/}
                     <Button
                         color='primary'
                         onClick={() => gotoPage(pageCount - 1)}
