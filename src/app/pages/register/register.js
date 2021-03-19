@@ -5,12 +5,15 @@ import FormText from "react-bootstrap/FormText";
 
 import './register.css'
 import logo from "../../../assets/img/logo.png";
+import Alert from "react-bootstrap/Alert";
 
 export default function Register(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [estAdmin, setEstAdmin] = useState(0);
     const [errortext, setErrortext] = useState("");
+
+    const [show, setShow] = useState(false)
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
@@ -41,6 +44,7 @@ export default function Register(){
                     if (responseJson.success) {
                         //afficher message de réussite
                         console.log("compte crée")
+                        setShow(true)
                     } else {
                         setErrortext(responseJson.error);
                     }
@@ -51,6 +55,9 @@ export default function Register(){
     }
     return (
         <>
+            <Alert id="alertSucces" variant="success" show={show}>
+                Compté crée avec succès!
+            </Alert>
             <img id="logo" src={logo} />
             <div className="Register">
                 <Form onSubmit={handleSubmit}>

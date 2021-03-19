@@ -58,7 +58,7 @@ export default function UpdatePassword(){
     return(
         <>
             <Alert id="alertSucces" variant="success" show={show}>
-                Mot de passe modifié avec succès le 100
+                Mot de passe modifié avec succès!
             </Alert>
             <img id="logo" src={logo} />
             <div className="Password">
