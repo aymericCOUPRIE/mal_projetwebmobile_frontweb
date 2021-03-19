@@ -8,6 +8,9 @@ import Login from './app/pages/login/login';
 import AfficherSociete from './app/pages/societe/AfficherSociete'
 import Home from './app/pages/home/home'
 import UpdatePassword from './app/pages/update-password/update-password'
+import Register from './app/pages/register/register'
+
+
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
 //
@@ -23,6 +26,7 @@ function App() {
                     <Route path='/login' component={Login}/>
                     <Route path='/update-password' component={UpdatePassword}/>
                     <Route path='/societes' component={AfficherSociete}/>
+                    <Route path='/register' component={Register}/>
                 </Switch>
 
             </div>

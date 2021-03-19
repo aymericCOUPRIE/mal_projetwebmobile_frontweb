@@ -39,16 +39,14 @@ export default function UpdatePassword(){
                     "Content-Type": "application/json",
                 },
             }).then((res) => {
-                console.log(res)
+
                 // If response was successful parse the json and dispatch an update
                 if (res.ok) {
                     res.json().then((responseJson) => {
                         if (responseJson.success) {
-                            console.log("mdp changé")
                             setShow(true)
                         } else {
                             setErrortext(responseJson.error);
-                            console.log(responseJson.error)
                         }
                     })
                 }

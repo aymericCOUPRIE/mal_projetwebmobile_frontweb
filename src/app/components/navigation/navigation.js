@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import './navigation.css';
 
 import App from "../../../App"
-import Login from "../../pages/login/login";
 import {Route, Redirect, Router} from "react-router-dom";
 
 //mettre dans isAdmin les pages accecibles uniquement à l'admin
@@ -31,6 +30,7 @@ const Navigation = () => {
 
                             {isLogin() ? (
                                 <NavDropdown title={email()} id="who">
+                                    <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de passe</Nav.Link>
                                         <Button variant="link" onClick={logout}>Se déconnecter</Button>
                                 </NavDropdown>
 
@@ -44,6 +44,9 @@ const Navigation = () => {
 
                             {isAdmin() ? (
                                 <Nav>
+                                    <NavDropdown title="Comptes" >
+                                        <Nav.Link id="dropdownItem" href='/register'>Créer un nouveau compte</Nav.Link>
+                                    </NavDropdown>
                                     <Nav.Link href='/societes'>Societes</Nav.Link>
                                 </Nav>
                             ) : null}
