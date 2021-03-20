@@ -1,0 +1,23 @@
+@media all and (min-width: 480px) {
+    .CreateFestival {
+        padding: 60px 0;
+    }
+
+    .CreateFestival form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+
+#btn-valider{
+    background-color:#002065;
+    border-color: #002065;
+}
+
+#errorLabel{
+    color: red;
+}
+
+#alertSucces{
+    padding-top: 4em;
+}
