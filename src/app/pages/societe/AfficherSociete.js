@@ -3,12 +3,24 @@ import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
-import {Card} from "react-bootstrap";
+import {Card, Form} from "react-bootstrap";
+//import TextareaAutosize from 'react-autosize-textarea';
+import {rgbToHex, TextField} from '@material-ui/core';
+import {red} from "@material-ui/core/colors";
 
 
 export default function AfficherSociete() {
 
     const [societe, setListSociete] = useState([])
+    const options = [
+        "En discussion",
+        "Présence confirmée",
+        "Présent (liste jeux demandée)",
+        "Présent (liste jeux reçus)",
+        "Absent",
+        "Considéré absent",
+        "Présent via distributeur"
+    ]
 
     /**
      * This method is used to fetch data from DB every time it is been updated
@@ -16,7 +28,6 @@ export default function AfficherSociete() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await Axios.get("http://localhost:3000/server/societe/affichage");
-            console.log(response.data.res)
             setListSociete(response.data.res)
         };
         fetchData();
@@ -54,8 +65,36 @@ export default function AfficherSociete() {
         })
     }
 
-    const updateDateContact = (data) => {
+    const updateDateContact1 = (suivE_id, value) => {
+        console.log("DATA", suivE_id, value)
+        Axios.put("http://localhost:3000/server/societe/updateDateContact1", {
+            suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            suivE_dateContact: value //'true' or 'false'
+        })
+    }
 
+    const updateDateContact2 = (suivE_id, value) => {
+        console.log("DATA", suivE_id, value)
+        Axios.put("http://localhost:3000/server/societe/updateDateContact2", {
+            suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            suivE_dateContact: value //'true' or 'false'
+        })
+    }
+
+    const updateDateContact3 = (suivE_id, value) => {
+        console.log("DATA", suivE_id, value)
+        Axios.put("http://localhost:3000/server/societe/updateDateContact3", {
+            suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            suivE_dateContact: value //'true' or 'false'
+        })
+    }
+
+    const updateStatusFacture = (rowValue, value) => {
+        console.log("ROW VALUE", rowValue)
+        Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {
+            res_id: rowValue.res_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            res_facture: value //'true' or 'false'
+        })
     }
 
 
@@ -78,6 +117,19 @@ export default function AfficherSociete() {
             {
                 Header: "Nom",
                 accessor: "soc_nom",
+            },
+            {
+                Header: "Commentaire",
+                accessor: "suivE_commentaire",
+
+                Cell: row => {
+                    return (
+                        <div>
+                            {/* TODO wait for updating into DB + update comment*/}
+                            <Form.Control as={"textarea"} value={row.value}></Form.Control>
+                        </div>
+                    )
+                }
             },
             {
                 id: "inactif",
@@ -108,6 +160,23 @@ export default function AfficherSociete() {
                 disableSortBy: true,
                 Filter: SelectColumnFilter,
                 filter: 'equals',
+
+
+               /* Cell: row => {
+                    return (
+                        <div>
+                            <select value={row.value} style={{"background-color": rgbToHex(#FFFFFF)}}>
+                                {
+                                    options.map(option => {
+                                        return (
+                                            <option value={option} key={option}> {option} </option>
+                                        )
+                                    })
+                                }
+                            </select>
+                        </div>
+                    )
+                }*/
             },
             {
                 id: "estExposant",
@@ -151,6 +220,33 @@ export default function AfficherSociete() {
                         </div>)
                 },
             },
+            {
+                id: "espaceQte",
+                Header: "Tables",
+                accessor: d => String(`${d.esp_qte == null ? "0" : d.esp_qte}` + ' ' + `${d.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
+            },
+            {
+                id: "facture",
+                Header: "Facture",
+                accessor: d => d.res_facture, //required cast from boolean to string
+
+                //Allows column to be sorted depending on all content type (true/false)
+                disableSortBy: true,
+                Filter: SelectColumnFilter,
+                filter: 'equals',
+
+                Cell: row => {
+                    return (
+                        <div style={{'text-align': 'center'}}>
+                            <input
+                                type="checkbox"
+                                defaultChecked={row.value == 1 ? true : false}
+                                onChange={(event) => updateStatusFacture(row.row.original, event.target.checked ? true : false)}
+                            />
+                        </div>)
+                },
+            },
+
         ], []
     )
 
@@ -163,6 +259,8 @@ export default function AfficherSociete() {
      */
     const detailsSociete = (row) => {
 
+        console.log("ROW VALUES", row)
+
         //Name of the attributes in a societe
         const {
             soc_nom,
@@ -171,7 +269,8 @@ export default function AfficherSociete() {
             soc_codePostal,
             suivE_dateContact1,
             suivE_dateContact2,
-            suivE_dateContact3
+            suivE_dateContact3,
+            suivE_id
         } = row.original;
 
         //Display the cards (more details)
@@ -189,21 +288,21 @@ export default function AfficherSociete() {
                         <strong>Date contact 1 </strong>
                         <input type={'date'}
                                defaultValue={`${suivE_dateContact1}`}
-                               onChange={(event) => updateDateContact(row.data, event.target)}
+                               onChange={(event) => updateDateContact1(suivE_id, event.target.value)}
                         />
                     </CardText>
                     <CardText>
                         <strong>Date contact 2 </strong>
                         <input type={'date'}
                                defaultValue={`${suivE_dateContact2}`}
-                               onChange={(event) => updateDateContact(row.data, event.target)}
+                               onChange={(event) => updateDateContact2(suivE_id, event.target.value)}
                         />
                     </CardText>
                     <CardText>
                         <strong>Date contact 3 </strong>
                         <input type={'date'}
                                defaultValue={`${suivE_dateContact3}`}
-                               onChange={(event) => updateDateContact(row.data, event.target)}
+                               onChange={(event) => updateDateContact3(suivE_id, event.target.value)}
                         />
                     </CardText>
                 </CardBody>

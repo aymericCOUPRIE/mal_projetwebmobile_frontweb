@@ -6,7 +6,7 @@ import {Input} from "reactstrap";
 import Button from "react-bootstrap/Button";
 
 
-const FormFestival = () => {
+const FormFestival = (props) => {
 
     const [fes_date, setDate] = useState("");
     const [fes_nbTables, setNbTables] = useState(0);
@@ -53,6 +53,8 @@ const FormFestival = () => {
 
     return (
         <div>
+
+            <p> TEST </p>
             <Alert id="alertSucces" variant="success" show={show}>
                 Festival créé avec succès!
             </Alert>

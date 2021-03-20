@@ -17,14 +17,14 @@ import Jeux from "../pages/jeux/jeux";
 function Routes() {
     return (
         <div className="App">
-            
+
             <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
                 <Route path='/update-password' component={UpdatePassword}/>
                 <Route path='/societes' component={AfficherSociete}/>
                 <Route path='/register' component={Register}/>
-                <Route path='/festival' component={Festivals}/>
+                <Route path='/festivals' component={Festivals}/>
                 <Route path='/jeux' component={Jeux}/>
             </Switch>
 
