@@ -1,18 +1,20 @@
-import React, {useEffect, useState} from "react";
-import Axios from "axios"
+import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FormText from "react-bootstrap/FormText";
 
+import {useHistory} from "react-router"
 import "./login.css";
 import logo from "../../../assets/img/logo.png";
 import {Redirect} from "react-router-dom";
 
 
-export default function Login() {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errortext, setErrortext] = useState("");
+
+    const history = useHistory();
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
@@ -53,24 +55,20 @@ export default function Login() {
                 })
             }
         });
-        event.preventDefault();
-    }
 
-/*
-    useEffect(() => {
-        Axios.get('http://localhost:3000/server/isUserAuth', {
-            headers: {
-                "x-access-token": localStorage.getItem("userToken")
-            }
-        }).then((response) => {
-            setLoginStatus(response.data.auth)
-        })
-    }, [])
-*/
+        event.preventDefault();
+
+        if (!history.location.state) {
+            history.push("/home")
+        } else {
+            history.push(history.location.from.pathname)
+        }
+
+    }
 
     return (
         <>
-            <img id="logo" src={logo} />
+            <img id="logo" src={logo}/>
             <div className="Login">
                 <Form onSubmit={handleSubmit}>
                     {/* equivalent du if/else */}
@@ -100,7 +98,8 @@ export default function Login() {
 
                 </Form>
             </div>
-
         </>
     );
 }
+
+export default Login
