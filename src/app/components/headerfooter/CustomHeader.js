@@ -7,15 +7,16 @@ const CustomHeader = () => {
 
     const history = useHistory();
 
-    const logout = () => {
+    function logout() {
         localStorage.removeItem("userToken")
-
-        if (!history.location.state) {
-            history.push("/")
-        } else {
-            history.push(history.location.from.pathname)
-        }
+        history.push("/")
+        window.location.reload(false)
     }
+
+
+    //mettre dans isAdmin les pages accecibles uniquement à l'admin
+//idem pour isLogin ---------------------------------- si on est connecté
+// à la fin les pages accéssibles à tous
 
     return (
         <div>
@@ -27,9 +28,8 @@ const CustomHeader = () => {
 
                             {isLogin() ? (
                                 <NavDropdown title={email()} id="who">
-                                    <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de
-                                        passe</Nav.Link>
-                                    <Button variant="link" onClick={(e) => logout(e)}>Se déconnecter</Button>
+                                    <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de passe</Nav.Link>
+                                    <Button variant="link" onClick={logout}>Se déconnecter</Button>
                                 </NavDropdown>
 
                             ) : (
@@ -39,10 +39,9 @@ const CustomHeader = () => {
                                 </Nav>
                             )}
 
-                            {/* mettre dans isAdmin les pages accecibles uniquement à l'admin*/}
                             {isAdmin() ? (
                                 <Nav>
-                                    <NavDropdown title="Comptes">
+                                    <NavDropdown title="Comptes" >
                                         <Nav.Link id="dropdownItem" href='/register'>Créer un nouveau compte</Nav.Link>
                                     </NavDropdown>
                                     <Nav.Link href='/societes'>Societes</Nav.Link>
@@ -50,7 +49,9 @@ const CustomHeader = () => {
                                 </Nav>
                             ) : null}
 
-
+                            <Nav>
+                                <Nav.Link href='/jeux-festival'>Jeux</Nav.Link>
+                            </Nav>
                         </Navbar.Collapse>
 
                     </Container>

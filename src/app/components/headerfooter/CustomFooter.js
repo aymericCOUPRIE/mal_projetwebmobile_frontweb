@@ -4,7 +4,6 @@ import {faEnvelope, faMapMarker, faPhone} from "@fortawesome/free-solid-svg-icon
 import logo from "../../../assets/img/logo.png";
 import React from "react";
 
-
 function CustomFooter() {
 
     return (
