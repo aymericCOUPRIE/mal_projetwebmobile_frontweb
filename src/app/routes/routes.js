@@ -17,9 +17,7 @@ import Jeux from "../pages/jeux/jeux";
 function Routes() {
     return (
         <div className="App">
-
-            <Navigation/>
-
+            
             <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
