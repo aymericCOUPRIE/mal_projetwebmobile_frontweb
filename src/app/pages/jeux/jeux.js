@@ -1,4 +1,4 @@
-import './jeux-festival.css'
+import './jeux.css'
 import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import Button from "react-bootstrap/Button";
 
-export default function JeuxFestival() {
+export default function Jeux() {
 
     const [jeux, setListJeux] = useState([])
 
