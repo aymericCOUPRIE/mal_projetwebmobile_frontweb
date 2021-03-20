@@ -6,3 +6,11 @@ button.btn.btn-link, #dropdownItem {
 #who{
     color: rgba(255, 255, 255, 0.5);
 }
+
+.faicon{
+    margin-right: 0.5em;
+}
+
+.fixed-top {
+    position: inherit!important;
+}

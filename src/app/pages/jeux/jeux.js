@@ -5,19 +5,27 @@ import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import {Card} from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faPlus} from '@fortawesome/free-solid-svg-icons'
-import Button from "react-bootstrap/Button";
-
-export default function Jeux() {
+import { Container } from "../../components/ModalForm/container";
+export const Jeux = () => {
 
     const [jeux, setListJeux] = useState([])
 
+    const onSubmit = (event) => {
+        event.preventDefault(event);
+        //récupérer les valeurs du formulaire
+        //console.log("TARGET",event.target.title.value)
+        Axios.post("http://localhost:3000/server/jeux/add", {
+            title: event.target.title.value,
+        })
+            .then((res) => {
+               //faire quelque chose genre message succès
+            })
+    };
 
     return(
      <>
-         <h1 id="title">Jeux du festival</h1>
-         <Button id="addGame" > <FontAwesomeIcon id="plus" icon={faPlus} /> Créer un nouveau jeu</Button>
+         <h1>Jeux</h1>
+       <Container  triggerText="Créer un nouveau jeu" onSubmit={onSubmit} />
 
      </>
  );

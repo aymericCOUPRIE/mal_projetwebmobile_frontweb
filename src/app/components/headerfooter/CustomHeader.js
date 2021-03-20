@@ -2,6 +2,11 @@ import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {email, isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUser, faAddressBook, faCalendarAlt, faDice, faClipboardList,faFileInvoiceDollar, faTh, faShapes} from "@fortawesome/free-solid-svg-icons";
+import './CustomHeader.css'
+import {faFacebook} from "@fortawesome/free-brands-svg-icons";
+import React from "react";
 
 const CustomHeader = () => {
 
@@ -41,16 +46,41 @@ const CustomHeader = () => {
 
                             {isAdmin() ? (
                                 <Nav>
-                                    <NavDropdown title="Comptes" >
-                                        <Nav.Link id="dropdownItem" href='/register'>Créer un nouveau compte</Nav.Link>
+                                    <NavDropdown title="Paramètres" >
+                                        <Nav.Link id="dropdownItem" href='/register'>
+                                            <FontAwesomeIcon className="faicon" icon={faUser}/>
+                                            Créer un nouveau compte
+                                        </Nav.Link>
+                                        <Nav.Link id="dropdownItem" href='/'>
+                                            <FontAwesomeIcon className="faicon" icon={faShapes}/>
+                                            Types de jeux
+                                        </Nav.Link>
+                                        <Nav.Link id="dropdownItem" href='/'>
+                                            <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                            Zones festival
+                                        </Nav.Link>
                                     </NavDropdown>
-                                    <Nav.Link href='/societes'>Societes</Nav.Link>
-                                    <Nav.Link href='/festivals'>Festivals</Nav.Link>
+                                    <Nav.Link href='/festivals'>
+                                        <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
+                                        Festivals</Nav.Link>
+
+                                    <Nav.Link href='/societes'>
+                                        <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                                        Societes
+                                    </Nav.Link>
+                                    <Nav.Link href='/'>
+                                        <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
+                                        Reservations</Nav.Link>
+                                    <Nav.Link href='/'>
+                                        <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
+                                        Facture</Nav.Link>
                                 </Nav>
                             ) : null}
 
                             <Nav>
-                                <Nav.Link href='/jeux-festival'>Jeux</Nav.Link>
+                                <Nav.Link href='/jeux'>
+                                    <FontAwesomeIcon className="faicon" icon={faDice}/>
+                                    Jeux</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
 

@@ -9,7 +9,7 @@ import UpdatePassword from "../pages/update-password/update-password";
 import AfficherSociete from "../pages/societe/AfficherSociete";
 import Register from "../pages/register/register";
 import Festivals from "../pages/festivals/Festivals";
-import Jeux from "../pages/jeux/jeux";
+import {Jeux} from "../pages/jeux/jeux";
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut

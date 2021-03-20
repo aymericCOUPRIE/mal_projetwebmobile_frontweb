@@ -6,7 +6,8 @@ import FormText from "react-bootstrap/FormText";
 import {useHistory} from "react-router"
 import "./login.css";
 import logo from "../../../assets/img/logo.png";
-import {Redirect} from "react-router-dom";
+
+
 
 
 const Login = () => {
@@ -45,9 +46,7 @@ const Login = () => {
                         //stock le token en local
                         //localStorage.getItem("userToken") pour y acceder
                         localStorage.setItem("userToken", responseJson.token)
-                        return (
-                            <Redirect to='/festivals'/>
-                        );
+                        history.push("/festivals")
                     } else {
                         setErrortext(responseJson.error);
                         //console.log(responseJson.error)

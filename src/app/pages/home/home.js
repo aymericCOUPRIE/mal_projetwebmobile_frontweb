@@ -14,6 +14,8 @@ export default function Home() {
                 localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
                 setdateProchainFestival(res.data.closestFestival[0].fes_date);
             })
+
+
     });
 
     return (
