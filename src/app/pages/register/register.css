@@ -1,0 +1,30 @@
+@media all and (min-width: 480px) {
+    .Register {
+        padding: 60px 0;
+    }
+
+    .Register form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+
+#btn-valider{
+    background-color:#002065;
+    border-color: #002065;
+}
+
+#errorLabel{
+    color: red;
+}
+
+#logo{
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10em;
+    display: block;
+}
+#alertSucces{
+    padding-top: 4em;
+}

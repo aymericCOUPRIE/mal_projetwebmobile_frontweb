@@ -15,7 +15,8 @@ export default function AfficherSociete() {
      */
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Axios.get("http://localhost:3000/societe/affichage");
+            const response = await Axios.get("http://localhost:3000/server/societe/affichage");
+            console.log(response.data.res)
             setListSociete(response.data.res)
         };
         fetchData();
@@ -30,14 +31,14 @@ export default function AfficherSociete() {
      * @param value
      */
     const updateStatusInactif = (rowIndex, data, value) => {
-        Axios.put("http://localhost:3000/societe/updateStatusInactif", {
+        Axios.put("http://localhost:3000/server/societe/updateStatusInactif", {
             soc_id: data[rowIndex].soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             soc_estInactif: value //'true' or 'false'
         })
     }
 
     const updateStatusEditeur = (rowIndex, data, value) => {
-        Axios.put("http://localhost:3000/societe/updateStatusEditeur", {
+        Axios.put("http://localhost:3000/server/societe/updateStatusEditeur", {
             soc_id: data[rowIndex].soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             fes_id: data[rowIndex].fes_id,
             rolF_estEditeur: value //'true' or 'false'
@@ -46,11 +47,15 @@ export default function AfficherSociete() {
 
 
     const updateStatusExposant = (rowIndex, data, value) => {
-        Axios.put("http://localhost:3000/societe/updateStatusExposant", {
+        Axios.put("http://localhost:3000/server/societe/updateStatusExposant", {
             soc_id: data[rowIndex].soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             fes_id: data[rowIndex].fes_id,
             rolF_estExposant: value //'true' or 'false'
         })
+    }
+
+    const updateDateContact = (data) => {
+
     }
 
 
@@ -72,12 +77,12 @@ export default function AfficherSociete() {
             },
             {
                 Header: "Nom",
-                accessor: "societe.soc_nom",
+                accessor: "soc_nom",
             },
             {
                 id: "inactif",
                 Header: "Inactif",
-                accessor: d => d.societe.soc_estInactif.toString(), //required cast from boolea to string
+                accessor: d => d.soc_estInactif.toString(), //required cast from boolea to string
 
                 //Allows column to be sorted depending on all content type (true/false)
                 disableSortBy: true,
@@ -91,10 +96,18 @@ export default function AfficherSociete() {
                         <div style={{'text-align': 'center'}}>
                             <input
                                 type="checkbox"
-                                defaultChecked={row.value == "true" ? true : false}
+                                defaultChecked={row.value == 1 ? true : false}
                                 onChange={(event) => updateStatusInactif(parseInt(row.row.id), row.data, event.target.checked ? true : false)}/>
                         </div>)
                 },
+            },
+            {
+                Header: "WorkFlow",
+                accessor: "suivD_libelle",
+
+                disableSortBy: true,
+                Filter: SelectColumnFilter,
+                filter: 'equals',
             },
             {
                 id: "estExposant",
@@ -152,7 +165,13 @@ export default function AfficherSociete() {
 
         //Name of the attributes in a societe
         const {
-            societe,
+            soc_nom,
+            soc_rue,
+            soc_ville,
+            soc_codePostal,
+            suivE_dateContact1,
+            suivE_dateContact2,
+            suivE_dateContact3
         } = row.original;
 
         //Display the cards (more details)
@@ -160,11 +179,32 @@ export default function AfficherSociete() {
             <Card style={{width: '50rem', margin: '0 auto'}}>
                 <CardBody>
                     <CardTitle>
-                        <strong>{`${societe.soc_nom}`} </strong>
+                        <strong>{`${soc_nom}`} </strong>
                     </CardTitle>
                     <CardText>
-                        <strong>Address:</strong>{' '}
-                        {`${societe.soc_rue} ${societe.soc_ville} - ${societe.soc_codePostal}`}
+                        <strong>Address : </strong>
+                        {`${soc_rue} ${soc_ville} - ${soc_codePostal}`}
+                    </CardText>
+                    <CardText>
+                        <strong>Date contact 1 </strong>
+                        <input type={'date'}
+                               defaultValue={`${suivE_dateContact1}`}
+                               onChange={(event) => updateDateContact(row.data, event.target)}
+                        />
+                    </CardText>
+                    <CardText>
+                        <strong>Date contact 2 </strong>
+                        <input type={'date'}
+                               defaultValue={`${suivE_dateContact2}`}
+                               onChange={(event) => updateDateContact(row.data, event.target)}
+                        />
+                    </CardText>
+                    <CardText>
+                        <strong>Date contact 3 </strong>
+                        <input type={'date'}
+                               defaultValue={`${suivE_dateContact3}`}
+                               onChange={(event) => updateDateContact(row.data, event.target)}
+                        />
                     </CardText>
                 </CardBody>
             </Card>

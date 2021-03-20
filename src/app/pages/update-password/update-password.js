@@ -39,16 +39,14 @@ export default function UpdatePassword(){
                     "Content-Type": "application/json",
                 },
             }).then((res) => {
-                console.log(res)
+
                 // If response was successful parse the json and dispatch an update
                 if (res.ok) {
                     res.json().then((responseJson) => {
                         if (responseJson.success) {
-                            console.log("mdp changé")
                             setShow(true)
                         } else {
                             setErrortext(responseJson.error);
-                            console.log(responseJson.error)
                         }
                     })
                 }
@@ -60,7 +58,7 @@ export default function UpdatePassword(){
     return(
         <>
             <Alert id="alertSucces" variant="success" show={show}>
-                Mot de passe modifié avec succès le 100
+                Mot de passe modifié avec succès!
             </Alert>
             <img id="logo" src={logo} />
             <div className="Password">
