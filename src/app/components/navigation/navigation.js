@@ -5,9 +5,9 @@ import {useEffect} from "react";
 
 const Navigation = () => {
 
-    useEffect( () =>  {
+    /*useEffect( () =>  {
         window.location.reload()
-    })
+    })*/
 
     return (
         <>
