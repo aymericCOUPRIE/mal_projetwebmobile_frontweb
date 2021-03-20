@@ -17,7 +17,7 @@ import Home from './app/pages/home/home'
 import UpdatePassword from './app/pages/update-password/update-password'
 import Register from './app/pages/register/register'
 import Festivals from './app/pages/festivals/Festivals'
-
+import JeuxFestival from './app/pages/jeux-festival/jeux-festival'
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
@@ -35,6 +35,8 @@ function App() {
                     <Route path='/update-password' component={UpdatePassword}/>
                     <Route path='/societes' component={AfficherSociete}/>
                     <Route path='/register' component={Register}/>
+                    <Route path='/festivals' component={Festivals}/>
+                    <Route path='/jeux-festival' component={JeuxFestival}/>
                 </Switch>
 
             </div>
