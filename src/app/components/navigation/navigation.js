@@ -13,10 +13,7 @@ const Navigation = () => {
     function logout() {
         localStorage.removeItem("userToken")
         return (
-            <div>
-                {console.log("AUREVOIR")}
-                <App />
-            </div>
+            <Redirect to='/'/>
         );
     }
 
@@ -48,6 +45,7 @@ const Navigation = () => {
                                         <Nav.Link id="dropdownItem" href='/register'>Créer un nouveau compte</Nav.Link>
                                     </NavDropdown>
                                     <Nav.Link href='/societes'>Societes</Nav.Link>
+                                    <Nav.Link href='/festivals'>Festivals</Nav.Link>
                                 </Nav>
                             ) : null}
 
