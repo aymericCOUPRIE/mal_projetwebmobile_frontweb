@@ -6,6 +6,7 @@ import FormText from "react-bootstrap/FormText";
 
 import "./login.css";
 import logo from "../../../assets/img/logo.png";
+import {Redirect} from "react-router-dom";
 
 
 export default function Login() {
@@ -42,6 +43,9 @@ export default function Login() {
                         //stock le token en local
                         //localStorage.getItem("userToken") pour y acceder
                         localStorage.setItem("userToken", responseJson.token)
+                        return (
+                            <Redirect to='/festivals'/>
+                        );
                     } else {
                         setErrortext(responseJson.error);
                         //console.log(responseJson.error)
