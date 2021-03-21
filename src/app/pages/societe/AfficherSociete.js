@@ -12,6 +12,9 @@ import FormSociete from "./formSociete";
 export default function AfficherSociete() {
 
     const [societe, setListSociete] = useState([])
+    const [optionsDiscussion, setOptionsDiscussion] = useState([])
+
+
     const options = [
         "En discussion",
         "Présence confirmée",
@@ -89,18 +92,27 @@ export default function AfficherSociete() {
     }
 
     const updateStatusFacture = (rowValue, value) => {
-        console.log("ROW VALUE", rowValue)
         Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {
             res_id: rowValue.res_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             res_facture: value //'true' or 'false'
         })
     }
 
+    const updateStatusBenevole = () => {
+
+    }
 
     const updateStatusWorkflow = () => {
         Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {})
     }
 
+
+    useEffect( () => {
+        Axios.get("http://localhost:3000/server/suivi_discussion/getDiscussions", {}).then((response) => {
+            setOptionsDiscussion(res.data)
+            console.log(res.data)
+        })
+    })
 
     /**
      * This method is declaring all the columns for the table
@@ -131,7 +143,7 @@ export default function AfficherSociete() {
                     return (
                         <div>
                             {/* TODO wait for updating into DB + update comment*/}
-                            <Form.Control as={"textarea"} value={row.value}></Form.Control>
+                            <Form.Control as={"textarea"} value={row.value == null ? "" : row.value}></Form.Control>
                         </div>
                     )
                 }
@@ -150,7 +162,7 @@ export default function AfficherSociete() {
                 //Calls updateStatusInactif every time a checkbox is been updated
                 Cell: row => {
                     return (
-                        <div style={{'text-align': 'center'}}>
+                        <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value == 1 ? true : false}
@@ -196,7 +208,7 @@ export default function AfficherSociete() {
 
                 Cell: row => {
                     return (
-                        <div style={{'text-align': 'center'}}>
+                        <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value == 1 ? true : false}
@@ -217,7 +229,7 @@ export default function AfficherSociete() {
 
                 Cell: row => {
                     return (
-                        <div style={{'text-align': 'center'}}>
+                        <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value == 1 ? true : false}
@@ -243,11 +255,11 @@ export default function AfficherSociete() {
 
                 Cell: row => {
                     return (
-                        <div style={{'text-align': 'center'}}>
+                        <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
                                 defaultChecked={(row.value == null || row.value == 0) ? false : true}
-                                onChange={(event) => updateStatusFacture(row.row.original, event.target.checked ? true : false)}
+                                onChange={(event) => updateStatusBenevole(row.row.original, event.target.checked ? true : false)}
                             />
                         </div>)
                 },
@@ -264,7 +276,7 @@ export default function AfficherSociete() {
 
                 Cell: row => {
                     return (
-                        <div style={{'text-align': 'center'}}>
+                        <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
                                 defaultChecked={(row.value == null || row.value == 0) ? false : true}
@@ -337,8 +349,18 @@ export default function AfficherSociete() {
         );
     };
 
-    const onSubmit = () => {
+    const onSubmit = (event) => {
+        event.preventDefault(event);
 
+        Axios.post("http://localhost:3000/server/societe/add", {
+            soc_nom: event.target.nom.value,
+            soc_ville: event.target.ville.value,
+            soc_rue: event.target.rue.value,
+            soc_codePostal: event.target.codePostal.value,
+            soc_pays: event.target.pays.value
+        }).then((response) => {
+            console.log(response)
+        })
     }
 
     /**
@@ -353,7 +375,7 @@ export default function AfficherSociete() {
     return (
         <div style={{marginTop: `50px`}}>
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
-            <Container triggerText="Créer une societe" onSubmit={onSubmit} component={FormSociete}/>
+            <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
         </div>
     )
 }

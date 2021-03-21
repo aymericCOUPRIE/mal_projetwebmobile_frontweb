@@ -45,7 +45,7 @@ const CustomHeader = () => {
             <header>
                 <Navbar collapseOnSelect fixed='top' expand='lg' bg='dark' variant='dark'>
                     <Container>
-                        <Navbar.Toggle aria-cpntrols='responsive-navbar-nav'/>
+                        <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
                         <Navbar.Collapse id='responsive-navbar-nav'>
                             {isLogin() ? (
                                 <Nav>
