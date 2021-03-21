@@ -10,6 +10,7 @@ import AfficherSociete from "../pages/societe/AfficherSociete";
 import Register from "../pages/register/register";
 import Festivals from "../pages/festivals/Festivals";
 import {Jeux} from "../pages/jeux/jeux";
+import PrivateRoute from "./privateRoute";
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
@@ -21,10 +22,10 @@ function Routes() {
             <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
-                <Route path='/update-password' component={UpdatePassword}/>
-                <Route path='/societes' component={AfficherSociete}/>
-                <Route path='/register' component={Register}/>
-                <Route path='/festivals' component={Festivals}/>
+                <PrivateRoute path='/update-password' component={UpdatePassword}/>
+                <PrivateRoute path='/societes' component={AfficherSociete}/>
+                <PrivateRoute path='/register' component={Register}/>
+                <PrivateRoute path='/festivals' component={Festivals}/>
                 <Route path='/jeux' component={Jeux}/>
             </Switch>
 

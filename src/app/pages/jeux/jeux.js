@@ -5,7 +5,8 @@ import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import {Card} from "react-bootstrap";
-import { Container } from "../../components/ModalForm/container";
+import {Container} from "../../components/ModalForm/container";
+
 export const Jeux = () => {
 
     const [jeux, setListJeux] = useState([])
@@ -18,15 +19,14 @@ export const Jeux = () => {
             title: event.target.title.value,
         })
             .then((res) => {
-               //faire quelque chose genre message succès
+                //faire quelque chose genre message succès
             })
     };
 
-    return(
-     <>
-         <h1>Jeux</h1>
-       <Container  triggerText="Créer un nouveau jeu" onSubmit={onSubmit} />
-
-     </>
- );
+    return (
+        <>
+            <h1>Jeux</h1>
+            <Container triggerText="Créer un nouveau jeu" onSubmit={onSubmit}/>
+        </>
+    );
 }

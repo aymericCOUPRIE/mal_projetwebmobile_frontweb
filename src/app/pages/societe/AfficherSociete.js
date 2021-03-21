@@ -95,6 +95,14 @@ export default function AfficherSociete() {
     }
 
 
+    const updateStatusWorkflow = () => {
+        Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {
+
+        })
+    }
+
+
+
     /**
      * This method is declaring all the columns for the table
      *
@@ -105,6 +113,7 @@ export default function AfficherSociete() {
                 //This column is used for displaying more/less details
                 Header: () => null,
                 id: 'expander', // 'id' is required
+
                 Cell: ({row}) => (
                     <span {...row.getToggleRowExpandedProps()}>
                         {row.isExpanded ? 'v' : '>'}
@@ -166,7 +175,7 @@ export default function AfficherSociete() {
                                 {
                                     options.map(option => {
                                         return (
-                                            <option value={option} key={option}> {option} </option>
+                                            <option value={option} key={option} onSelect={updateStatusWorkflow()}> {option} </option>
                                         )
                                     })
                                 }
@@ -223,6 +232,27 @@ export default function AfficherSociete() {
                 accessor: d => String(`${d.esp_qte == null ? "0" : d.esp_qte}` + ' ' + `${d.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
             },
             {
+                id: "benevoles",
+                Header: "Bénévoles",
+                accessor: d => d.suivE_benevole, //required cast from boolean to string
+
+                //Allows column to be sorted depending on all content type (true/false)
+                disableSortBy: true,
+                Filter: SelectColumnFilter,
+                filter: 'equals',
+
+                Cell: row => {
+                    return (
+                        <div style={{'text-align': 'center'}}>
+                            <input
+                                type="checkbox"
+                                defaultChecked={(row.value == null || row.value == 0) ? false : true}
+                                onChange={(event) => updateStatusFacture(row.row.original, event.target.checked ? true : false)}
+                            />
+                        </div>)
+                },
+            },
+            {
                 id: "facture",
                 Header: "Facture",
                 accessor: d => d.res_facture, //required cast from boolean to string
@@ -237,7 +267,7 @@ export default function AfficherSociete() {
                         <div style={{'text-align': 'center'}}>
                             <input
                                 type="checkbox"
-                                defaultChecked={row.value == 1 ? true : false}
+                                defaultChecked={(row.value == null || row.value == 0) ? false : true}
                                 onChange={(event) => updateStatusFacture(row.row.original, event.target.checked ? true : false)}
                             />
                         </div>)
