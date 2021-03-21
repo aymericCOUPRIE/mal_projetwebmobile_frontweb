@@ -3,12 +3,16 @@ import {email, isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser, faAddressBook, faCalendarAlt, faDice, faClipboardList,faFileInvoiceDollar, faTh, faShapes} from "@fortawesome/free-solid-svg-icons";
+import {faUser, faAddressBook, faCalendarAlt, faDice, faClipboardList,faFileInvoiceDollar, faTh, faShapes, faTheaterMasks} from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
 import {faFacebook} from "@fortawesome/free-brands-svg-icons";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import Axios from "axios";
+import Moment from "moment";
 
 const CustomHeader = () => {
+
+    const [dateFestivalCourant,setDateFestivalCourant] = useState(null);
 
     const history = useHistory();
 
@@ -17,6 +21,19 @@ const CustomHeader = () => {
         history.push("/")
         window.location.reload(false)
     }
+
+    //méthode qui s'appelle au chargement de la page
+    useEffect(() => {
+
+        const fes_id = localStorage.getItem("currentFestival");
+
+        Axios.get(`http://localhost:3000/server/festivals/${fes_id}`)
+            .then((res) => {
+                setDateFestivalCourant(res.data.festival.fes_date)
+            })
+
+
+    });
 
 
     //mettre dans isAdmin les pages accecibles uniquement à l'admin
@@ -30,6 +47,7 @@ const CustomHeader = () => {
                     <Container>
                         <Navbar.Toggle aria-cpntrols='responsive-navbar-nav'/>
                         <Navbar.Collapse id='responsive-navbar-nav'>
+
 
                             {isLogin() ? (
                                 <NavDropdown title={email()} id="who">
@@ -60,9 +78,15 @@ const CustomHeader = () => {
                                             Zones festival
                                         </Nav.Link>
                                     </NavDropdown>
-                                    <Nav.Link href='/festivals'>
-                                        <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
-                                        Festivals</Nav.Link>
+                                    <div id="fesC">
+                                        <FontAwesomeIcon className="faicon"  icon={faTheaterMasks}/> Festival courant:
+                                    </div>
+
+                                    <NavDropdown title= {Moment(dateFestivalCourant).format('DD-MM-YYYY')} id="who">
+                                        <Nav.Link id="dropdownItem" href='/festivals'><FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
+                                            Festivals
+                                        </Nav.Link>
+                                    </NavDropdown>
 
                                     <Nav.Link href='/societes'>
                                         <FontAwesomeIcon className="faicon" icon={faAddressBook}/>

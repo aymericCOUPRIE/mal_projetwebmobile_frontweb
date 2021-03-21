@@ -7,15 +7,14 @@ import Axios from "axios";
 
 export const FormJeu = ({ onSubmit }) => {
     const [title,setTitle] = useState("");
-    const [minAge,setMinAge] = useState(null);
-    const [duration,setDuration] = useState(null);
-    const [maxNumPlayers,setMaxNumPlayers] = useState(null);
-    const [minNumPlayers,setMinNumPlayers] = useState(null);
+    const [minAge,setMinAge] = useState("");
+    const [duration,setDuration] = useState("");
+    const [maxNumPlayers,setMaxNumPlayers] = useState("");
+    const [minNumPlayers,setMinNumPlayers] = useState("");
     const [rulesLink,setRulesLink] = useState("");
     const [companyId,setCompanyId] = useState("");
     const [gameTypeId,setGameTypeId] = useState("");
 
-    const [errortext, setErrortext] = useState("");
 
     const [gameTypeList,setGameTypeList] = useState([]);
     const [editeursList,setEditeursList] = useState([]);
@@ -29,12 +28,13 @@ export const FormJeu = ({ onSubmit }) => {
                setGameTypeList(res.data)
             })
 
+        /*
         //requetes tous les éditeurs
         Axios.get("http://localhost:3000/server/societe/allEditeurs")
             .then((res) => {
                setEditeursList(res.data)
             })
-
+*/
     });
 
     function validateForm() {
@@ -47,10 +47,7 @@ export const FormJeu = ({ onSubmit }) => {
 
         <Form onSubmit={onSubmit}>
             <h4 id="titleGameForm">Détails du jeu</h4>
-            {/* equivalent du if/else */}
-            {errortext !== "" ? (
-                <FormText id="errorLabel">{errortext}</FormText>
-            ) : null}
+
             <Form.Group size="lg"  controlId="title">
                 <Form.Label>Nom*</Form.Label>
                 <Form.Control autoFocus value={title} onChange={(e) => setTitle(e.target.value)} />

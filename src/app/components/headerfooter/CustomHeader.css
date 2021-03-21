@@ -1,10 +1,14 @@
-button.btn.btn-link, #dropdownItem {
+button.btn.btn-link, #dropdownItem{
     color: #343a40;
     text-decoration: none;
 }
 
-#who{
+#who,#fesC{
     color: rgba(255, 255, 255, 0.5);
+}
+
+#fesC{
+    margin-top: 0.5em;
 }
 
 .faicon{
