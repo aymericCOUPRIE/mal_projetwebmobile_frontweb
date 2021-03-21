@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Modal } from './modal';
 import TriggerButton from './triggerButton';
+
+
 export class Container extends Component {
     state = { isShown: false };
+
     showModal = () => {
         this.setState({ isShown: true }, () => {
             this.closeButton.focus();
@@ -43,6 +46,7 @@ export class Container extends Component {
                         closeModal={this.closeModal}
                         onKeyDown={this.onKeyDown}
                         onClickOutside={this.onClickOutside}
+                        component={this.props.component}
                     />
                 ) : null}
             </React.Fragment>

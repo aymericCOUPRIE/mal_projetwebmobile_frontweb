@@ -59,9 +59,9 @@ const Login = () => {
 
         if (!history.location.state) {
             history.push("/home")
-        } else {
+        }/* else {
             history.push(history.location.from.pathname)
-        }
+        }*/
 
     }
 

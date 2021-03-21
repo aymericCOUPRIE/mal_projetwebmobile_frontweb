@@ -6,6 +6,7 @@ import {SelectColumnFilter} from "../../components/tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import {Card} from "react-bootstrap";
 import {Container} from "../../components/ModalForm/container";
+import FormJeu from "./formJeu";
 
 export const Jeux = () => {
 
@@ -26,7 +27,7 @@ export const Jeux = () => {
     return (
         <>
             <h1>Jeux</h1>
-            <Container triggerText="Créer un nouveau jeu" onSubmit={onSubmit}/>
+            <Container triggerText="Créer un nouveau jeu" onSubmit={onSubmit} component={FormJeu}/>
         </>
     );
 }

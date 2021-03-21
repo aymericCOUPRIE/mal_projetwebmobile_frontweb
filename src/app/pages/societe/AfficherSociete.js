@@ -5,6 +5,8 @@ import {SelectColumnFilter} from "../../components/tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import {Card, Form} from "react-bootstrap";
 import {rgbToHex} from "@material-ui/core";
+import {Container} from "../../components/ModalForm/container";
+import FormSociete from "./formSociete";
 
 
 export default function AfficherSociete() {
@@ -96,11 +98,8 @@ export default function AfficherSociete() {
 
 
     const updateStatusWorkflow = () => {
-        Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {
-
-        })
+        Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {})
     }
-
 
 
     /**
@@ -175,7 +174,8 @@ export default function AfficherSociete() {
                                 {
                                     options.map(option => {
                                         return (
-                                            <option value={option} key={option} onSelect={updateStatusWorkflow()}> {option} </option>
+                                            <option value={option} key={option}
+                                                    onSelect={updateStatusWorkflow()}> {option} </option>
                                         )
                                     })
                                 }
@@ -337,6 +337,9 @@ export default function AfficherSociete() {
         );
     };
 
+    const onSubmit = () => {
+
+    }
 
     /**
      * Display the table
@@ -350,6 +353,7 @@ export default function AfficherSociete() {
     return (
         <div style={{marginTop: `50px`}}>
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
+            <Container triggerText="Créer une societe" onSubmit={onSubmit} component={FormSociete}/>
         </div>
     )
 }
