@@ -3,8 +3,7 @@ import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
-import {CardBody, CardText, CardTitle} from "reactstrap";
-import {Card} from "react-bootstrap";
+import {closeModal} from '../../components/ModalForm/container';
 
 import {Container} from "../../components/ModalForm/container";
 import FormJeu from "./formJeu";
@@ -27,10 +26,17 @@ export const Jeux = () => {
         //récupérer les valeurs du formulaire
         Axios.post("http://localhost:3000/server/jeux/add", {
             title: event.target.title.value,
-            //récupérer les autres variables iciiiiii
+            minAge : event.target.minAge.value,
+            duration : event.target.duration.value,
+            maxNumPlayers : event.target.maxNumPlayers.value,
+            minNumPlayers : event.target.minNumPlayers.value,
+            rulesLink : event.target.rulesLink.value,
+            companyId : event.target.companyId.value,
+            gameTypeId : event.target.gameTypeId.value,
         })
             .then((res) => {
                 //faire quelque chose genre message succès
+
             })
     };
 
@@ -178,7 +184,7 @@ export const Jeux = () => {
             accessor: "j_nbMaxJoueurs",
             Cell: row =>{
                 return (
-                    <Form.Control autoFocus  type="number" min="0" defaultValue={row.value} onChange={(e) => updatenbjMax(parseInt(row.row.id), row.data, e.target.value)} />
+                    <Form.Control autoFocus  type="number" min={row.row.original.j_nbMinJoueurs} defaultValue={row.value} onChange={(e) => updatenbjMax(parseInt(row.row.id), row.data, e.target.value)} />
                 )
             },
         },

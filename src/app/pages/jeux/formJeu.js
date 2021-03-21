@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FormText from "react-bootstrap/FormText";
 import Axios from "axios";
+import Alert from "react-bootstrap/Alert";
 
 export const FormJeu = ({ onSubmit }) => {
     const [title,setTitle] = useState("");
@@ -20,6 +21,8 @@ export const FormJeu = ({ onSubmit }) => {
     const [editeursList,setEditeursList] = useState([]);
 
 
+
+
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer tous les types de jeux
@@ -27,15 +30,16 @@ export const FormJeu = ({ onSubmit }) => {
             .then((res) => {
                setGameTypeList(res.data)
             })
+    }, []);
 
-
+    useEffect(() => {
         //requetes tous les éditeurs
         Axios.get("http://localhost:3000/server/societe/allEditeurs")
             .then((res) => {
                setEditeursList(res.data)
             })
 
-    });
+    }, []);
 
     function validateForm() {
         return title.length > 0 ;
@@ -66,7 +70,7 @@ export const FormJeu = ({ onSubmit }) => {
             </Form.Group>
             <Form.Group size="lg"  controlId="maxNumPlayers">
                 <Form.Label>Max joueurs</Form.Label>
-                <Form.Control autoFocus value={maxNumPlayers} type="number" min="0" onChange={(e) => setMaxNumPlayers(e.target.value)} />
+                <Form.Control autoFocus value={maxNumPlayers} type="number" min={minNumPlayers} onChange={(e) => setMaxNumPlayers(e.target.value)} />
             </Form.Group>
             <Form.Group size="lg"  controlId="rulesLink">
                 <Form.Label>Lien règles du jeu</Form.Label>
@@ -87,6 +91,8 @@ export const FormJeu = ({ onSubmit }) => {
             </Form.Group>
 
             <p>* Champ obligatoire</p>
+
+
             <div className="form-group">
                 <Button id="btn-formGame" block size="lg" type="submit" disabled={!validateForm()}>
                     Submit

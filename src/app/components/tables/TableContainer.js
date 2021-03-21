@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import './TableContainer.css'
 import {
     useTable,
     useSortBy,
@@ -115,7 +116,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                 {/* go back buttons*/}
                 <Col md={3}>
                     <Button
-                        color='primary'
+                        id="pagination"
                         onClick={() => gotoPage(0)}
                         disabled={!canPreviousPage}
                     >
@@ -124,7 +125,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
 
                     {/* Left button --> Go to previous page*/}
                     <Button
-                        color='primary'
+                        id="pagination"
                         onClick={previousPage}
                         disabled={!canPreviousPage}
                     >
@@ -137,7 +138,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                 <Col md={2} style={{marginTop: 7}}>
                     Page{' '}
                     <strong>
-                        {pageIndex + 1} of {pageOptions.length}
+                        {pageIndex + 1} sur {pageOptions.length}
                     </strong>
                 </Col>
 
@@ -162,7 +163,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                     >
                         {[10, 20, 30, 40, 50].map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
-                                Show {pageSize}
+                                Afficher {pageSize}
                             </option>
                         ))}
                     </CustomInput>
@@ -172,13 +173,13 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                 {/*Go forward buttons*/}
                 <Col md={3}>
                     {/* Right button --> Go to next page*/}
-                    <Button color='primary' onClick={nextPage} disabled={!canNextPage}>
+                    <Button id="pagination" onClick={nextPage} disabled={!canNextPage}>
                         {'>'}
                     </Button>
 
                     {/* Go to last page*/}
                     <Button
-                        color='primary'
+                        id="pagination"
                         onClick={() => gotoPage(pageCount - 1)}
                         disabled={!canNextPage}
                     >

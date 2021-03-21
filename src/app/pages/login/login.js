@@ -47,6 +47,7 @@ const Login = () => {
                         //localStorage.getItem("userToken") pour y acceder
                         localStorage.setItem("userToken", responseJson.token)
                         history.push("/festivals")
+                        window.location.reload(false)
                     } else {
                         setErrortext(responseJson.error);
                         //console.log(responseJson.error)

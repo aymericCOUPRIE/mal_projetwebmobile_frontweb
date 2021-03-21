@@ -32,7 +32,7 @@ export const DefaultColumnFilter = (
             onChange={(e) => {
                 setFilter(e.target.value || undefined);
             }}
-            placeholder={`search (${length}) ...`}
+            placeholder={`Rechercher...`}
         />
     );
 };
@@ -69,7 +69,7 @@ export const SelectColumnFilter = (
                 setFilter(e.target.value || undefined);
             }}
         >
-            <option value=''>All</option>
+            <option value=''>Tous</option>
             {options.map((option) => (
                 <option key={option} value={option}>
                     {option}
