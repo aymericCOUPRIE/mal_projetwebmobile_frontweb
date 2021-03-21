@@ -8,6 +8,9 @@ import {closeModal} from '../../components/ModalForm/container';
 import {Container} from "../../components/ModalForm/container";
 import FormJeu from "./formJeu";
 import Form from "react-bootstrap/Form";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChessKnight} from "@fortawesome/free-solid-svg-icons";
+import {Nav} from "react-bootstrap";
 
 export const Jeux = () => {
 
@@ -216,8 +219,16 @@ export const Jeux = () => {
 
     return (
         <>
-            <h1>Jeux</h1>
-            <Container triggerText="Créer un nouveau jeu" onSubmit={onSubmit} component={FormJeu}/>
+            <div id="titlePageJeux">
+                <h1>
+                    <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
+                    Jeux</h1>
+            </div>
+
+            <div id="btnNewJeu">
+                <Container triggerText="Créer un nouveau jeu" onSubmit={onSubmit} component={FormJeu}/>
+
+            </div>
             <div style={{marginTop: `50px`}}>
                 <TableContainer columns={columns} data={listeJeux}/>
             </div>
