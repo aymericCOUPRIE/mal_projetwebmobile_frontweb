@@ -3,7 +3,17 @@ import {email, isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser, faAddressBook, faCalendarAlt, faDice, faClipboardList,faFileInvoiceDollar, faTh, faShapes, faTheaterMasks} from "@fortawesome/free-solid-svg-icons";
+import {
+    faUser,
+    faAddressBook,
+    faCalendarAlt,
+    faDice,
+    faClipboardList,
+    faFileInvoiceDollar,
+    faTh,
+    faShapes,
+    faTheaterMasks
+} from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
 import {faFacebook} from "@fortawesome/free-brands-svg-icons";
 import React, {useEffect, useState} from "react";
@@ -12,7 +22,7 @@ import Moment from "moment";
 
 const CustomHeader = () => {
 
-    const [dateFestivalCourant,setDateFestivalCourant] = useState(null);
+    const [dateFestivalCourant, setDateFestivalCourant] = useState(null);
 
     const history = useHistory();
 
@@ -43,18 +53,18 @@ const CustomHeader = () => {
     return (
         <div>
             <header>
-                <Navbar collapseOnSelect fixed='top' expand='sm' bg='dark' variant='dark'>
+                <Navbar collapseOnSelect fixed='top' expand='lg' bg='dark' variant='dark'>
                     <Container>
                         <Navbar.Toggle aria-cpntrols='responsive-navbar-nav'/>
                         <Navbar.Collapse id='responsive-navbar-nav'>
-
-
                             {isLogin() ? (
-                                <NavDropdown title={email()} id="who">
-                                    <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de passe</Nav.Link>
-                                    <Button variant="link" onClick={logout}>Se déconnecter</Button>
-                                </NavDropdown>
-
+                                <Nav>
+                                    <NavDropdown title={email()} id="who">
+                                        <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de
+                                            passe</Nav.Link>
+                                        <Button variant="link" onClick={logout}>Se déconnecter</Button>
+                                    </NavDropdown>
+                                </Nav>
                             ) : (
 
                                 <Nav>
@@ -64,7 +74,7 @@ const CustomHeader = () => {
 
                             {isAdmin() ? (
                                 <Nav>
-                                    <NavDropdown title="Paramètres" >
+                                    <NavDropdown title="Paramètres">
                                         <Nav.Link id="dropdownItem" href='/register'>
                                             <FontAwesomeIcon className="faicon" icon={faUser}/>
                                             Créer un nouveau compte
@@ -79,11 +89,14 @@ const CustomHeader = () => {
                                         </Nav.Link>
                                     </NavDropdown>
                                     <div id="fesC">
-                                        <FontAwesomeIcon className="faicon"  icon={faTheaterMasks}/> Festival courant:
+                                        <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/> Festival
+                                        courant:
                                     </div>
 
-                                    <NavDropdown title= {Moment(dateFestivalCourant).format('DD-MM-YYYY')} id="who">
-                                        <Nav.Link id="dropdownItem" href='/festivals'><FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
+                                    <NavDropdown title={Moment(dateFestivalCourant).format('DD-MM-YYYY')}
+                                                 id="who">
+                                        <Nav.Link id="dropdownItem" href='/festivals'><FontAwesomeIcon
+                                            className="faicon" icon={faCalendarAlt}/>
                                             Festivals
                                         </Nav.Link>
                                     </NavDropdown>
@@ -107,7 +120,6 @@ const CustomHeader = () => {
                                     Jeux</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
-
                     </Container>
                 </Navbar>
             </header>
