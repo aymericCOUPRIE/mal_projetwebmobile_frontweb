@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {FormJeu} from '../../pages/jeux/formJeu';
+
 import FocusTrap from 'focus-trap-react';
-import FormSociete from "../../pages/societe/formSociete";
+
 
 export const Modal = ({
                           onClickOutside,
@@ -13,6 +13,7 @@ export const Modal = ({
                           onSubmit,
                           component: Component
                       }) => {
+
     return ReactDOM.createPortal(
         <FocusTrap>
             <aside

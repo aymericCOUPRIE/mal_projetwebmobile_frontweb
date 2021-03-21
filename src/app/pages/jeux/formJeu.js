@@ -28,13 +28,13 @@ export const FormJeu = ({ onSubmit }) => {
                setGameTypeList(res.data)
             })
 
-        /*
+
         //requetes tous les éditeurs
         Axios.get("http://localhost:3000/server/societe/allEditeurs")
             .then((res) => {
                setEditeursList(res.data)
             })
-*/
+
     });
 
     function validateForm() {

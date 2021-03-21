@@ -3,19 +3,9 @@ import {email, isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faUser,
-    faAddressBook,
-    faCalendarAlt,
-    faDice,
-    faClipboardList,
-    faFileInvoiceDollar,
-    faTh,
-    faShapes,
-    faTheaterMasks
-} from "@fortawesome/free-solid-svg-icons";
+
+import {faUser, faAddressBook, faCalendarAlt, faDice, faClipboardList,faFileInvoiceDollar, faTh, faShapes, faTheaterMasks, faChessKnight} from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
-import {faFacebook} from "@fortawesome/free-brands-svg-icons";
 import React, {useEffect, useState} from "react";
 import Axios from "axios";
 import Moment from "moment";
@@ -79,6 +69,11 @@ const CustomHeader = () => {
                                             <FontAwesomeIcon className="faicon" icon={faUser}/>
                                             Créer un nouveau compte
                                         </Nav.Link>
+                                        <Nav.Link id="dropdownItem" href='/jeux'>
+                                            <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
+                                            Jeux
+                                        </Nav.Link>
+
                                         <Nav.Link id="dropdownItem" href='/'>
                                             <FontAwesomeIcon className="faicon" icon={faShapes}/>
                                             Types de jeux
@@ -115,10 +110,14 @@ const CustomHeader = () => {
                             ) : null}
 
                             <Nav>
-                                <Nav.Link href='/jeux'>
+                                <Nav.Link href='/'>
                                     <FontAwesomeIcon className="faicon" icon={faDice}/>
-                                    Jeux</Nav.Link>
+                                    Jeux festival
+                                </Nav.Link>
+
                             </Nav>
+
+
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
