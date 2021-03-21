@@ -4,9 +4,7 @@ import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import {Card, Form} from "react-bootstrap";
-//import TextareaAutosize from 'react-autosize-textarea';
-import {rgbToHex, TextField} from '@material-ui/core';
-import {red} from "@material-ui/core/colors";
+import {rgbToHex} from "@material-ui/core";
 
 
 export default function AfficherSociete() {
@@ -55,7 +53,6 @@ export default function AfficherSociete() {
             rolF_estEditeur: value //'true' or 'false'
         })
     }
-
 
     const updateStatusExposant = (rowIndex, data, value) => {
         Axios.put("http://localhost:3000/server/societe/updateStatusExposant", {
@@ -162,10 +159,10 @@ export default function AfficherSociete() {
                 filter: 'equals',
 
 
-               /* Cell: row => {
+                Cell: row => {
                     return (
                         <div>
-                            <select value={row.value} style={{"background-color": rgbToHex(#FFFFFF)}}>
+                            <select value={row.value}>
                                 {
                                     options.map(option => {
                                         return (
@@ -176,7 +173,7 @@ export default function AfficherSociete() {
                             </select>
                         </div>
                     )
-                }*/
+                }
             },
             {
                 id: "estExposant",
