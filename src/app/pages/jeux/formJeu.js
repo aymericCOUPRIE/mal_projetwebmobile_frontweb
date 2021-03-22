@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './formJeu.css'
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import FormText from "react-bootstrap/FormText";
 import Axios from "axios";
-import Alert from "react-bootstrap/Alert";
+
 
 export const FormJeu = ({ onSubmit }) => {
     const [title,setTitle] = useState("");

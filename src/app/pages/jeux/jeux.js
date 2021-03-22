@@ -1,7 +1,6 @@
 import './jeux.css'
 import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
-import {useHistory} from "react-router"
 
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
@@ -14,7 +13,7 @@ import Alert from "react-bootstrap/Alert";
 
 export const Jeux = () => {
 
-    const history = useHistory();
+
 
     const [listeJeux, setListeJeux] = useState([]);
     const [gameTypeList, setGameTypeList] = useState([]);
@@ -27,8 +26,9 @@ export const Jeux = () => {
 
         //Ne pas oublier cette ligne!!!
         event.preventDefault(event);
-        //récupérer les valeurs du formulaire
+
         Axios.post("http://localhost:3000/server/jeux/add", {
+            //récupérer les valeurs du formulaire
             title: event.target.title.value,
             minAge : event.target.minAge.value,
             duration : event.target.duration.value,
