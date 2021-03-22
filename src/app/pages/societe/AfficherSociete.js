@@ -37,6 +37,13 @@ export default function AfficherSociete() {
     }, [setListSociete])
 
 
+    useEffect(() => {
+        Axios.get("http://localhost:3000/server/suiviExposant/getDiscussions", {}).then((response) => {
+            setOptionsDiscussion(response.data.res)
+        })
+    }, [])
+
+
     /**
      * This method is used to update the status (soc_estInactif) of a societe
      *
@@ -67,25 +74,9 @@ export default function AfficherSociete() {
         })
     }
 
-    const updateDateContact1 = (suivE_id, value) => {
-        console.log("DATA", suivE_id, value)
-        Axios.put("http://localhost:3000/server/societe/updateDateContact1", {
-            suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
-            suivE_dateContact: value //'true' or 'false'
-        })
-    }
-
-    const updateDateContact2 = (suivE_id, value) => {
-        console.log("DATA", suivE_id, value)
-        Axios.put("http://localhost:3000/server/societe/updateDateContact2", {
-            suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
-            suivE_dateContact: value //'true' or 'false'
-        })
-    }
-
-    const updateDateContact3 = (suivE_id, value) => {
-        console.log("DATA", suivE_id, value)
-        Axios.put("http://localhost:3000/server/societe/updateDateContact3", {
+    const updateDateContact = (suivE_id, value, numeroRelance) => {
+        console.log("DATA", numeroRelance)
+        Axios.put(`http://localhost:3000/server/societe/updateDateContact/${numeroRelance}`, {
             suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             suivE_dateContact: value //'true' or 'false'
         })
@@ -98,22 +89,21 @@ export default function AfficherSociete() {
         })
     }
 
-    const updateStatusBenevole = () => {
-
-    }
-
-    const updateStatusWorkflow = () => {
-        Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {})
-    }
-
-
-    useEffect( () => {
-        Axios.get("http://localhost:3000/server/suivi_discussion/getDiscussions", {}).then((response) => {
-            setOptionsDiscussion(response.data)
-            console.log(response.data)
+    const updateStatusBenevole = (data, value) => {
+        Axios.put("http://localhost:3000/server/suiviExposant/updateBenevole", {
+            suivE_id: data.suivE_id,
+            suivE_benevole: value
         })
-    })
+    }
 
+    const updateStatusWorkflow = (data, value) => {
+        console.log("RETOURNE", data, value)
+        Axios.put("http://localhost:3000/server/suiviExposant/updateWorkflow", {
+            suivE_id: data.suivE_id,
+            suivD_id: value
+        })
+    }
+    
     /**
      * This method is declaring all the columns for the table
      *
@@ -178,20 +168,20 @@ export default function AfficherSociete() {
                 Filter: SelectColumnFilter,
                 filter: 'equals',
 
-
                 Cell: row => {
                     return (
                         <div>
-                            <select value={row.value}>
-                                {
-                                    options.map(option => {
-                                        return (
-                                            <option value={option} key={option}
-                                                    onSelect={updateStatusWorkflow()}> {option} </option>
-                                        )
-                                    })
-                                }
-                            </select>
+                            <Form.Group>
+                                <Form.Control as="select"
+                                              onChange={(e) => updateStatusWorkflow(row.row.original, e.target.value)}>
+                                    {optionsDiscussion.map((object, i) =>
+                                        <option selected={row.value == object.suivD_libelle ? true : false}
+                                                value={object.suivD_id}
+                                                key={object.suivD_id}> {object.suivD_libelle}</option>
+                                    )}
+                                </Form.Control>
+                            </Form.Group>
+
                         </div>
                     )
                 }
@@ -199,7 +189,7 @@ export default function AfficherSociete() {
             {
                 id: "estExposant",
                 Header: "Exposant",
-                accessor: d => d.rolF_estExposant.toString(), //required cast from boolea to string
+                accessor: d => d.rolF_estExposant != null ? d.rolF_estExposant.toString() : null, //required cast from boolea to string
 
                 //Allows column to be sorted depending on all content type (true/false)
                 disableSortBy: true,
@@ -220,7 +210,7 @@ export default function AfficherSociete() {
             {
                 id: "estEditeur",
                 Header: "Editeur",
-                accessor: d => d.rolF_estEditeur.toString(), //required cast from boolea to string
+                accessor: d => d.rolF_estEditeur != null ? d.rolF_estEditeur.toString() : null, //required cast from boolea to string
 
 
                 //Allows column to be sorted depending on all content type (true/false)
@@ -279,6 +269,7 @@ export default function AfficherSociete() {
                     return (
                         <div style={{'textAlign': 'center'}}>
                             <input
+                                disabled={row.value == null ? true : false}
                                 type="checkbox"
                                 defaultChecked={(row.value == null || row.value == 0) ? false : true}
                                 onChange={(event) => updateStatusFacture(row.row.original, event.target.checked ? true : false)}
@@ -287,7 +278,7 @@ export default function AfficherSociete() {
                 },
             },
 
-        ], []
+        ], [optionsDiscussion]
     )
 
     /**
@@ -328,21 +319,21 @@ export default function AfficherSociete() {
                         <strong>Date contact 1 </strong>
                         <input type={'date'}
                                defaultValue={`${suivE_dateContact1}`}
-                               onChange={(event) => updateDateContact1(suivE_id, event.target.value)}
+                               onChange={(event) => updateDateContact(suivE_id, event.target.value, 1)}
                         />
                     </CardText>
                     <CardText>
                         <strong>Date contact 2 </strong>
                         <input type={'date'}
                                defaultValue={`${suivE_dateContact2}`}
-                               onChange={(event) => updateDateContact2(suivE_id, event.target.value)}
+                               onChange={(event) => updateDateContact(suivE_id, event.target.value, 2)}
                         />
                     </CardText>
                     <CardText>
                         <strong>Date contact 3 </strong>
                         <input type={'date'}
                                defaultValue={`${suivE_dateContact3}`}
-                               onChange={(event) => updateDateContact3(suivE_id, event.target.value)}
+                               onChange={(event) => updateDateContact(suivE_id, event.target.value, 3)}
                         />
                     </CardText>
                 </CardBody>

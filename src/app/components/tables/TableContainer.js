@@ -55,12 +55,12 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
 
     return (
         <Fragment>
-            <Table bordered hover {...getTableProps()}>
+            <Table bordered hover {...getTableProps()} style={{width: '100%'}}>
 
                 {/* En-tete du tableau (avec les menu de recherches/tris)*/}
                 <thead>
                 {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <tr  {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
                             <th {...column.getHeaderProps()}>
                                 <div {...column.getSortByToggleProps()}>
@@ -76,14 +76,14 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
 
 
                 {/* Affichage des données*/}
-                <tbody {...getTableBodyProps()}>
+                <tbody {...getTableBodyProps()} style={{width: 'auto'}}>
                 {page.map((row) => {
                     prepareRow(row);
                     return (
                         <Fragment key={row.getRowProps().key}>
 
                             {/* Contenu pour chaque ligne*/}
-                            <tr>
+                            <tr >
                                 {row.cells.map((cell) => {
                                     return (
                                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>

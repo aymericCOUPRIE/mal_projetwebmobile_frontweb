@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Modal } from './modal';
+import React, {Component} from 'react';
+import {Modal} from './modal';
 import TriggerButton from './triggerButton';
 
 export class Container extends Component {
-    state = { isShown: false };
+    state = {isShown: false};
 
     showModal = () => {
-        this.setState({ isShown: true }, () => {
+        this.setState({isShown: true}, () => {
             this.closeButton.focus();
         });
         this.toggleScrollLock();
@@ -19,7 +19,7 @@ export class Container extends Component {
     }
 
     closeModal = () => {
-        this.setState({ isShown: false });
+        this.setState({isShown: false});
         this.TriggerButton.focus();
         this.toggleScrollLock();
     };
@@ -36,6 +36,7 @@ export class Container extends Component {
     toggleScrollLock = () => {
         document.querySelector('html').classList.toggle('scroll-lock');
     };
+
     render() {
         return (
             <React.Fragment>

@@ -33,13 +33,14 @@ export const DefaultColumnFilter = (
                 setFilter(e.target.value || undefined);
             }}
             placeholder={`Rechercher...`}
+            style={{width: 'auto'}}
         />
     );
 };
 
 /**
  * Type selector filter
-*        --> Selection between different types in column
+ *        --> Selection between different types in column
  *
  * @param filterValue
  * @param setFilter
@@ -65,15 +66,14 @@ export const SelectColumnFilter = (
             id='custom-select'
             type='select'
             value={filterValue}
+            style={{width: 'auto'}}
             onChange={(e) => {
                 setFilter(e.target.value || undefined);
             }}
         >
             <option value=''>Tous</option>
             {options.map((option) => (
-                <option key={option} value={option}>
-                    {option}
-                </option>
+                <option key={option} value={option}> {option} </option>
             ))}
         </CustomInput>
     );

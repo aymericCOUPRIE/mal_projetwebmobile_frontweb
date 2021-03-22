@@ -81,7 +81,6 @@ export const Jeux = () => {
     }
     //TODO updtate Type jeu
     const updateGameTypeId = (data, value) => {
-        console.log("VALUES", data, value)
         const j_id = data.j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-typeId`, {
             typeId: value,
