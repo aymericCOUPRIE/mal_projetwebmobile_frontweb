@@ -30,7 +30,13 @@ export const Jeux = () => {
         //récupérer les valeurs du formulaire
         Axios.post("http://localhost:3000/server/jeux/add", {
             title: event.target.title.value,
-            //récupérer les autres variables iciiiiii
+            minAge : event.target.minAge.value,
+            duration : event.target.duration.value,
+            maxNumPlayers : event.target.maxNumPlayers.value,
+            minNumPlayers : event.target.minNumPlayers.value,
+            rulesLink : event.target.rulesLink.value,
+            companyId : event.target.companyId.value,
+            gameTypeId : event.target.gameTypeId.value,
         }).then((res) => {
             //faire quelque chose genre message succès
         })
@@ -42,33 +48,31 @@ export const Jeux = () => {
         //Récupérer les infos de tous les jeux
         Axios.get("http://localhost:3000/server/Jeux/allDetails")
             .then((res) => {
-                console.log(res.data)
                 setListeJeux(res.data)
             });
 
     }, []);
 
     useEffect(() => {
+        //Récupérer tous les types
         Axios.get("http://localhost:3000/server/jeux/allGameType")
             .then((res) => {
-                console.log(res.data)
                 setGameTypeList(res.data)
             })
     }, [])
 
     useEffect(() => {
+        //récupérer tous les éditeurs
         Axios.get("http://localhost:3000/server/societe/allEditeurs")
             .then((res) => {
-                console.log(res.data)
                 setEditeursList(res.data)
             })
     }, [])
 
 
     //TODO update Editeur
-    const updateEditeurId = (rowIndex, data, value) => {
-        const j_id = data[rowIndex].j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-editeurId`, {
+    const updateEditeurId = (data, value) => {
+        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-editeurId`, {
             editeurId: value,
         })
     }
@@ -127,21 +131,30 @@ export const Jeux = () => {
         },
         {
             Header: "Éditeur",
-            accessor: "nom_editeur"
-            /*
-           disableSortBy: true,
-           Filter: SelectColumnFilter,
-           filter: 'equals',
+            accessor: "nom_editeur",
 
-           Cell: row => {
-               return (
-                   <Form.Control autoFocus  as="select" value={row.value} onChange={(e) => updateEditeurId(parseInt(row.row.id), row.data, e.target.value)} >
-                       {editeursList.map((object,i) =><option value={editeursList[i].soc_id}>{editeursList[i].soc_nom} </option> )}
-                   </Form.Control>
-               )
-           }
 
-            */
+            disableSortBy: true,
+            Filter: SelectColumnFilter,
+            filter: 'equals',
+
+
+            Cell: row => {
+                {console.log("DEFAULT bonjour", row.value)}
+                return (
+                    <div>
+                        <Form.Group>
+                            <Form.Control as="select" onChange={(e) => updateEditeurId(row.row.original, e.target.value)}>
+                                {editeursList.map((object, i) =>
+                                    <option selected={row.value == object.soc_nom ? true : false} value={object.soc_id} key={object.soc_id} > {object.soc_nom}</option>
+                                )}
+                            </Form.Control>
+                        </Form.Group>
+                    </div>
+                )
+            }
+
+
         },
         {
             Header: "Type de jeu",
@@ -153,7 +166,6 @@ export const Jeux = () => {
 
 
             Cell: row => {
-                {console.log("DEFAULT", row.value)}
                 return (
                     <div>
                         <Form.Group>

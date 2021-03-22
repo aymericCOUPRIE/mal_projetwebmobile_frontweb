@@ -14,7 +14,7 @@ import PrivateRoute from "./privateRoute";
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
-//
+//Private route = route accéccibles que quand login
 function Routes() {
     return (
         <div className="App">

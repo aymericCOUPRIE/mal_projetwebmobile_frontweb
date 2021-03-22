@@ -222,6 +222,7 @@ export default function AfficherSociete() {
                 Header: "Editeur",
                 accessor: d => d.rolF_estEditeur.toString(), //required cast from boolea to string
 
+
                 //Allows column to be sorted depending on all content type (true/false)
                 disableSortBy: true,
                 Filter: SelectColumnFilter,
