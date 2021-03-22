@@ -98,11 +98,12 @@ const CustomHeader = () => {
                                                     <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
                                                     Reservations
                                                 </Nav.Link>
-
+                                                {isAdmin() ? (
                                                 <Nav.Link href='/'>
                                                     <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
                                                     Facture
                                                 </Nav.Link>
+                                                ) : null}
                                             </Nav>
                                         </Nav>
                                     ) : null }

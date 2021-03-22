@@ -223,7 +223,7 @@ export const Jeux = () => {
                 )
             },
         }
-    ], [listeJeux, editeursList, gameTypeList])
+    ], [listeJeux, editeursList, gameTypeList]) //les variables du tableau
 
 
     return (

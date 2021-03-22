@@ -109,8 +109,8 @@ export default function AfficherSociete() {
 
     useEffect( () => {
         Axios.get("http://localhost:3000/server/suivi_discussion/getDiscussions", {}).then((response) => {
-            setOptionsDiscussion(res.data)
-            console.log(res.data)
+            setOptionsDiscussion(response.data)
+            console.log(response.data)
         })
     })
 

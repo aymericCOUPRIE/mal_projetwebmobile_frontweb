@@ -80,13 +80,13 @@ export const FormJeu = ({ onSubmit }) => {
                 <Form.Label>Type de jeux</Form.Label>
                 <Form.Control autoFocus value={gameTypeId} as="select" onChange={(e) => setGameTypeId(e.target.value)} >
 
-                {gameTypeList.map((object,i) =><option value={gameTypeList[i].typJ_id}>{gameTypeList[i].typJ_libelle} </option> )}
+                {gameTypeList.map((object) =><option value={object.typJ_id}>{object.typJ_libelle} </option> )}
                 </Form.Control>
             </Form.Group>
             <Form.Group size="lg"  controlId="companyId">
                 <Form.Label>Éditeur</Form.Label>
                 <Form.Control autoFocus value={companyId} as="select" onChange={(e) => setCompanyId(e.target.value)} >
-                    {editeursList.map((object,i) =><option value={editeursList[i].soc_id}>{editeursList[i].soc_nom} </option> )}
+                    {editeursList.map((object) =><option value={object.soc_id}>{object.soc_nom} </option> )}
                 </Form.Control>
             </Form.Group>
 
