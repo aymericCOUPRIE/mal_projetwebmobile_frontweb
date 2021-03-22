@@ -26,7 +26,7 @@ export const FormJeu = ({ onSubmit }) => {
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer tous les types de jeux
-        Axios.get("http://localhost:3000/server/jeux/allGameType")
+        Axios.get("http://localhost:3000/server/typeJeu/all")
             .then((res) => {
                setGameTypeList(res.data)
             })

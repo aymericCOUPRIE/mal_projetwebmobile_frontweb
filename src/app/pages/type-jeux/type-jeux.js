@@ -3,7 +3,7 @@ import Axios from "axios"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShapes} from "@fortawesome/free-solid-svg-icons";
 
- function TypeJeu(){
+const TypeJeu = () => {
     return(
         <>
             <div id="titlePageJeux">

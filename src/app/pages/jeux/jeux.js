@@ -58,7 +58,7 @@ export const Jeux = () => {
 
     useEffect(() => {
         //Récupérer tous les types
-        Axios.get("http://localhost:3000/server/jeux/allGameType")
+        Axios.get("http://localhost:3000/server/typeJeu/all")
             .then((res) => {
                 setGameTypeList(res.data)
             })
