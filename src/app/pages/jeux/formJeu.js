@@ -95,7 +95,7 @@ export const FormJeu = ({ onSubmit }) => {
 
             <div className="form-group">
                 <Button id="btn-formGame" block size="lg" type="submit" disabled={!validateForm()}>
-                    Submit
+                    Valider
                 </Button>
             </div>
 
