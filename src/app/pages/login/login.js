@@ -50,19 +50,19 @@ const Login = () => {
                         window.location.reload(false)
                     } else {
                         setErrortext(responseJson.error);
-                        //console.log(responseJson.error)
+
                     }
                 })
             }
         });
 
         event.preventDefault();
-
-        if (!history.location.state) {
-            history.push("/home")
-        }/* else {
-            history.push(history.location.from.pathname)
-        }*/
+        /*
+                if (!history.location.state) {
+                    history.push("/home")
+                } else {
+                    history.push(history.location.from.pathname)
+                }*/
 
     }
 

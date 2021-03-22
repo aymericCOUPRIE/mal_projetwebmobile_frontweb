@@ -64,7 +64,7 @@ const CustomHeader = () => {
                                     {isLogin() ? (
                                         <Nav>
                                             <NavDropdown title="Paramètres">
-                                                <Nav.Link id="dropdownItem" href='/'>
+                                                <Nav.Link id="dropdownItem" href='/type-jeux'>
                                                     <FontAwesomeIcon className="faicon" icon={faShapes}/>
                                                     Types de jeux
                                                 </Nav.Link>

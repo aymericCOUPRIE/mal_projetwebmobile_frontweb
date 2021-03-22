@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Modal } from './modal';
 import TriggerButton from './triggerButton';
 
-
 export class Container extends Component {
     state = { isShown: false };
 
@@ -12,6 +11,13 @@ export class Container extends Component {
         });
         this.toggleScrollLock();
     };
+
+    submit = (event) => {
+        console.log(this.props)
+        this.closeModal();
+        this.props.onSubmit(event);
+    }
+
     closeModal = () => {
         this.setState({ isShown: false });
         this.TriggerButton.focus();
@@ -40,7 +46,7 @@ export class Container extends Component {
                 />
                 {this.state.isShown ? (
                     <Modal
-                        onSubmit={this.props.onSubmit}
+                        onSubmit={this.submit}
                         modalRef={(n) => (this.modal = n)}
                         buttonRef={(n) => (this.closeButton = n)}
                         closeModal={this.closeModal}

@@ -1,28 +1,32 @@
 import './jeux.css'
 import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
+import {useHistory} from "react-router"
 
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChessKnight} from "@fortawesome/free-solid-svg-icons";
-import {Nav} from "react-bootstrap";
 import {Container} from "../../components/ModalForm/container";
 import FormJeu from "./formJeu";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 
 export const Jeux = () => {
 
+    const history = useHistory();
 
     const [listeJeux, setListeJeux] = useState([]);
     const [gameTypeList, setGameTypeList] = useState([]);
     const [editeursList, setEditeursList] = useState([]);
 
+    const [show, setShow] = useState(false)
+
+
     const onSubmit = (event) => {
 
         //Ne pas oublier cette ligne!!!
         event.preventDefault(event);
-
         //récupérer les valeurs du formulaire
         Axios.post("http://localhost:3000/server/jeux/add", {
             title: event.target.title.value,
@@ -34,7 +38,9 @@ export const Jeux = () => {
             companyId : event.target.companyId.value,
             gameTypeId : event.target.gameTypeId.value,
         }).then((res) => {
-            //faire quelque chose genre message succès
+         //afficher alert succes
+            setShow(true);
+
 
         })
     };
@@ -240,12 +246,15 @@ export const Jeux = () => {
             <div id="titlePageJeux">
                 <h1>
                     <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
-                    Jeux</h1>
-            </div>
+                    Jeux
+                </h1>
 
+            </div>
+            <Alert id="alertSucces" variant="success" show={show}>
+                Le jeu a été crée avec succès!
+            </Alert>
             <div id="btnNewJeu">
                 <Container triggerText="Créer un nouveau jeu" onSubmit={onSubmit} component={FormJeu}/>
-
             </div>
             <div style={{marginTop: `50px`}}>
                 <TableContainer columns={columns} data={listeJeux}/>

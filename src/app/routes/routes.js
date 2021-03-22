@@ -9,6 +9,7 @@ import UpdatePassword from "../pages/update-password/update-password";
 import AfficherSociete from "../pages/societe/AfficherSociete";
 import Register from "../pages/register/register";
 import Festivals from "../pages/festivals/Festivals";
+import TypeJeux from "../pages/type-jeux/type-jeux"
 import {Jeux} from "../pages/jeux/jeux";
 import PrivateRoute from "./privateRoute";
 
@@ -27,6 +28,7 @@ function Routes() {
                 <PrivateRoute path='/register' component={Register}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>
                 <Route path='/jeux' component={Jeux}/>
+                <PrivateRoute path='/type-jeux' component={TypeJeux}/>
             </Switch>
 
         </div>
