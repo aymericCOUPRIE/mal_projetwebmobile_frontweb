@@ -51,6 +51,7 @@ export const Jeux = () => {
         //Récupérer les infos de tous les jeux
         Axios.get("http://localhost:3000/server/Jeux/allDetails")
             .then((res) => {
+                console.log(res.data)
                 setListeJeux(res.data)
             });
 
@@ -133,7 +134,7 @@ export const Jeux = () => {
         },
         {
             Header: "Éditeur",
-            accessor: "nom_editeur",
+            accessor: "societe.soc_nom",
 
 
             disableSortBy: true,
@@ -160,7 +161,7 @@ export const Jeux = () => {
         },
         {
             Header: "Type de jeu",
-            accessor: "typeJeu",
+            accessor: "type_jeu.typJ_libelle",
 
             disableSortBy: true,
             Filter: SelectColumnFilter,
