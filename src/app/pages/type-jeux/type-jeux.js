@@ -29,6 +29,9 @@ const TypeJeu = () => {
 
         Axios.post("http://localhost:3000/server/typeJeu/add", {
             libelle: event.target.libelle.value
+        }).then((res) => {
+            //afficher alert succes
+            setShow(true);
         })
 
     }
@@ -37,9 +40,6 @@ const TypeJeu = () => {
         const typJ_id = data[rowIndex].typJ_id
         Axios.post(`http://localhost:3000/server/typeJeu/${typJ_id}/update`,{
             libelle: value,
-        }).then((res) => {
-            //afficher alert succes
-            setShow(true);
         })
     }
 
