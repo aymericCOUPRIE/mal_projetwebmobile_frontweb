@@ -33,7 +33,7 @@ export const DefaultColumnFilter = (
                 setFilter(e.target.value || undefined);
             }}
             placeholder={`Rechercher...`}
-            style={{width: 'auto'}}
+            //style={{width: 'auto'}}
         />
     );
 };
@@ -66,7 +66,7 @@ export const SelectColumnFilter = (
             id='custom-select'
             type='select'
             value={filterValue}
-            style={{width: 'auto'}}
+            //style={{width: 'auto'}}
             onChange={(e) => {
                 setFilter(e.target.value || undefined);
             }}

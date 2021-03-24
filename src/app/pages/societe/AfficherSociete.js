@@ -7,6 +7,9 @@ import {Card, Form} from "react-bootstrap";
 import {rgbToHex} from "@material-ui/core";
 import {Container} from "../../components/ModalForm/container";
 import FormSociete from "./formSociete";
+import './AfficherSociete.css'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function AfficherSociete() {
@@ -117,7 +120,7 @@ export default function AfficherSociete() {
 
                 Cell: ({row}) => (
                     <span {...row.getToggleRowExpandedProps()}>
-                        {row.isExpanded ? 'v' : '>'}
+                        {row.isExpanded ? <FontAwesomeIcon className="faiconDetail" icon={faEyeSlash}/> :  <FontAwesomeIcon className="faiconDetail" icon={faInfoCircle}/>}
                     </span>
                 ),
             },

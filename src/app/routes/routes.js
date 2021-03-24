@@ -12,6 +12,7 @@ import Festivals from "../pages/festivals/Festivals";
 import TypeJeux from "../pages/type-jeux/type-jeux"
 import {Jeux} from "../pages/jeux/jeux";
 import PrivateRoute from "./privateRoute";
+import FestivalGames from "../pages/festival-games/festval-games";
 
 
 // DANS LE SWITCH
@@ -30,6 +31,7 @@ function Routes() {
                 <PrivateRoute path='/festivals' component={Festivals}/>
                 <Route path='/jeux' component={Jeux}/>
                 <PrivateRoute path='/type-jeux' component={TypeJeux}/>
+                <Route path='/festival-games' component={FestivalGames}/>
 
             </Switch>
 

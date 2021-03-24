@@ -147,7 +147,7 @@ export const Jeux = () => {
                 return (
                     <div>
                         <Form.Group>
-                            <Form.Control as="select" onChange={(e) => updateEditeurId(row.row.original, e.target.value)}>
+                            <Form.Control style={{width: 'auto'}} as="select" onChange={(e) => updateEditeurId(row.row.original, e.target.value)}>
                                 {editeursList.map((object, i) =>
                                     <option selected={row.value == object.soc_nom ? true : false} value={object.soc_id} key={object.soc_id} > {object.soc_nom}</option>
                                 )}
@@ -172,9 +172,9 @@ export const Jeux = () => {
                 return (
                     <div>
                         <Form.Group>
-                            <Form.Control as="select" onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}>
+                            <Form.Control style={{width: 'auto'}} as="select" onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}>
                                 {gameTypeList.map((object, i) =>
-                                    <option selected={row.value == object.typJ_libelle ? true : false} value={object.typJ_id} key={object.typJ_id} > {object.typJ_libelle}</option>
+                                    <option  selected={row.value == object.typJ_libelle ? true : false} value={object.typJ_id} key={object.typJ_id} > {object.typJ_libelle}</option>
                                 )}
                             </Form.Control>
                         </Form.Group>
@@ -189,7 +189,7 @@ export const Jeux = () => {
             accessor: "j_ageMin",
             Cell: row => {
                 return (
-                    <Form.Control autoFocus type="number" min="0" defaultValue={row.value}
+                    <Form.Control  autoFocus type="number" min="0" defaultValue={row.value}
                                   onChange={(e) => updateageMin(parseInt(row.row.id), row.data, e.target.value)}/>
                 )
             },

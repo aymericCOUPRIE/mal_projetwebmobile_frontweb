@@ -114,7 +114,7 @@ const CustomHeader = () => {
                                             Societes
                                         </Nav.Link>
 
-                                        <Nav.Link href='/'>
+                                        <Nav.Link href='/festival-games'>
                                             <FontAwesomeIcon className="faicon" icon={faDice}/>
                                             Jeux festival
                                         </Nav.Link>
