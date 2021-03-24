@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 
@@ -8,6 +8,10 @@ import RegisterForm from "./registerForm"
 import {Container} from "../../components/ModalForm/container";
 import Axios from "axios";
 import FormText from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button"
+
+import TableContainer from "../../components/tables/TableContainer";
+import {SelectColumnFilter} from "../../components/tables/Filters";
 
 
 
@@ -15,8 +19,7 @@ import FormText from "react-bootstrap/Form";
 export default function HandleAccounts(){
     const [errortext, setErrortext] = useState("");
     const [show, setShow] = useState(false)
-
-
+    const [userList,setUserList] = useState([]);
 
     const onSubmit = (event) => {
 
@@ -32,7 +35,6 @@ export default function HandleAccounts(){
 
         }).then((res) => {
             //afficher alert succes
-
                     if (res.data.success) {
                         //afficher message de réussite
                         console.log("compte crée")
@@ -40,16 +42,60 @@ export default function HandleAccounts(){
                     } else {
                         setErrortext(res.data.error);
                     }
-
-
-
-
-
-
-
         })
     };
+    //méthode qui s'appelle au chargement de la page
+    useEffect(() => {
+        //Récupérer les infos de tous les users
+        Axios.get("http://localhost:3000/server/allUsers")
+            .then((res) => {
+                setUserList(res.data);
+            });
 
+    }, []);
+
+
+
+    const deleteUser = (data) => {
+
+        Axios.delete(`http://localhost:3000/server/delete-profile/${data.user_email}`)
+            .then(
+                //userList.splice(userList.indexOf(data),1)
+                window.location.reload(false)
+            )
+
+
+
+    }
+
+    const columns = useMemo(() => [
+        {
+            Header: "User",
+            accessor: "user_email"
+        },
+        {
+            Header: "Admin",
+            accessor: d => d.user_estAdmin != null ? d.user_estAdmin.toString() : null, //required cast from boolea to string
+
+            disableSortBy: true,
+            Filter: SelectColumnFilter,
+            filter: 'equals',
+
+        },
+        {
+            id: 'supprimer',
+
+            Cell: row => {
+                return (
+                    <div>
+                        <Button id="btndelete" onClick={(e) => deleteUser(row.row.original)}>Supprimer</Button>
+                    </div>
+                    )
+            },
+
+
+        }
+        ], [userList])
 
     return (
         <>
@@ -69,6 +115,10 @@ export default function HandleAccounts(){
             ) : null}
             <div id="btn-NewUser">
                 <Container triggerText="Créer un nouveau compte" onSubmit={onSubmit} component={RegisterForm}/>
+            </div>
+
+            <div style={{marginTop: `50px`}}>
+                <TableContainer columns={columns} data={userList}/>
             </div>
 
 

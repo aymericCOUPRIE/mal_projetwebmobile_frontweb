@@ -10,3 +10,8 @@ margin-left: 5em;
 #alertSucces{
     padding-top: 4em;
 }
+
+#btndelete{
+    background-color: red;
+    border-color:red;
+}

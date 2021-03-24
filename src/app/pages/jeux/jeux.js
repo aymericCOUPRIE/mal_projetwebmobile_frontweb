@@ -51,7 +51,7 @@ export const Jeux = () => {
         //Récupérer les infos de tous les jeux
         Axios.get("http://localhost:3000/server/Jeux/allDetails")
             .then((res) => {
-                console.log(res.data)
+
                 setListeJeux(res.data)
             });
 
@@ -74,34 +74,34 @@ export const Jeux = () => {
     }, [])
 
 
-    //TODO update Editeur
+    // update Editeur
     const updateEditeurId = (data, value) => {
         Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-editeurId`, {
             editeurId: value,
         })
     }
-    //TODO updtate Type jeu
+    // updtate Type jeu
     const updateGameTypeId = (data, value) => {
         const j_id = data.j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-typeId`, {
             typeId: value,
         })
     }
-    //TODO update ageMin
+    //update ageMin
     const updateageMin = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-ageMin`, {
             ageMin: value,
         })
     }
-    //TODO update joueurs Min
+    // update joueurs Min
     const updatenbjMin = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-nbjMin`, {
             nbjMin: value,
         })
     }
-    //TODO update joueurs Max
+    // update joueurs Max
     const updatenbjMax = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-nbjMax`, {
@@ -109,7 +109,7 @@ export const Jeux = () => {
         })
     }
 
-    //TODO update DUREE
+    // update DUREE
     const updateDuree = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-duree`, {
@@ -117,7 +117,7 @@ export const Jeux = () => {
         })
     }
 
-    //TODO  update NOTICE
+    //  update NOTICE
     const updateNotice = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
         Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-lienNotice`, {
@@ -143,7 +143,7 @@ export const Jeux = () => {
 
 
             Cell: row => {
-                {console.log("DEFAULT bonjour", row.value)}
+
                 return (
                     <div>
                         <Form.Group>
@@ -209,7 +209,7 @@ export const Jeux = () => {
             accessor: "j_nbMaxJoueurs",
             Cell: row => {
                 return (
-                    <Form.Control autoFocus type="number" min="0" defaultValue={row.value}
+                    <Form.Control autoFocus type="number" min={row.row.original.j_nbMinJoueurs} defaultValue={row.value}
                                   onChange={(e) => updatenbjMax(parseInt(row.row.id), row.data, e.target.value)}/>
                 )
             },
