@@ -1,0 +1,12 @@
+#btn-NewUser{
+margin-left: 5em;
+    margin-top: 2em;
+}
+
+#errorLabel{
+    color: red;
+}
+
+#alertSucces{
+    padding-top: 4em;
+}

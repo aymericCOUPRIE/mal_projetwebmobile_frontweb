@@ -73,10 +73,11 @@ const CustomHeader = () => {
                                                     Jeux
                                                 </Nav.Link>
                                                 {isAdmin() ? (
-                                                <Nav.Link id="dropdownItem" href='/register'>
-                                                    <FontAwesomeIcon className="faicon" icon={faUser}/>
-                                                    Créer un nouveau compte
-                                                </Nav.Link>
+                                                        <Nav.Link id="dropdownItem" href='/handle-accounts'>
+                                                            <FontAwesomeIcon className="faicon" icon={faUser}/>
+                                                            Gérer les comptes
+                                                        </Nav.Link>
+
                                                 ) : null}
 
                                             </NavDropdown>

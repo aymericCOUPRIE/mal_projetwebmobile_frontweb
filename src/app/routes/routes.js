@@ -7,11 +7,12 @@ import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 import UpdatePassword from "../pages/update-password/update-password";
 import AfficherSociete from "../pages/societe/AfficherSociete";
-import Register from "../pages/register/register";
+import HandleAccounts from "../pages/handle-accounts/handle-accounts";
 import Festivals from "../pages/festivals/Festivals";
 import TypeJeux from "../pages/type-jeux/type-jeux"
 import {Jeux} from "../pages/jeux/jeux";
 import PrivateRoute from "./privateRoute";
+
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
@@ -25,10 +26,11 @@ function Routes() {
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
                 <PrivateRoute path='/societes' component={AfficherSociete}/>
-                <PrivateRoute path='/register' component={Register}/>
+                <PrivateRoute path='/handle-accounts' component={HandleAccounts}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>
                 <Route path='/jeux' component={Jeux}/>
                 <PrivateRoute path='/type-jeux' component={TypeJeux}/>
+
             </Switch>
 
         </div>
