@@ -6,7 +6,7 @@ import Axios from "axios";
 
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
-import {CardBody, CardText, CardTitle} from "reactstrap";
+import {CardBody, CardLink, CardText, CardTitle} from "reactstrap";
 import {Card, Form} from "react-bootstrap";
 
 const FestivalGames = () => {
@@ -82,6 +82,46 @@ const FestivalGames = () => {
      */
     const detailsGame = (row) =>{
 
+        //attributs à afficher dans détails
+        const suivJ_tombola = row.original.suivi_jeus[0].suivJ_tombola;
+        const suivJ_nbJeuxRecus = row.original.suivi_jeus[0].suivJ_nbJeuxRecus;
+        const suivJ_nbJeuxExposes = row.original.suivi_jeus[0].suivJ_nbJeuxExposes;
+        const suivJ_dotation = row.original.suivi_jeus[0].suivJ_dotation;
+
+
+        const {
+            j_lienNotice,
+            j_ageMin,
+            j_duree,
+            j_nbMaxJoueurs,
+            j_nbMinJoueurs
+        } = row.original;
+        console.log("ROW ORIGINAL",row.original)
+
+        //Display the cards (more details)
+        return(
+            <Card style={{width: '50rem', margin: '0 auto'}}>
+            <CardTitle>
+                <h5>Détails réservation </h5>
+            </CardTitle>
+                <CardText>
+                    <p>Tombola: {`${suivJ_tombola}`}</p>
+                    <p>Dotation: {`${suivJ_dotation}`}</p>
+                    <p>Nombre de jeux reçus: {`${suivJ_nbJeuxRecus}`}</p>
+                    <p>Nombre de jeux exposés: {`${suivJ_nbJeuxExposes}`}</p>
+                </CardText>
+                <CardTitle>
+                   <h5> Détails jeu </h5>
+                </CardTitle>
+                <CardText>
+                    <p>Age minimum: {`${j_ageMin}`}</p>
+                    <p>Nombre de joueurs minimum: {`${j_nbMinJoueurs}`}</p>
+                    <p>Nombre de joueurs maximum: {`${j_nbMaxJoueurs}`}</p>
+                    <p>Durée: {`${j_duree}`}</p>
+                    <CardLink href={j_lienNotice}>Voir les règles du jeu</CardLink>
+                </CardText>
+            </Card>
+        )
     }
 
     return(
