@@ -2,75 +2,75 @@ import {isAdmin} from "../../utils/utils";
 
 import React, {useEffect, useState} from "react";
 import './Festivals.css';
-import Form from "react-bootstrap/Form";
 import FormFestival from './FormFestival';
 import {Container} from "../../components/ModalForm/container";
+import CardFestival from "../../components/festivals/CardFestival";
 import Axios from "axios";
-import {Card} from "react-bootstrap";
-import {CardBody, CardText, CardTitle} from "reactstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTheaterMasks} from "@fortawesome/free-solid-svg-icons";
+import Alert from "react-bootstrap/Alert";
+//const CardFestival = require('')
 
 const Festivals = () => {
 
     const [form, setForm] = useState(false)
-    const [festivals, setListFestivals] = useState([])
+    const [festivals, setListFestivals] = useState([]);
 
+    const [show, setShow] = useState(false)
 
     /**
-     * This method is used to fetch data from DB every time it is been updated
+     * Method which is called at the loading of the page
+     * to show all the festivals
      */
-    /*
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await Axios.get("http://localhost:3000/server/festivals/show");
-            setListFestivals(response.data.res)
-        };
-        fetchData();
-    }, [setListFestivals])
+        Axios.get("http://localhost:3000/server/Festivals/allDetails")
+            .then((res) => {
+                setListFestivals(res.data.allFestivals)
+            });
+    }, []);
 
-    const detailsSociete = (row) => {
-
-        console.log("ROW VALUES", row)
-
-        //Name of the attributes in a festival
-        const {
-            fes_date,
-            fes_nbTables
-        } = row.original;
-
-        //Display the cards (more details)
-        return (
-            <Card style={{width: '50rem', margin: '0 auto'}}>
-                <CardBody>
-                    <CardTitle>
-                        <strong>{`${soc_nom}`} </strong>
-                    </CardTitle>
-                    <CardText>
-                        <strong>Address : </strong>
-                        {`${soc_rue} ${soc_ville} - ${soc_codePostal}`}
-                    </CardText>
-                </CardBody>
-            </Card>
-        );
-    };
-*/
-
+    /**
+     * Method called when the form is validated
+     * @param event
+     */
     const onSubmit = (event) => {
         event.preventDefault(event);
-        //récupérer les valeurs du formulaire
+        //get the information of the form
         Axios.post("http://localhost:3000/server/festivals/add", {
             fes_date: event.target.fes_date.value,
             fes_nbTables: event.target.fes_nbTables.value
         })
             .then((res) => {
-                //faire quelque chose genre message succès
+                // to show the success with an alert
+                setShow(true);
             })
     };
 
     //ATTENTION : faire if  isAdmin la page admin else la page organisateur
     return (
         <>
-            <h1>Festivals</h1>
-            <Container  triggerText="Créer un nouveau festival" onSubmit={onSubmit} component={FormFestival}/>
+            <div>
+                <div id="titlePageFestivals">
+                    <h1>
+                        <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/>
+                        Festivals
+                    </h1>
+
+                </div>
+                <Alert id="alertSucces" variant="success" show={show}>
+                    Le festival a été créé !
+                </Alert>
+                <div id="btnNewFestival">
+                    <Container triggerText="Créer un nouveau festival" onSubmit={onSubmit} component={FormFestival}/>
+                </div>
+                <div className="flex-container">
+                    {festivals.map((fest, i) =>
+                        <div className="flex-item" >
+                            <CardFestival fes={fest}/>
+                        </div>
+                    )}
+                </div>
+            </div>
         </>
     )
 }

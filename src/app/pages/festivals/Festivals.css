@@ -21,3 +21,25 @@
 #alertSucces{
     padding-top: 4em;
 }
+#titlePageFestivals{
+    text-align: center;
+    margin-top: 2em;
+}
+
+#btnNewFestival{
+    margin-left: 5em;
+}
+
+.flex-container {
+    margin-top: 1em;
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.flex-item{
+    text-align: center;
+    margin-top: 2em;
+}
