@@ -46,6 +46,30 @@ const Festivals = () => {
             })
     };
 
+    /**
+     * Method called by the input date to update the date of the festival of the card
+     * @param old_date : the current date
+     * @param new_date : the new date of the festival
+     */
+    const updateDateFestival = async (fes_id, new_date) => {
+        const res = await Axios.put("http://localhost:3000/server/festivals/updateDate", {
+            fes_id: fes_id,
+            new_date: new_date
+        })
+    }
+
+    /**
+     *
+     * @param fes_date
+     * @param new_number
+     */
+    const updateNbTables = (fes_id, new_nbTables) => {
+        Axios.put("http://localhost:3000/server/festivals/updateNbTables", {
+            fes_id : fes_id,
+            new_nbTables : new_nbTables
+        })
+    }
+
     //ATTENTION : faire if  isAdmin la page admin else la page organisateur
     return (
         <>
@@ -66,7 +90,7 @@ const Festivals = () => {
                 <div className="flex-container">
                     {festivals.map((fest, i) =>
                         <div className="flex-item" >
-                            <CardFestival fes={fest}/>
+                            <CardFestival fes={fest} updateDate={updateDateFestival} updateNbTables={updateNbTables}/>
                         </div>
                     )}
                 </div>
