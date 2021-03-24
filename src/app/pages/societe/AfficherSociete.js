@@ -10,6 +10,7 @@ import FormSociete from "./formSociete";
 import './AfficherSociete.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
 
 
 export default function AfficherSociete() {
@@ -19,13 +20,14 @@ export default function AfficherSociete() {
 
 
     const options = [
-        "En discussion",
-        "Présence confirmée",
-        "Présent (liste jeux demandée)",
-        "Présent (liste jeux reçus)",
-        "Absent",
-        "Considéré absent",
-        "Présent via distributeur"
+        {libelle: "En discussion", color: "rgb(204, 255, 51)"},
+        {libelle: "Présence confirmée", color: "rgb(57,171,57)"},
+        {libelle: "Présent (liste jeux demandée)", color: "rgb(57,171,57)"},
+        {libelle: "Présent (liste jeux reçus)", color: "rgb(57,171,57)"},
+        {libelle: "Absent", color: "rgb(200,56,56)"},
+        {libelle: "Considéré absent", color: "rgb(255, 165, 0)"},
+        {libelle: "Présent via distributeur", color: "rgb(57,171,57)"},
+        {libelle: null, color: "default"},
     ]
 
     /**
@@ -34,7 +36,7 @@ export default function AfficherSociete() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await Axios.get("http://localhost:3000/server/societe/affichage");
-            setListSociete(response.data.res)
+            setListSociete(response.data)
         };
         fetchData();
     }, [setListSociete])
@@ -42,7 +44,7 @@ export default function AfficherSociete() {
 
     useEffect(() => {
         Axios.get("http://localhost:3000/server/suiviExposant/getDiscussions", {}).then((response) => {
-            setOptionsDiscussion(response.data.res)
+            setOptionsDiscussion(response.data)
         })
     }, [])
 
@@ -85,9 +87,9 @@ export default function AfficherSociete() {
         })
     }
 
-    const updateStatusFacture = (rowValue, value) => {
+    const updateStatusFacture = (data, value) => {
         Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {
-            res_id: rowValue.res_id, //row id=0 <==> soc_id = 1 --> d'où le +1
+            res_id: data.res_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             res_facture: value //'true' or 'false'
         })
     }
@@ -100,13 +102,17 @@ export default function AfficherSociete() {
     }
 
     const updateStatusWorkflow = (data, value) => {
-        console.log("RETOURNE", data, value)
+        console.log("RETOURNE", value)
         Axios.put("http://localhost:3000/server/suiviExposant/updateWorkflow", {
             suivE_id: data.suivE_id,
             suivD_id: value
         })
     }
-    
+
+    const setAllAbsent = () => {
+
+    }
+
     /**
      * This method is declaring all the columns for the table
      *
@@ -120,7 +126,8 @@ export default function AfficherSociete() {
 
                 Cell: ({row}) => (
                     <span {...row.getToggleRowExpandedProps()}>
-                        {row.isExpanded ? <FontAwesomeIcon className="faiconDetail" icon={faEyeSlash}/> :  <FontAwesomeIcon className="faiconDetail" icon={faInfoCircle}/>}
+                        {row.isExpanded ? <FontAwesomeIcon className="faiconDetail" icon={faEyeSlash}/> :
+                            <FontAwesomeIcon className="faiconDetail" icon={faInfoCircle}/>}
                     </span>
                 ),
             },
@@ -175,12 +182,18 @@ export default function AfficherSociete() {
                     return (
                         <div>
                             <Form.Group>
-                                <Form.Control as="select"
-                                              onChange={(e) => updateStatusWorkflow(row.row.original, e.target.value)}>
+                                <Form.Control
+                                    style={{backgroundColor: options.find(element => element.libelle === row.value).color}}
+                                    as="select"
+                                    onChange={(e) => updateStatusWorkflow(row.row.original, e.target.value)}>
+
                                     {optionsDiscussion.map((object, i) =>
-                                        <option selected={row.value == object.suivD_libelle ? true : false}
+                                        <option selected={row.value === object.suivD_libelle ? true : false}
                                                 value={object.suivD_id}
-                                                key={object.suivD_id}> {object.suivD_libelle}</option>
+                                                style={{backgroundColor: options.find(element => element.libelle === object.suivD_libelle).color}}
+                                                key={object.suivD_id}>
+                                            {object.suivD_libelle}
+                                        </option>
                                     )}
                                 </Form.Control>
                             </Form.Group>
@@ -369,8 +382,12 @@ export default function AfficherSociete() {
      */
     return (
         <div style={{marginTop: `50px`}}>
-            <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
+
             <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
+            <Button onClick={setAllAbsent()}> Mettre tous les exposant absent </Button>
+
+            <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
+
         </div>
     )
 }
