@@ -381,7 +381,7 @@ export default function AfficherSociete() {
      *      {renderRowSubComponent} only if you want the ability to display more details
      */
     return (
-        <div style={{marginTop: `50px`}}>
+        <div style={{marginTop: `50px`}} className="EspaceFooter">
 
             <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
             <Button onClick={setAllAbsent()}> Mettre tous les exposant absent </Button>

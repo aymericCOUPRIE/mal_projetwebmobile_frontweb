@@ -3,6 +3,7 @@ import {faFacebook, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-i
 import {faEnvelope, faMapMarker, faPhone} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../../assets/img/logo.png";
 import React from "react";
+import './CustomFooter.css'
 
 function CustomFooter() {
 

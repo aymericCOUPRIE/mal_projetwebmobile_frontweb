@@ -242,7 +242,7 @@ export const Jeux = () => {
 
 
     return (
-        <>
+        <div className="EspaceFooter">
             <div id="titlePageJeux">
                 <h1>
                     <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
@@ -259,7 +259,7 @@ export const Jeux = () => {
             <div style={{marginTop: `50px`}}>
                 <TableContainer columns={columns} data={listeJeux}/>
             </div>
-        </>
+        </div>
     )
 }
 

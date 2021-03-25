@@ -73,7 +73,7 @@ const Festivals = () => {
     //ATTENTION : faire if  isAdmin la page admin else la page organisateur
     return (
         <>
-            <div>
+            <div className="EspaceFooter">
                 <div id="titlePageFestivals">
                     <h1>
                         <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/>

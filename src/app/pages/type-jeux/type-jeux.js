@@ -58,7 +58,7 @@ const TypeJeu = () => {
     ], [gameTypeList])
 
     return(
-        <>
+        <div className="EspaceFooter">
             <div id="titlePageJeux">
                 <h1>
                     <FontAwesomeIcon className="faicon" icon={faShapes}/>
@@ -73,7 +73,7 @@ const TypeJeu = () => {
             <div style={{marginTop: `50px`}}>
                 <TableContainer columns={columns} data={gameTypeList}/>
             </div>
-        </>
+        </div>
     )
 }
 export default TypeJeu

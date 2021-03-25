@@ -248,9 +248,10 @@ const columns = useMemo(() => [
         }
     },
     {
-        id: "prototype",
+
         Header: "Prototype",
-        accessor: "suivJ_prototype",
+        accessor: d => d.suivJ_prototype != null ? d.suivJ_prototype.toString() : null, //required cast from boolea to string
+
 
         disableSortBy: true,
         Filter: SelectColumnFilter,
@@ -261,7 +262,7 @@ const columns = useMemo(() => [
                 <div style={{'textAlign': 'center'}}>
                     <input
                         type="checkbox"
-                        defaultChecked={row.value}
+                        defaultChecked={row.value === "true"}
                         onChange={(event) => updatePrototype(row.row.original, event.target.checked)}/>
                 </div>
             )
@@ -297,7 +298,8 @@ const columns = useMemo(() => [
 
     {
         Header: "Placé plan",
-        accessor: "suivJ_place",
+        accessor:  d => d.suivJ_place != null ? d.suivJ_place.toString() : null, //required cast from boolea to string
+
 
         disableSortBy: true,
         Filter: SelectColumnFilter,
@@ -308,7 +310,7 @@ const columns = useMemo(() => [
                 <div style={{'textAlign': 'center'}}>
                     <input
                         type="checkbox"
-                        defaultChecked={row.value}
+                        defaultChecked={row.value === "true"}
                         onChange={(event) => updatePlace(row.row.original, event.target.checked)}/>
                 </div>
             )
@@ -460,7 +462,7 @@ const detailsGame = (row) => {
 }
 
 return (
-    <>
+    <div className="EspaceFooter">
         <div id="titlePageJeuxFestival">
             <h1>
                 <FontAwesomeIcon className="faicon" icon={faDice}/>
@@ -470,7 +472,7 @@ return (
         <div style={{marginTop: `50px`}}>
             <TableContainer columns={columns} data={listeJeux} renderRowSubComponent={detailsGame}/>
         </div>
-    </>
+    </div>
 )
 }
 

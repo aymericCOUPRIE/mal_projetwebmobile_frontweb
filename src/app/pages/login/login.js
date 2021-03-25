@@ -67,7 +67,7 @@ const Login = () => {
     }
 
     return (
-        <>
+        <div className="EspaceFooter">
             <img id="logo" src={logo}/>
             <div className="Login">
                 <Form onSubmit={handleSubmit}>
@@ -98,7 +98,7 @@ const Login = () => {
 
                 </Form>
             </div>
-        </>
+        </div>
     );
 }
 

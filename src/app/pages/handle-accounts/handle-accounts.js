@@ -98,7 +98,7 @@ export default function HandleAccounts(){
         ], [userList])
 
     return (
-        <>
+        <div className="EspaceFooter">
             <div id="titlePageJeux">
                 <h1>
                     <FontAwesomeIcon className="faicon" icon={faUser}/>
@@ -122,6 +122,6 @@ export default function HandleAccounts(){
             </div>
 
 
-        </>
+        </div>
     );
 }

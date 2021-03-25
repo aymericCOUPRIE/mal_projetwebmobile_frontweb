@@ -56,7 +56,7 @@ export default function UpdatePassword(){
 
     }
     return(
-        <>
+        <div className="EspaceFooter">
             <Alert id="alertSucces" variant="success" show={show}>
                 Mot de passe modifié avec succès!
             </Alert>
@@ -98,6 +98,6 @@ export default function UpdatePassword(){
                 </Form>
             </div>
 
-        </>
+        </div>
     );
 }
