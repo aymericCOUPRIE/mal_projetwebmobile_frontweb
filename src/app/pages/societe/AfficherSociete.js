@@ -218,7 +218,7 @@ export default function AfficherSociete() {
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value == 1 ? true : false}
-                                onChange={(event) => updateStatusExposant(parseInt(row.row.id), row.data, event.target.checked ? true : false)}
+                                onChange={(event) => updateStatusExposant(parseInt(row.row.id), row.data, event.target.checked)}
                             />
                         </div>)
                 },
