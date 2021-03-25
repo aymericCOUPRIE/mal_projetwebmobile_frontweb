@@ -159,6 +159,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
                     <CustomInput
                         type='select'
                         value={pageSize}
+                        id={"selectionPage"}
                         onChange={onChangeInSelect}
                     >
                         {[10, 20, 30, 40, 50].map((pageSize) => (

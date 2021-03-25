@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 import UpdatePassword from "../pages/update-password/update-password";
-import AfficherSociete from "../pages/societe/AfficherSociete";
+import AfficherExposant from "../pages/societe/AfficherExposant";
 import HandleAccounts from "../pages/handle-accounts/handle-accounts";
 import Festivals from "../pages/festivals/Festivals";
 import TypeJeux from "../pages/type-jeux/type-jeux"
@@ -26,7 +26,7 @@ function Routes() {
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
-                <PrivateRoute path='/societes' component={AfficherSociete}/>
+                <PrivateRoute path='/societes' component={AfficherExposant}/>
                 <PrivateRoute path='/handle-accounts' component={HandleAccounts}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>
                 <Route path='/jeux' component={Jeux}/>
