@@ -87,7 +87,7 @@ const CustomHeader = () => {
                                                     courant:
                                                 </div>
 
-                                                <NavDropdown title={Moment(dateFestivalCourant).format('DD-MM-YYYY')}
+                                                <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
                                                 id="who">
                                                     <Nav.Link id="dropdownItem" href='/festivals'>
                                                         <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>

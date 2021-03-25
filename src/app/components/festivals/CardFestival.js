@@ -31,14 +31,16 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
                     <strong>Festival du {Moment(festivalDate).format('DD/MM/YYYY')}</strong>
                 </CardTitle>
                 <CardText>
-                    <strong>Date </strong>
+                    Date
+
                     <input type={'date'}
                            value={festivalDate}
                             onChange={changeDate}
+
                     />
                 </CardText>
                 <CardText>
-                    <strong>Nombre de tables </strong>
+                  Nombre de tables
                     <NumberFormat
                            value={fes.fes_nbTables}
                            onChange={changeNbTables}

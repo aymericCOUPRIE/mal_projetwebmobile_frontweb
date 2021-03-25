@@ -149,7 +149,7 @@ export const Jeux = () => {
                         <Form.Group>
                             <Form.Control style={{width: 'auto'}} as="select" onChange={(e) => updateEditeurId(row.row.original, e.target.value)}>
                                 {editeursList.map((object, i) =>
-                                    <option selected={row.value == object.soc_nom ? true : false} value={object.soc_id} key={object.soc_id} > {object.soc_nom}</option>
+                                    <option selected={row.value === object.soc_nom} value={object.soc_id} key={object.soc_id} > {object.soc_nom}</option>
                                 )}
                             </Form.Control>
                         </Form.Group>
@@ -174,7 +174,7 @@ export const Jeux = () => {
                         <Form.Group>
                             <Form.Control style={{width: 'auto'}} as="select" onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}>
                                 {gameTypeList.map((object, i) =>
-                                    <option  selected={row.value == object.typJ_libelle ? true : false} value={object.typJ_id} key={object.typJ_id} > {object.typJ_libelle}</option>
+                                    <option selected={row.value === object.typJ_libelle} value={object.typJ_id} key={object.typJ_id} > {object.typJ_libelle}</option>
                                 )}
                             </Form.Control>
                         </Form.Group>
