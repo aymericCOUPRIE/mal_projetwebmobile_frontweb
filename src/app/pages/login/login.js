@@ -57,12 +57,6 @@ const Login = () => {
         });
 
         event.preventDefault();
-        /*
-                if (!history.location.state) {
-                    history.push("/home")
-                } else {
-                    history.push(history.location.from.pathname)
-                }*/
 
     }
 
