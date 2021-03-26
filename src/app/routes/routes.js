@@ -12,7 +12,7 @@ import Festivals from "../pages/festivals/Festivals";
 import TypeJeux from "../pages/type-jeux/type-jeux"
 import {Jeux} from "../pages/jeux/jeux";
 import PrivateRoute from "./privateRoute";
-import FestivalGames from "../pages/festival-games/festval-games";
+import FestivalGames from "../pages/festival-games/festival-games";
 import ExhibitorMonitoring from "../pages/exhibitor-monitoring/exhibitor-monitoring";
 
 // DANS LE SWITCH

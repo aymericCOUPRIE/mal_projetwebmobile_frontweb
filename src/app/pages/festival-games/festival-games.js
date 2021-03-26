@@ -201,6 +201,17 @@ const FestivalGames = () => {
 
 //déclarer toutes les colonnes
     const columns = useMemo(() => {
+       /*
+        const result = [
+
+        ];
+        if(isLogin()) {
+            result.push(
+
+                )
+        }
+
+        */
         return [
             {
                 //This column is used for displaying more/less details
@@ -407,6 +418,7 @@ const FestivalGames = () => {
         //Display the cards (more details)
         return (
             <Card className="CardGames">
+                {isLogin() ?
                 <div className="flex-item">
                     <CardTitle>
                         <h5>Détails réservation </h5>
@@ -447,6 +459,7 @@ const FestivalGames = () => {
                         </p>
                     </CardText>
                 </div>
+                      : null}
                 <div className="flex-item">
                     <CardTitle>
                         <h5> Détails jeu </h5>
@@ -457,6 +470,7 @@ const FestivalGames = () => {
                             <input
                                 type="number"
                                 min="0"
+                                disabled={!isLogin()}
                                 defaultValue={row.original.suivJ_nbJeuxExposes}
                                 onChange={(event) => updateNbJeuxExposes(row.original, event.target.value)}/>
 
@@ -466,6 +480,7 @@ const FestivalGames = () => {
                             <input
                                 type="number"
                                 min="0"
+                                disabled={!isLogin()}
                                 defaultValue={row.original.jeu.j_nbMinJoueurs}
                                 onChange={(event) => updatenbjMin(row.original, event.target.value)}/>
 
@@ -475,6 +490,7 @@ const FestivalGames = () => {
                             <input
                                 type="number"
                                 min={row.original.jeu.j_nbMinJoueurs}
+                                disabled={!isLogin()}
                                 defaultValue={row.original.jeu.j_nbMaxJoueurs}
                                 onChange={(event) => updatenbjMax(row.original, event.target.value)}/>
                         </p>
@@ -482,6 +498,7 @@ const FestivalGames = () => {
                             <label id="checboxCardGames">Durée: </label>
                             <input
                                 type="time"
+                                disabled={!isLogin()}
                                 defaultValue={row.original.jeu.j_duree}
                                 onChange={(event) => updateDuree(row.original, event.target.value)}/>
                         </p>
@@ -491,12 +508,16 @@ const FestivalGames = () => {
                             ) : null}
 
                         </p>
-                        <p><label id="checboxCardGames"> Changer le lien des règles: </label>
+                        {
+                            isLogin() ? <p><label id="checboxCardGames"> Changer le lien des règles: </label>
                             <input
-                                type="url"
-                                defaultValue={row.original.jeu.j_lienNotice}
-                                onChange={(event) => updateNotice(row.original, event.target.value)}/>
-                        </p>
+                            type="url"
+                            defaultValue={row.original.jeu.j_lienNotice}
+                            onChange={(event) => updateNotice(row.original, event.target.value)}/>
+                            </p>
+                                : null
+                        }
+
 
                     </CardText>
                 </div>
