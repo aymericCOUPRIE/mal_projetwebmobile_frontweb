@@ -27,6 +27,7 @@ const FestivalGames = () => {
         Axios.get(`http://localhost:3000/server/jeuxFestival/${localStorage.getItem("currentFestival")}/allDetails`)
             .then((res) => {
                 setListeJeux(res.data)
+                console.log(res.data)
             });
 
     }, []);
@@ -187,6 +188,14 @@ const FestivalGames = () => {
 
         Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-lienNotice`, {
             lienNotice: value,
+        })
+    }
+
+    //update recu
+    const updateRecu = (data, value) => {
+
+        Axios.post(`http://localhost:3000/server/JeuxFestival/update-recu/${data.suivJ_id}`, {
+            suivJ_recu: value,
         })
     }
 
@@ -354,11 +363,22 @@ const FestivalGames = () => {
             },
             {
                 Header: "Reçu ?",
-                accessor: d => d.reservation.res_recu != null ? d.reservation.res_recu.toString() : null, //required cast from boolea to string
+                accessor: d => d.suivJ_recu != null ? d.suivJ_recu.toString() : null, //required cast from boolea to string
 
                 disableSortBy: true,
                 Filter: SelectColumnFilter,
                 filter: 'equals',
+
+                Cell: row => {
+                    return (
+                        <div style={{'textAlign': 'center'}}>
+                            <input
+                                type="checkbox"
+                                defaultChecked={row.value === "true"}
+                                onChange={(event) => updateRecu(row.row.original, event.target.checked)}/>
+                        </div>
+                    )
+                },
             }, {
                 Header: "Dernière modifications",
                 accessor: "suivJ_dateSaisie",
