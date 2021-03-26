@@ -1,13 +1,16 @@
 import React, {useEffect, useMemo, useState} from "react";
 import Axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const ExhibitorMonitoring = () => {
-    const location = useLocation();
+    //const location = useLocation();
 
-    //console.log("LOCATION", location.state)
+   //console.log("LOCATION", location.state)
     //console.log("STATE",location.state.detail)
 
+    const {idExposant} = useParams();
+
+    console.log(idExposant);
 
     return(
         <div className="EspaceFooter">

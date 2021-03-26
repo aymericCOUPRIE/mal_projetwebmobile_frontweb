@@ -58,10 +58,7 @@ const FestivalGames = () => {
     //redirection page suivi éditeur
     const goToExhibitorMonitoring = (soc_id) => {
 
-        history.push({
-            pathname: '/exhibitor-monitoring',
-            state: { detail: soc_id }
-        });
+        history.push('/exhibitor-monitoring/' + soc_id);
 
         window.location.reload(false)
 

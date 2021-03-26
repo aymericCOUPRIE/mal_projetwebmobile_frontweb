@@ -32,8 +32,7 @@ function Routes() {
                 <PrivateRoute path='/jeux' component={Jeux}/>
                 <PrivateRoute path='/type-jeux' component={TypeJeux}/>
                 <Route path='/festival-games' component={FestivalGames}/>
-
-                <PrivateRoute path='/exhibitor-monitoring' component={ExhibitorMonitoring}/>
+                <PrivateRoute path='/exhibitor-monitoring/:idExposant' component={ExhibitorMonitoring}/>
 
             </Switch>
 
