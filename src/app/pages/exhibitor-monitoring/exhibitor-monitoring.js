@@ -8,7 +8,7 @@ import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import FormText from "react-bootstrap/FormText";
+import ListGroup from "react-bootstrap/ListGroup";
 import Alert from "react-bootstrap/Alert";
 
 const ExhibitorMonitoring = () => {
@@ -28,6 +28,10 @@ const ExhibitorMonitoring = () => {
                 setContactList(res.data)
                 setName(res.data.soc_nom)
                 console.log(res.data)
+                res.data.contacts.map((value, index) => {
+                    console.log(value)
+                    return <li>{value}</li>
+                })
             });
 
     }, []);
@@ -43,7 +47,6 @@ const ExhibitorMonitoring = () => {
         Axios.post(`http://localhost:3000/server/societe/${idExposant}/update-name`, {
             name: name,
         }) .then((res) => {
-            console.log(res)
             setShow("true");
         })
     }
@@ -76,7 +79,33 @@ const ExhibitorMonitoring = () => {
                         Contacts
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body>Hello! I'm the body</Card.Body>
+
+                        <Card.Body className="flex-container">
+                            <Card className="flex-item">
+                                <Card.Header >Adresse: {name}</Card.Header >
+                                    <div id="cardContacts">
+                                        <div>{contactList.soc_rue}</div>
+                                        <div> {contactList.soc_codePostal}</div>
+                                        <div> {contactList.soc_ville}</div>
+                                    </div>
+                            </Card>
+
+                            {contactList.contacts.map((value, index) => {
+                                    return (
+                                        <Card className="flex-item">
+                                            <Card.Header >Contact</Card.Header>
+                                            <div id="cardContacts">
+                                                <div>{value.co_prenom}</div>
+                                                <div>{value.co_nom}</div>
+                                            </div>
+                                        </Card>
+                                    )
+                                }
+                            )}
+
+
+
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
 

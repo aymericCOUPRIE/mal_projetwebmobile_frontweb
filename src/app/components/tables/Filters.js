@@ -72,7 +72,7 @@ export const SelectColumnFilter = (
             }}
         >
             <option value=''>Tous</option>
-            {options.map((option) => (
+            {options.map((option, index) => (
                 <option key={option} value={option}> {option} </option>
             ))}
         </CustomInput>
