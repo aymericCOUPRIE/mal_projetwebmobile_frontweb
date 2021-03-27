@@ -14,6 +14,7 @@ import {Jeux} from "../pages/jeux/jeux";
 import PrivateRoute from "./privateRoute";
 import FestivalGames from "../pages/festival-games/festival-games";
 import ExhibitorMonitoring from "../pages/exhibitor-monitoring/exhibitor-monitoring";
+import AfficherSocieteRole from "../pages/societe/AfficherSocieteRole";
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
@@ -26,7 +27,8 @@ function Routes() {
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
-                <PrivateRoute path='/societes' component={AfficherExposant}/>
+                <PrivateRoute path='/exposants' component={AfficherExposant}/>
+                <PrivateRoute path='/societes' component={AfficherSocieteRole}/>
                 <PrivateRoute path='/handle-accounts' component={HandleAccounts}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>
                 <PrivateRoute path='/jeux' component={Jeux}/>

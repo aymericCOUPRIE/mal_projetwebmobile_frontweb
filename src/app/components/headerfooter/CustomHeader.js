@@ -4,7 +4,18 @@ import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-import {faUser, faAddressBook, faCalendarAlt, faDice, faClipboardList,faFileInvoiceDollar, faTh, faShapes, faTheaterMasks, faChessKnight} from "@fortawesome/free-solid-svg-icons";
+import {
+    faUser,
+    faAddressBook,
+    faCalendarAlt,
+    faDice,
+    faClipboardList,
+    faFileInvoiceDollar,
+    faTh,
+    faShapes,
+    faTheaterMasks,
+    faChessKnight
+} from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
 import React, {useEffect, useState} from "react";
 import Axios from "axios";
@@ -61,69 +72,74 @@ const CustomHeader = () => {
                                     <Nav.Link href='/login'>Se connecter</Nav.Link>
                                 </Nav>
                             )}
-                                    {isLogin() ? (
-                                        <Nav>
-                                            <NavDropdown title="Paramètres">
-                                                <Nav.Link id="dropdownItem" href='/type-jeux'>
-                                                    <FontAwesomeIcon className="faicon" icon={faShapes}/>
-                                                    Types de jeux
-                                                </Nav.Link>
-                                                <Nav.Link id="dropdownItem" href='/jeux'>
-                                                    <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
-                                                    Jeux
-                                                </Nav.Link>
-                                                {isAdmin() ? (
-                                                        <Nav.Link id="dropdownItem" href='/handle-accounts'>
-                                                            <FontAwesomeIcon className="faicon" icon={faUser}/>
-                                                            Gérer les comptes
-                                                        </Nav.Link>
+                            {isLogin() ? (
+                                <Nav>
+                                    <NavDropdown title="Paramètres">
+                                        <Nav.Link id="dropdownItem" href='/type-jeux'>
+                                            <FontAwesomeIcon className="faicon" icon={faShapes}/>
+                                            Types de jeux
+                                        </Nav.Link>
+                                        <Nav.Link id="dropdownItem" href='/jeux'>
+                                            <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
+                                            Jeux
+                                        </Nav.Link>
 
-                                                ) : null}
+                                        {isAdmin() ? (
+                                            <Nav.Link id="dropdownItem" href='/handle-accounts'>
+                                                <FontAwesomeIcon className="faicon" icon={faUser}/>
+                                                Gérer les comptes
+                                            </Nav.Link>
 
-                                            </NavDropdown>
-                                            <Nav>
-                                                <div id="fesC">
-                                                    <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/> Festival
-                                                    courant:
-                                                </div>
+                                        ) : null}
 
-                                                <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
-                                                id="who">
-                                                    <Nav.Link id="dropdownItem" href='/festivals'>
-                                                        <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
-                                                        Festivals
-                                                    </Nav.Link>
-                                                </NavDropdown>
-
-                                                <Nav.Link href='/'>
-                                                    <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
-                                                    Reservations
-                                                </Nav.Link>
-                                                {isAdmin() ? (
-                                                <Nav.Link href='/'>
-                                                    <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
-                                                    Facture
-                                                </Nav.Link>
-                                                ) : null}
-                                            </Nav>
-                                        </Nav>
-                                    ) : null }
+                                    </NavDropdown>
                                     <Nav>
-                                        <Nav.Link href='/societes'>
-                                            <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
-                                            Societes
-                                        </Nav.Link>
+                                        <div id="fesC">
+                                            <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/> Festival
+                                            courant:
+                                        </div>
 
-                                        <Nav.Link href='/festival-games'>
-                                            <FontAwesomeIcon className="faicon" icon={faDice}/>
-                                            Jeux festival
-                                        </Nav.Link>
+                                        <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
+                                                     id="who">
+                                            <Nav.Link id="dropdownItem" href='/festivals'>
+                                                <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
+                                                Festivals
+                                            </Nav.Link>
+                                        </NavDropdown>
+
                                         <Nav.Link href='/'>
-                                            <FontAwesomeIcon className="faicon" icon={faTh}/>
-                                            Zones festival
+                                            <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
+                                            Reservations
                                         </Nav.Link>
-
+                                        {isAdmin() ? (
+                                            <Nav.Link href='/'>
+                                                <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
+                                                Facture
+                                            </Nav.Link>
+                                        ) : null}
                                     </Nav>
+                                </Nav>
+                            ) : null}
+                            <Nav>
+                                <Nav.Link href='/exposants'>
+                                    <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                                    Exposants
+                                </Nav.Link>
+
+                                <Nav.Link href='/festival-games'>
+                                    <FontAwesomeIcon className="faicon" icon={faDice}/>
+                                    Jeux festival
+                                </Nav.Link>
+                                <Nav.Link href='/'>
+                                    <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                    Zones festival
+                                </Nav.Link>
+                                <Nav.Link href='/societes'>
+                                    <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                    Societes
+                                </Nav.Link>
+
+                            </Nav>
 
                         </Navbar.Collapse>
                     </Container>
