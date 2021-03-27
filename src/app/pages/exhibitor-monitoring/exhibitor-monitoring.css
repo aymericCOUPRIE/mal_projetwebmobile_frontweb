@@ -1,0 +1,18 @@
+#labelNomExposant{
+    margin-right: 0.5em;
+    margin-left: 2em;
+}
+
+#nomExposant{
+    margin:2em
+}
+
+#validateButton{
+    margin-left: 0.5em;
+    color: #87D300;
+}
+
+#btnCheck{
+    background-color: transparent;
+    border-color: transparent;
+}

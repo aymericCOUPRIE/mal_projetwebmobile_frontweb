@@ -201,18 +201,8 @@ const FestivalGames = () => {
 
 //déclarer toutes les colonnes
     const columns = useMemo(() => {
-       /*
+
         const result = [
-
-        ];
-        if(isLogin()) {
-            result.push(
-
-                )
-        }
-
-        */
-        return [
             {
                 //This column is used for displaying more/less details
                 Header: () => null,
@@ -233,41 +223,27 @@ const FestivalGames = () => {
                 Header: "Éditeur",
                 accessor: "jeu.societe.soc_nom",
 
-                disableSortBy: true,
-                Filter: SelectColumnFilter,
-                filter: 'equals',
 
                 Cell: row => {
 
                     return (
-                        <div>
-                            <Form.Group>
-                                <Form.Control style={{width: 'auto'}} as="select"
-                                              onChange={(e) => updateEditeurId(row.row.original, e.target.value)}>
-                                    {editeursList.map((object, i) =>
-                                        <option selected={row.value === object.soc_nom} value={object.soc_id}
-                                                key={object.soc_id}> {object.soc_nom}</option>
-                                    )}
-                                </Form.Control>
-                            </Form.Group>
-                        </div>
+                        isLogin() ?
+                            <div>
+                                <Form.Group>
+                                    <Form.Control style={{width: 'auto'}} as="select"
+                                                  onChange={(e) => updateEditeurId(row.row.original, e.target.value)}>
+                                        {editeursList.map((object, i) =>
+                                            <option selected={row.value === object.soc_nom} value={object.soc_id}
+                                                    key={object.soc_id}> {object.soc_nom}</option>
+                                        )}
+                                    </Form.Control>
+                                </Form.Group>
+                            </div>
+                            : <p>{row.value}</p>
                     )
                 }
             },
-            {
 
-                Header: "Exposant",
-                accessor: "reservation.societe.soc_nom",
-
-                Cell: row => {
-
-                    return (
-
-                        <a href="#" onClick={() => goToExhibitorMonitoring(row.row.original.reservation.societe.soc_id)}>{row.value}</a>
-
-                    )
-                }
-            },
             {
                 Header: "Type",
                 accessor: "jeu.type_jeu.typJ_libelle",
@@ -278,42 +254,24 @@ const FestivalGames = () => {
 
                 Cell: row => {
                     return (
-                        <div>
-                            <Form.Group>
-                                <Form.Control style={{width: 'auto'}} as="select"
-                                              onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}>
-                                    {gameTypeList.map((object, i) =>
-                                        <option selected={row.value === object.typJ_libelle}
-                                                value={object.typJ_id}
-                                                key={object.typJ_id}> {object.typJ_libelle}</option>
-                                    )}
-                                </Form.Control>
-                            </Form.Group>
-                        </div>
+                        isLogin() ?
+                            <div>
+                                <Form.Group>
+                                    <Form.Control style={{width: 'auto'}} as="select"
+                                                  onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}>
+                                        {gameTypeList.map((object, i) =>
+                                            <option selected={row.value === object.typJ_libelle}
+                                                    value={object.typJ_id}
+                                                    key={object.typJ_id}> {object.typJ_libelle}</option>
+                                        )}
+                                    </Form.Control>
+                                </Form.Group>
+                            </div>
+                            : <p>{row.value}</p>
                     )
                 }
             },
-            {
 
-                Header: "Prototype",
-                accessor: d => d.suivJ_prototype != null ? d.suivJ_prototype.toString() : null, //required cast from boolea to string
-
-
-                disableSortBy: true,
-                Filter: SelectColumnFilter,
-                filter: 'equals',
-
-                Cell: row => {
-                    return (
-                        <div style={{'textAlign': 'center'}}>
-                            <input
-                                type="checkbox"
-                                defaultChecked={row.value === "true"}
-                                onChange={(event) => updatePrototype(row.row.original, event.target.checked)}/>
-                        </div>
-                    )
-                },
-            },
             {
                 Header: "Zone",
                 accessor: "zone.zo_libelle",
@@ -326,85 +284,130 @@ const FestivalGames = () => {
                 Cell: row => {
 
                     return (
-                        <div>
-                            <Form.Group>
-                                <Form.Control style={{width: 'auto'}} as="select"
-                                              onChange={(e) => updateZone(row.row.original, e.target.value)}>
-                                    {zoneList.map((object, i) =>
-                                        <option selected={row.value === object.zo_libelle} value={object.zo_id}
-                                                key={object.zo_id}> {object.zo_libelle}</option>
-                                    )}
-                                </Form.Control>
-                            </Form.Group>
-                        </div>
+                        isLogin() ?
+                            <div>
+                                <Form.Group>
+                                    <Form.Control style={{width: 'auto'}} as="select"
+                                                  onChange={(e) => updateZone(row.row.original, e.target.value)}>
+                                        {zoneList.map((object, i) =>
+                                            <option selected={row.value === object.zo_libelle} value={object.zo_id}
+                                                    key={object.zo_id}> {object.zo_libelle}</option>
+                                        )}
+                                    </Form.Control>
+                                </Form.Group>
+                            </div>
+                            :  <p>{row.value}</p>
                     )
                 }
 
             },
 
-            {
-                Header: "Placé plan",
-                accessor: d => d.suivJ_place != null ? d.suivJ_place.toString() : null, //required cast from boolea to string
-
-
-                disableSortBy: true,
-                Filter: SelectColumnFilter,
-                filter: 'equals',
-
-                Cell: row => {
-                    return (
-                        <div style={{'textAlign': 'center'}}>
-                            <input
-                                type="checkbox"
-                                defaultChecked={row.value === "true"}
-                                onChange={(event) => updatePlace(row.row.original, event.target.checked)}/>
-                        </div>
-                    )
-                },
-            },
-
-
-            {
-                Header: "Envoie ?",
-                accessor: d => d.reservation.res_envoiDebut != null ? d.reservation.res_envoiDebut.toString() : null, //required cast from boolea to string
-
-                disableSortBy: true,
-                Filter: SelectColumnFilter,
-                filter: 'equals',
-            },
-            {
-                Header: "Reçu ?",
-                accessor: d => d.suivJ_recu != null ? d.suivJ_recu.toString() : null, //required cast from boolea to string
-
-                disableSortBy: true,
-                Filter: SelectColumnFilter,
-                filter: 'equals',
-
-                Cell: row => {
-                    return (
-                        <div style={{'textAlign': 'center'}}>
-                            <input
-                                type="checkbox"
-                                defaultChecked={row.value === "true"}
-                                onChange={(event) => updateRecu(row.row.original, event.target.checked)}/>
-                        </div>
-                    )
-                },
-            }, {
-                Header: "Dernière modifications",
-                accessor: "suivJ_dateSaisie",
-
-                Cell: row => {
-                    return (
-                        <div>
-                            {Moment(row.row.original.suivJ_dateSaisie).format('DD/MM/YYYY')}
-                        </div>
-                    )
-                },
-            }
-
 
         ];
+
+        if(isLogin()) {
+            result.push(
+                {
+
+                    Header: "Exposant",
+                    accessor: "reservation.societe.soc_nom",
+
+                    Cell: row => {
+
+                        return (
+
+                            <a href="#" onClick={() => goToExhibitorMonitoring(row.row.original.reservation.societe.soc_id)}>{row.value}</a>
+
+                        )
+                    }
+                },
+                {
+
+                    Header: "Prototype",
+                    accessor: d => d.suivJ_prototype != null ? d.suivJ_prototype.toString() : null, //required cast from boolea to string
+
+
+                    disableSortBy: true,
+                    Filter: SelectColumnFilter,
+                    filter: 'equals',
+
+                    Cell: row => {
+                        return (
+                            <div style={{'textAlign': 'center'}}>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.value === "true"}
+                                    onChange={(event) => updatePrototype(row.row.original, event.target.checked)}/>
+                            </div>
+                        )
+                    },
+                },
+                {
+                    Header: "Placé plan",
+                    accessor: d => d.suivJ_place != null ? d.suivJ_place.toString() : null, //required cast from boolea to string
+
+
+                    disableSortBy: true,
+                    Filter: SelectColumnFilter,
+                    filter: 'equals',
+
+                    Cell: row => {
+                        return (
+                            <div style={{'textAlign': 'center'}}>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.value === "true"}
+                                    onChange={(event) => updatePlace(row.row.original, event.target.checked)}/>
+                            </div>
+                        )
+                    },
+                },
+
+
+                {
+                    Header: "Envoie ?",
+                    accessor: d => d.reservation.res_envoiDebut != null ? d.reservation.res_envoiDebut.toString() : null, //required cast from boolea to string
+
+                    disableSortBy: true,
+                    Filter: SelectColumnFilter,
+                    filter: 'equals',
+                },
+                {
+                    Header: "Reçu ?",
+                    accessor: d => d.suivJ_recu != null ? d.suivJ_recu.toString() : null, //required cast from boolea to string
+
+                    disableSortBy: true,
+                    Filter: SelectColumnFilter,
+                    filter: 'equals',
+
+                    Cell: row => {
+                        return (
+                            <div style={{'textAlign': 'center'}}>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.value === "true"}
+                                    onChange={(event) => updateRecu(row.row.original, event.target.checked)}/>
+                            </div>
+                        )
+                    },
+                }, {
+                    Header: "Dernière modifications",
+                    accessor: "suivJ_dateSaisie",
+
+                    Cell: row => {
+                        return (
+                            <div>
+                                {Moment(row.row.original.suivJ_dateSaisie).format('DD/MM/YYYY')}
+                            </div>
+                        )
+                    },
+                }
+
+
+            )
+        }
+        return result
+
     }, [listeJeux, editeursList, zoneList])
 
     /**
@@ -453,7 +456,7 @@ const FestivalGames = () => {
                             <input
                                 type="number"
                                 min="0"
-                                defaultValue={row.original.jeu.j_ageMin}
+                                defaultValue={row.original.suivJ_nbJeuxExposes}
                                 onChange={(event) => updateageMin(row.original, event.target.value)}/>
 
                         </p>
@@ -467,40 +470,43 @@ const FestivalGames = () => {
                     <CardText>
                         <p>
                             <label id="checboxCardGames">Age minimum:</label>
+                            {isLogin() ?
                             <input
                                 type="number"
                                 min="0"
-                                disabled={!isLogin()}
-                                defaultValue={row.original.suivJ_nbJeuxExposes}
+                                defaultValue={row.original.jeu.j_ageMin}
                                 onChange={(event) => updateNbJeuxExposes(row.original, event.target.value)}/>
-
+                                : row.original.jeu.j_ageMin}
+                                an(s)
                         </p>
                         <p>
                             <label id="checboxCardGames">Nombre de joueurs minimum: </label>
+                            {isLogin() ?
                             <input
                                 type="number"
                                 min="0"
-                                disabled={!isLogin()}
                                 defaultValue={row.original.jeu.j_nbMinJoueurs}
                                 onChange={(event) => updatenbjMin(row.original, event.target.value)}/>
-
+                                : row.original.jeu.j_nbMinJoueurs }
                         </p>
                         <p>
                             <label id="checboxCardGames"> Nombre de joueurs maximum: </label>
+                            {isLogin() ?
                             <input
                                 type="number"
                                 min={row.original.jeu.j_nbMinJoueurs}
-                                disabled={!isLogin()}
                                 defaultValue={row.original.jeu.j_nbMaxJoueurs}
                                 onChange={(event) => updatenbjMax(row.original, event.target.value)}/>
+                                : row.original.jeu.j_nbMaxJoueurs}
                         </p>
                         <p>
                             <label id="checboxCardGames">Durée: </label>
+                            {isLogin() ?
                             <input
                                 type="time"
-                                disabled={!isLogin()}
                                 defaultValue={row.original.jeu.j_duree}
                                 onChange={(event) => updateDuree(row.original, event.target.value)}/>
+                                : row.original.jeu.j_duree}
                         </p>
                         <p>
                             {row.original.jeu.j_lienNotice !== "'NULL'" ? (
