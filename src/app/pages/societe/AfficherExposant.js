@@ -78,6 +78,7 @@ export default function AfficherExposant() {
             suivE_id: data.suivE_id,
             suivD_id: value
         })
+        window.location.reload()
     }
 
     const setAllAbsent = () => {
