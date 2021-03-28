@@ -182,8 +182,9 @@ export default function AfficherSocieteRole() {
      */
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
-            <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
-{/*
+            {/*
+           <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
+
             <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
 */}
 

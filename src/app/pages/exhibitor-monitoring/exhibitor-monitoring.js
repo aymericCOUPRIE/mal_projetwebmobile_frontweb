@@ -8,9 +8,8 @@ import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
 import Alert from "react-bootstrap/Alert";
-import {CardText} from "reactstrap";
+import CardContact from "../../components/contact/CardContact";
 
 const ExhibitorMonitoring = () => {
 
@@ -161,12 +160,14 @@ const ExhibitorMonitoring = () => {
                                                 <div>{value.co_mail}</div>
                                                 <div>{value.co_telFixe}</div>
                                                 <div>{value.co_telPortable}</div>
+                                                <div>{value.co_rue}</div>
+                                                <div> {value.co_codePostal}{value.co_ville}{value.co_pays}</div>
+
                                             </div>
                                         </Card>
                                     )
                                 }
                             )}
-
 
                         </Card.Body>
                     </Accordion.Collapse>
