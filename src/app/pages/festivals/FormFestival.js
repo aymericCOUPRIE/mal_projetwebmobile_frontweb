@@ -6,24 +6,25 @@ import {Input} from "reactstrap";
 import Button from "react-bootstrap/Button";
 
 import './FormFestival.css';
+import FormLocalisation from "../../components/festivals/FormLocalisation";
+import Axios from "axios";
 
 
 const FormFestival = ({onSubmit}) => {
 
     const [fes_date, setDate] = useState("");
     const [fes_nbTables, setNbTables] = useState(0);
+    const [festival, setFestival] = useState();
     const [errortext, setErrortext] = useState("");
 
-    const [show, setShow] = useState(false);
+    const [showFestival, setShowFestival] = useState(false);
 
     function validateForm() {
-        console.log("dateeee : ",fes_date);
         return fes_date.length > 0;
     }
 
-/*
-    function onSubmit(event) {
-        setErrortext("")
+    /*
+    function submitFestival(event) {
         //variable to send in json format
         let dataToSend = JSON.stringify({
             fes_date,
@@ -45,22 +46,18 @@ const FormFestival = ({onSubmit}) => {
                     if (resJson.success) {
                         //afficher message de réussite
                         console.log("festival créé")
-                        setShow(true)
+                        setShowFestival(true)
                     } else {
                         setErrortext(resJson.error);
                     }
                 })
             }
         });
-        event.preventDefault();
     }
 */
 
     return (
         <div>
-            <Alert id="alertSucces" variant="success" show={show}>
-                Festival créé avec succès!
-            </Alert>
             <div className="CreateFestival">
                 <Form onSubmit={onSubmit}>
                     {errortext !== "" ? (
@@ -68,7 +65,7 @@ const FormFestival = ({onSubmit}) => {
                     ) : null}
                     <h4 id="titleFestivalForm">Création d'un festival</h4>
                     <Form.Group size="lg" controlId="fes_date">
-                        <Form.Label>Date du festival*</Form.Label>
+                        <Form.Label>Date du festival *</Form.Label>
                         <Form.Control
                             autoFocus
                             type="date"
@@ -77,9 +74,9 @@ const FormFestival = ({onSubmit}) => {
                         />
                     </Form.Group>
                     <Form.Group size="lg" controlId="fes_nbTables">
-                        <Form.Label>Nombre de tables total</Form.Label>
+                        <Form.Label>Nombre de tables total </Form.Label>
                         <Form.Control
-                            type="nbTables"
+                            type="text"
                             min="0"
                             value={fes_nbTables}
                             onChange={(e) => setNbTables(e.target.value)}

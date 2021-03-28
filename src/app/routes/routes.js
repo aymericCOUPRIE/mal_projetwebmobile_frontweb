@@ -15,6 +15,7 @@ import PrivateRoute from "./privateRoute";
 import FestivalGames from "../pages/festival-games/festival-games";
 import ExhibitorMonitoring from "../pages/exhibitor-monitoring/exhibitor-monitoring";
 import AfficherSocieteRole from "../pages/societe/AfficherSocieteRole";
+import FormLocalisation from "../components/festivals/FormLocalisation";
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
@@ -32,6 +33,7 @@ function Routes() {
                 <PrivateRoute path='/societes' component={AfficherSocieteRole}/>
                 <PrivateRoute path='/handle-accounts' component={HandleAccounts}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>
+                <PrivateRoute path='/localisation' component={FormLocalisation}/>
                 <PrivateRoute path='/jeux' component={Jeux}/>
                 <PrivateRoute path='/type-jeux' component={TypeJeux}/>
                 <PrivateRoute path='/exhibitor-monitoring/:idExposant' component={ExhibitorMonitoring}/>
