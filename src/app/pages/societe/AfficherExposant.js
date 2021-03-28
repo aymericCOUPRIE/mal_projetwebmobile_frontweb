@@ -28,18 +28,8 @@ export default function AfficherExposant() {
         {id: 4, libelle: "Présent (liste jeux demandée)", color: "rgb(57,171,57)"},
         {id: 5, libelle: "Considéré absent", color: "rgb(255, 165, 0)"},
         {id: 6, libelle: "Présent via distributeur", color: "rgb(57,171,57)"},
-        {id: 6, libelle: "Présent (liste jeux reçus)", color: "rgb(57,171,57)"},
-        {id: 7, libelle: null, color: "default"},
+        {id: 7, libelle: "Présent (liste jeux reçus)", color: "rgb(57,171,57)"},
     ]
-
-
-    useEffect(() => {
-        Axios.get("http://localhost:3000/server/suiviExposant/getDiscussions")
-            .then((response) => {
-                setOptionsDiscussion(response.data)
-                console.log("DISC", response.data)
-            });
-    }, [])
 
 
     useEffect(() => {
@@ -48,6 +38,14 @@ export default function AfficherExposant() {
                 setListSociete(response.data[0].societes)
                 console.log(response.data[0].societes)
             })
+    }, [])
+
+    useEffect(() => {
+        Axios.get("http://localhost:3000/server/suiviExposant/getDiscussions")
+            .then((response) => {
+                setOptionsDiscussion(response.data)
+                console.log("DISC", response.data)
+            });
     }, [])
 
 
@@ -126,7 +124,7 @@ export default function AfficherExposant() {
                 }
             },
 
-          /* {
+            {
                 Header: "WorkFlow",
                 accessor: d => d.suivi_exposants.length == 0 ? null : d.suivi_exposants[0].suivD_id.toString(), //required cast from boolean to string
 
@@ -137,9 +135,12 @@ export default function AfficherExposant() {
                 Cell: row => {
                     return (
                         <div>
+                            {
+                                console.log("ROW VALUE", row.value)
+                            }
                             <Form.Control as={"select"}
                                           onChange={(e) => updateStatusWorkflow(row.row.original.suivi_exposants[0], e.target.value)}
-                                          style={{backgroundColor: options.find(element => element.id === parseInt(row.value)).color}}>
+                                          style={{backgroundColor: row.value ==  null ? 'default' : options.find(element => element.id === parseInt(row.value)).color}}>
                                 {
                                     optionsDiscussion.map((option) =>
                                         <option value={option.suivD_id}
@@ -155,12 +156,12 @@ export default function AfficherExposant() {
                     )
                 }
 
-            },*/
-          /*  {
+            },
+            {
                 id: "espaceQte",
                 Header: "Tables",
                 accessor: d => d.reservations.length == 0 ? "NULL" : String(`${d.reservations[0].espace.esp_qte}` + ' ' + `${d.reservations[0].espace.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
-            },*/
+            },
             {
                 id: "benevoles",
                 Header: "Bénévoles",
@@ -176,6 +177,7 @@ export default function AfficherExposant() {
                         <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
+                                disabled={row.value == null}
                                 defaultChecked={(row.value == null || row.value == 'false') ? false : true}
                                 onChange={(event) => updateStatusBenevole(row.row.original.suivi_exposants[0], event.target.checked ? 1 : 0)}
                             />
@@ -352,11 +354,8 @@ export default function AfficherExposant() {
      */
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
-
             <Button onClick={setAllAbsent}> Mettre tous les exposant absent </Button>
-
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsExposant}/>
-
         </div>
     )
 }
