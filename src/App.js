@@ -10,11 +10,9 @@ function App() {
 
     return (
         <div className="App">
-
-            <CustomHeader/>
-            <Routes/>
-            <CustomFooter/>
-
+                <CustomHeader/>
+                <Routes/>
+                <CustomFooter/>
         </div>
     );
 

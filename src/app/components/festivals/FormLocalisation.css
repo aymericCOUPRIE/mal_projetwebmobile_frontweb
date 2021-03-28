@@ -1,14 +1,11 @@
-.card {
-    background-color: #f1f1f1;
+.cardLocalisation {
+    background-color: #002065;
+    color: white;
     width: 100%;
     border-radius: 0.6em;
     margin: 1em;
     overflow: hidden;
     cursor: pointer;
     transition: all ease 200ms;
-}
-
-.inputCss {
-    margin-left: 0.5em;
 }
 

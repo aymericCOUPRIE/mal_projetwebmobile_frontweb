@@ -89,7 +89,7 @@ const Festivals = () => {
                 </div>
                 <div className="flex-container">
                     {festivals.map((fest, i) =>
-                        <div className="flex-item" >
+                        <div id={fest} className="flex-item" >
                             <CardFestival fes={fest} updateDate={updateDateFestival} updateNbTables={updateNbTables}/>
                         </div>
                     )}
