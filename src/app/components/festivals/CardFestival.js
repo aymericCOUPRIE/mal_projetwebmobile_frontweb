@@ -1,21 +1,30 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
 import Card from "@material-ui/core/Card";
 import {CardBody, CardText, CardTitle} from "reactstrap";
-import CardAction from '@material-ui/core/CardActions';
 import Axios from "axios";
 import NumberFormat from 'react-number-format';
 import Moment from "moment";
-import Button from "react-bootstrap/Button";
 import FormLocalisation from "./FormLocalisation";
 import {Container} from "../ModalForm/container";
 import "./CardFestival.css";
 import Alert from "react-bootstrap/Alert";
+import SimpleTableContainer from "../../components/tables/SimpleTableContainer";
+import Form from "react-bootstrap/Form";
+
 
 const CardFestival = ({fes, updateDate, updateNbTables}) => {
 
     const [festivalDate, setDate] = useState(fes.fes_date)
     const [localisationList, setLocalList] = useState([])
     const [show, setShow] = useState(false) // for the form of the localisation
+
+    useEffect(() => {
+        // Get details for the festivals
+        Axios.get(`http://localhost:3000/server/localisation/allDetails/${fes.fes_id}`)
+            .then((res) => {
+                setLocalList(res.data)
+            })
+    }, []);
 
     const changeDate = event => {
         updateDate(fes.fes_id, event.target.value) // update in the database
@@ -44,11 +53,76 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
                 // to show the success with an alert
                 setShow(true);
             })
-    };
+    }
+
+    /**
+     * Method to update the unit price of the table
+     * @param rowIndex
+     * @param data
+     * @param value
+     */
+    function updatePriceTable(rowIndex, data, value) {
+        const loc_id = data[rowIndex].loc_id;
+        Axios.put("http://localhost:3000/server/localisation/updatePriceTable/", {
+            loc_id : loc_id,
+            new_priceTable : value
+        });
+    }
+
+    /**
+     * Method to update the price of m²
+     * @param rowIndex
+     * @param data
+     * @param value
+     */
+    function updatePriceM2(rowIndex, data, value) {
+        const loc_id = data[rowIndex].loc_id;
+        Axios.put("http://localhost:3000/server/localisation/updatePriceM2/", {
+            loc_id : loc_id,
+            new_priceM2 : value
+        });
+    }
+
+    const columns = useMemo(() => [
+        {
+            Header: "Nom",
+            accessor: "loc_libelle"
+        }, {
+            Header: "Prix table",
+            accessor: "loc_prixTable",
+            Cell: row => {
+                return (
+                    <Form.Control
+                        autoFocus
+                        type="text"
+                        min="0"
+                        defaultValue={row.value}
+                        onChange={(e) => updatePriceTable(row.row.id, row.data, e.target.value)}
+                    />
+                )
+            }
+        }, {
+            Header: "Prix m²",
+            accessor: "loc_prixM2",
+            Cell: row => {
+                return (
+                    <Form.Control
+                        autoFocus
+                        type="text"
+                        min="0"
+                        defaultValue={row.value}
+                        onChange={(e) => updatePriceM2(row.row.id, row.data, e.target.value)}
+                    />
+                )
+            }
+        }
+    ], [localisationList])
+
+
 
     return (
         <div>
-            <Alert id="alertSuccesLoc" variant="success" show={show}>
+            <Alert id="alertSucces" variant="success" show={show}>
                 Espace créé avec succès!
             </Alert>
             <Card className="card">
@@ -73,16 +147,15 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
                             onChange={changeNbTables}
                         />
                     </CardText>
-
-                    <CardAction>
-                        <Container triggerText="Créer un nouvel espace" onSubmit={onSubmitLocalisation} component={FormLocalisation}/>
-                    </CardAction>
+                    <div className="tableLocalisation">
+                        <SimpleTableContainer columns={columns} data={localisationList}/>
+                    </div>
+                    <Container triggerText="Créer un nouvel espace" onSubmit={onSubmitLocalisation}
+                               component={FormLocalisation}/>
                 </CardBody>
             </Card>
         </div>
     );
 }
-
-// <FormLocalisation show={show} />
 
 export default CardFestival;
