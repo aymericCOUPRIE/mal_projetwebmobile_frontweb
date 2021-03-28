@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Alert from "react-bootstrap/Alert";
+import {CardText} from "reactstrap";
 
 const ExhibitorMonitoring = () => {
 
@@ -17,8 +18,13 @@ const ExhibitorMonitoring = () => {
 
     console.log(idExposant);
     const [contactList, setContactList] = useState([]);
-    const [name,setName] = useState("");
+    const [name, setName] = useState("");
     const [show, setShow] = useState(false);
+    const [showAdress, setShowAdress] = useState(false);
+    const [soc_ville, setSoc_ville] = useState("");
+    const [soc_rue, setSoc_rue] = useState("");
+    const [soc_codePostal, setSoc_codePostal] = useState("");
+    const [soc_pays, setSoc_pays] = useState("");
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
@@ -27,17 +33,23 @@ const ExhibitorMonitoring = () => {
             .then((res) => {
                 setContactList(res.data)
                 setName(res.data.soc_nom)
+
+                setSoc_rue(res.data.soc_rue)
+                setSoc_ville(res.data.soc_ville)
+                setSoc_codePostal(res.data.soc_codePostal)
+                setSoc_pays(res.data.soc_pays)
                 console.log(res.data)
-                res.data.contacts.map((value, index) => {
-                    console.log(value)
-                    return <li>{value}</li>
-                })
+
             });
 
     }, []);
 
     function validateForm() {
-        return name.length > 0 ;
+        return name.length > 0;
+    }
+
+    function validateFormAdress() {
+        return soc_ville.length > 0 && soc_rue.length > 0 && soc_codePostal.length > 0 && soc_pays.length > 0
     }
 
     //changer le nom
@@ -46,8 +58,22 @@ const ExhibitorMonitoring = () => {
 
         Axios.post(`http://localhost:3000/server/societe/${idExposant}/update-name`, {
             name: name,
-        }) .then((res) => {
+        }).then((res) => {
             setShow("true");
+        })
+    }
+
+    //changer adresse exposant
+    const updateAdress = (event) => {
+        event.preventDefault()
+
+        Axios.post(`http://localhost:3000/server/societe/${idExposant}/update-adress`, {
+            soc_ville: soc_ville,
+            soc_rue: soc_rue,
+            soc_codePostal: soc_codePostal,
+            soc_pays: soc_pays
+        }).then((res) => {
+            setShowAdress("true");
         })
     }
 
@@ -59,19 +85,24 @@ const ExhibitorMonitoring = () => {
                 </h1>
             </div>
 
-            <Form onSubmit={updateNom}  id="nomExposant">
+            <Form onSubmit={updateNom} id="nomExposant">
 
-                    <label id="labelNomExposant">Changer le nom: </label>
-                    <input value={name} onChange={(e) => {setName(e.target.value); setShow(false)}}/>
-                     <Button type="submit" id="btnCheck" disabled={!validateForm()}>
-                         <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle} />
-                     </Button>
+                <label id="labelNomExposant">Changer le nom: </label>
+                <input value={name} onChange={(e) => {
+                    setName(e.target.value);
+                    setShow(false)
+                }}/>
+                <Button type="submit" id="btnCheck" disabled={!validateForm()}>
+                    <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle}/>
+                </Button>
 
                 <Alert id="alertSucces" variant="success" show={show}>
-                   Nom modifié !
+                    Nom modifié !
                 </Alert>
             </Form>
-
+            <Alert id="alertSucces" variant="success" show={showAdress}>
+                Adresse modifiée !
+            </Alert>
 
             <Accordion>
                 <Card>
@@ -80,29 +111,61 @@ const ExhibitorMonitoring = () => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
 
-                        <Card.Body className="flex-container">
+                        <Card.Body className="flex-container-Contacts">
                             <Card className="flex-item">
-                                <Card.Header >Adresse: {name}</Card.Header >
-                                    <div id="cardContacts">
-                                        <div>{contactList.soc_rue}</div>
-                                        <div> {contactList.soc_codePostal}</div>
-                                        <div> {contactList.soc_ville}</div>
-                                    </div>
+
+                                <Card.Header>Adresse: {name}</Card.Header>
+                                <div id="cardContacts">
+                                    <Form onSubmit={updateAdress}>
+                                        <div>
+                                            <input id="expoAdress" value={soc_rue} onChange={(e) => {
+                                                setSoc_rue(e.target.value);
+                                                setShowAdress(false)
+                                            }}/>
+
+                                        </div>
+                                        <div>
+                                            <input id="expoAdress" value={soc_codePostal}
+                                                   onChange={(e) => setSoc_codePostal(e.target.value)}/>
+
+                                        </div>
+
+                                        <div>
+                                            <input id="expoAdress" value={soc_ville}
+                                                   onChange={(e) => setSoc_ville(e.target.value)}/>
+
+                                        </div>
+                                       <div>
+                                           <input id="expoAdress" value={soc_pays}
+                                                  onChange={(e) => setSoc_pays(e.target.value)}/>
+
+                                       </div>
+
+                                        <Button type="submit" id="btnCheck" disabled={!validateFormAdress()}>
+                                            <FontAwesomeIcon className="faicon" id="validateButton"
+                                                             icon={faCheckCircle}/>
+                                        </Button>
+                                    </Form>
+                                </div>
                             </Card>
 
                             {contactList.contacts.map((value, index) => {
                                     return (
                                         <Card className="flex-item">
-                                            <Card.Header >Contact</Card.Header>
-                                            <div id="cardContacts">
+                                            <Card.Header
+                                                style={{"background-color": value.co_principal ? "#E74C3C " : "default"}}>Contact</Card.Header>
+                                            <div id="cardContacts"
+                                                 style={{"background-color": value.co_principal ? "#EC7063" : "default"}}>
                                                 <div>{value.co_prenom}</div>
                                                 <div>{value.co_nom}</div>
+                                                <div>{value.co_mail}</div>
+                                                <div>{value.co_telFixe}</div>
+                                                <div>{value.co_telPortable}</div>
                                             </div>
                                         </Card>
                                     )
                                 }
                             )}
-
 
 
                         </Card.Body>
@@ -120,7 +183,7 @@ const ExhibitorMonitoring = () => {
 
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="2">
-                       Réservation
+                        Réservation
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="2">
                         <Card.Body>Hello! I'm another body</Card.Body>
