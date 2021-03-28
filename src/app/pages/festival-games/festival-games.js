@@ -199,6 +199,28 @@ const FestivalGames = () => {
         })
     }
 
+    //update a renvoyer
+    const updateARenvoyer = (data, value) => {
+
+        Axios.post(`http://localhost:3000/server/JeuxFestival/update-aRenvoyer/${data.suivJ_id}`, {
+            suivJ_aRenvoyer: value,
+        })
+            .then((res) => {
+                console.log(res)
+            })
+    }
+
+    //update renvoyé
+    const updateRenvoye = (data, value) => {
+
+        Axios.post(`http://localhost:3000/server/JeuxFestival/update-renvoye/${data.suivJ_id}`, {
+            suivJ_renvoye: value,
+        })
+            .then((res) => {
+                console.log(res)
+            })
+    }
+
 //déclarer toutes les colonnes
     const columns = useMemo(() => {
 
@@ -390,7 +412,46 @@ const FestivalGames = () => {
                             </div>
                         )
                     },
-                }, {
+                },
+                {
+                    Header: "A renvoyer ?",
+                    accessor: d => d.suivJ_aRenvoyer != null ? d.suivJ_aRenvoyer.toString() : null, //required cast from boolea to string
+
+                    disableSortBy: true,
+                    Filter: SelectColumnFilter,
+                    filter: 'equals',
+
+                    Cell: row => {
+                        return (
+                            <div style={{'textAlign': 'center'}}>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.value === "true"}
+                                    onChange={(event) => updateARenvoyer(row.row.original, event.target.checked)}/>
+                            </div>
+                        )
+                    },
+                },
+                {
+                    Header: "Renvoyé ?",
+                    accessor: d => d.suivJ_renvoye != null ? d.suivJ_renvoye.toString() : null, //required cast from boolea to string
+
+                    disableSortBy: true,
+                    Filter: SelectColumnFilter,
+                    filter: 'equals',
+
+                    Cell: row => {
+                        return (
+                            <div style={{'textAlign': 'center'}}>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.value === "true"}
+                                    onChange={(event) => updateRenvoye(row.row.original, event.target.checked)}/>
+                            </div>
+                        )
+                    },
+                },
+                {
                     Header: "Dernière modifications",
                     accessor: "suivJ_dateSaisie",
 
