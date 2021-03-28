@@ -126,7 +126,7 @@ export default function AfficherExposant() {
                 }
             },
 
-           {
+          /* {
                 Header: "WorkFlow",
                 accessor: d => d.suivi_exposants.length == 0 ? null : d.suivi_exposants[0].suivD_id.toString(), //required cast from boolean to string
 
@@ -155,12 +155,12 @@ export default function AfficherExposant() {
                     )
                 }
 
-            },
-            {
+            },*/
+          /*  {
                 id: "espaceQte",
                 Header: "Tables",
                 accessor: d => d.reservations.length == 0 ? "NULL" : String(`${d.reservations[0].espace.esp_qte}` + ' ' + `${d.reservations[0].espace.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
-            },
+            },*/
             {
                 id: "benevoles",
                 Header: "Bénévoles",
