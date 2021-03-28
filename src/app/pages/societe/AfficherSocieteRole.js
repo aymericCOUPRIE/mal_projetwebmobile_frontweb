@@ -2,14 +2,12 @@ import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
-import {CardBody, CardText, CardTitle} from "reactstrap";
-import {Card, Form} from "react-bootstrap";
-import {Container} from "../../components/ModalForm/container";
-import FormSociete from "./formSociete";
+
 import './AfficherSociete.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
-import Button from "react-bootstrap/Button";
+import {Container} from "../../components/ModalForm/container";
+import FormSociete from "./formSociete";
 
 
 export default function AfficherSocieteRole() {
@@ -101,10 +99,6 @@ export default function AfficherSocieteRole() {
                     return (
                         <div style={{'textAlign': 'center'}}>
 
-                            {
-                                console.log(row)
-                            }
-
                             <input
                                 type="checkbox"
                                 defaultChecked={row.value}
@@ -189,6 +183,8 @@ export default function AfficherSocieteRole() {
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
+            <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
+
         </div>
     )
 }

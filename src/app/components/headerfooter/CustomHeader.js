@@ -121,10 +121,25 @@ const CustomHeader = () => {
                                 </Nav>
                             ) : null}
                             <Nav>
-                                <Nav.Link href='/exposants'>
-                                    <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
-                                    Exposants
-                                </Nav.Link>
+
+                                <NavDropdown title={"Gestion sociétés"} id={"societes"}>
+
+                                    <Nav.Link href='/exposants'>
+                                        <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                                        Exposants
+                                    </Nav.Link>
+
+                                    <Nav.Link href='/societes'>
+                                        <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                        Rôles Societes
+                                    </Nav.Link>
+
+                                    <Nav.Link href='/editeurs'>
+                                        <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                        Editeurs
+                                    </Nav.Link>
+                                </NavDropdown>
+
 
                                 <Nav.Link href='/festival-games'>
                                     <FontAwesomeIcon className="faicon" icon={faDice}/>
@@ -133,10 +148,6 @@ const CustomHeader = () => {
                                 <Nav.Link href='/'>
                                     <FontAwesomeIcon className="faicon" icon={faTh}/>
                                     Zones festival
-                                </Nav.Link>
-                                <Nav.Link href='/societes'>
-                                    <FontAwesomeIcon className="faicon" icon={faTh}/>
-                                    Societes
                                 </Nav.Link>
 
                             </Nav>

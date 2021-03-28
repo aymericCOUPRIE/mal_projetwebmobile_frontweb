@@ -32,23 +32,24 @@ export default function AfficherExposant() {
         {id: 7, libelle: null, color: "default"},
     ]
 
-    /**
-     * This method is used to fetch data from DB every time it is been updated
-     */
-    useEffect(() => {
-        Axios.get(`http://localhost:3000/server/festivals/affichageExposant/${localStorage.getItem("currentFestival")}`)
-            .then((response) => {
-                setListSociete(response.data[0].societes)
-            })
-    }, [])
-
 
     useEffect(() => {
         Axios.get("http://localhost:3000/server/suiviExposant/getDiscussions")
             .then((response) => {
                 setOptionsDiscussion(response.data)
+                console.log("DISC", response.data)
             });
     }, [])
+
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3000/server/festivals/affichageExposant/${localStorage.getItem("currentFestival")}`)
+            .then((response) => {
+                setListSociete(response.data[0].societes)
+                console.log(response.data[0].societes)
+            })
+    }, [])
+
 
     const updateDateContact = (suivE_id, value, numeroRelance) => {
         console.log("DATA", suivE_id, numeroRelance)
@@ -68,7 +69,6 @@ export default function AfficherExposant() {
     }
 
     const updateStatusBenevole = (data, value) => {
-
         Axios.put("http://localhost:3000/server/suiviExposant/updateBenevole", {
             suivE_id: data.suivE_id,
             suivE_benevole: value
@@ -83,7 +83,6 @@ export default function AfficherExposant() {
     }
 
     const setAllAbsent = () => {
-
         Axios.put("http://localhost:3000/server/suiviExposant/setAllAbsent").then(
             (response) => {
                 console.log("NOMBRE CONSIDERE ABS", response)
@@ -127,7 +126,7 @@ export default function AfficherExposant() {
                 }
             },
 
-            {
+           {
                 Header: "WorkFlow",
                 accessor: d => d.suivi_exposants.length == 0 ? null : d.suivi_exposants[0].suivD_id.toString(), //required cast from boolean to string
 
@@ -354,7 +353,6 @@ export default function AfficherExposant() {
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
 
-            <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
             <Button onClick={setAllAbsent}> Mettre tous les exposant absent </Button>
 
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsExposant}/>

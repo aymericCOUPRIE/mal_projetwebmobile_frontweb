@@ -26,6 +26,7 @@ function Routes() {
             <Switch>
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
+                <Route path='/festival-games' component={FestivalGames}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
                 <PrivateRoute path='/exposants' component={AfficherExposant}/>
                 <PrivateRoute path='/societes' component={AfficherSocieteRole}/>
@@ -33,11 +34,8 @@ function Routes() {
                 <PrivateRoute path='/festivals' component={Festivals}/>
                 <PrivateRoute path='/jeux' component={Jeux}/>
                 <PrivateRoute path='/type-jeux' component={TypeJeux}/>
-                <Route path='/festival-games' component={FestivalGames}/>
                 <PrivateRoute path='/exhibitor-monitoring/:idExposant' component={ExhibitorMonitoring}/>
-
             </Switch>
-
         </div>
     )
 }
