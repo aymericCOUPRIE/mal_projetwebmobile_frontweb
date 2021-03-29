@@ -44,14 +44,14 @@ const ExhibitorMonitoring = () => {
 
     }, []);
 
-    useEffect( () => {
+    useEffect(() => {
         console.log(localStorage.getItem("currentFestival"))
         //Récupérer les infos de suivi et de la réservation
-        Axios.get(`http://localhost:3000/server/reservations/${idExposant}/allInformations` , {
+        Axios.get(`http://localhost:3000/server/reservations/${idExposant}/allInformations`, {
             fes_id: localStorage.getItem("currentFestival")
         }).then((res) => {
             setDetailSuivi(res.data)
-            console.log("SUIVI",res)
+            console.log("SUIVI", res)
         })
     }, []);
 
@@ -95,25 +95,37 @@ const ExhibitorMonitoring = () => {
                     {name}
                 </h1>
             </div>
+            <div className="flex-container-Contacts">
 
-            <Form onSubmit={updateNom} id="nomExposant">
+                <div className="flex-item">
+                    <Form onSubmit={updateNom} id="nomExposant">
 
-                <label id="labelNomExposant">Changer le nom: </label>
-                <input value={name} onChange={(e) => {
-                    setName(e.target.value);
-                    setShow(false)
-                }}/>
-                <Button type="submit" id="btnCheck" disabled={!validateForm()}>
-                    <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle}/>
-                </Button>
+                        <label id="labelNomExposant">Changer le nom: </label>
+                        <input value={name} onChange={(e) => {
+                            setName(e.target.value);
+                            setShow(false)
+                        }}/>
+                        <Button type="submit" id="btnCheck" disabled={!validateForm()}>
+                            <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle}/>
+                        </Button>
 
-                <Alert id="alertSucces" variant="success" show={show}>
-                    Nom modifié !
-                </Alert>
-            </Form>
-            <Alert id="alertSucces" variant="success" show={showAdress}>
-                Adresse modifiée !
-            </Alert>
+                        <Alert id="alertSucces" variant="success" show={show}>
+                            Nom modifié !
+                        </Alert>
+                    </Form>
+                    <Alert id="alertSucces" variant="success" show={showAdress}>
+                        Adresse modifiée !
+                    </Alert>
+
+                </div>
+
+
+                <div className="flex-item">
+                    <textarea>Ici les commentaires de l'exposant</textarea>
+
+                </div>
+            </div>
+
 
             <Accordion>
                 <Card>
@@ -146,11 +158,11 @@ const ExhibitorMonitoring = () => {
                                                    onChange={(e) => setSoc_ville(e.target.value)}/>
 
                                         </div>
-                                       <div>
-                                           <input id="expoAdress" value={soc_pays}
-                                                  onChange={(e) => setSoc_pays(e.target.value)}/>
+                                        <div>
+                                            <input id="expoAdress" value={soc_pays}
+                                                   onChange={(e) => setSoc_pays(e.target.value)}/>
 
-                                       </div>
+                                        </div>
 
                                         <Button type="submit" id="btnCheck" disabled={!validateFormAdress()}>
                                             <FontAwesomeIcon className="faicon" id="validateButton"
@@ -160,26 +172,6 @@ const ExhibitorMonitoring = () => {
                                 </div>
                             </Card>
 
-                            {contactList.contacts.map((value, index) => {
-                                    return (
-                                        <Card className="flex-item">
-                                            <Card.Header
-                                                style={{"background-color": value.co_principal ? "#E74C3C " : "default"}}>Contact</Card.Header>
-                                            <div id="cardContacts"
-                                                 style={{"background-color": value.co_principal ? "#EC7063" : "default"}}>
-                                                <div>{value.co_prenom}</div>
-                                                <div>{value.co_nom}</div>
-                                                <div>{value.co_mail}</div>
-                                                <div>{value.co_telFixe}</div>
-                                                <div>{value.co_telPortable}</div>
-                                                <div>{value.co_rue}</div>
-                                                <div> {value.co_codePostal}{value.co_ville}{value.co_pays}</div>
-
-                                            </div>
-                                        </Card>
-                                    )
-                                }
-                            )}
 
                         </Card.Body>
                     </Accordion.Collapse>
