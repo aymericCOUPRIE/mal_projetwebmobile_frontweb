@@ -57,7 +57,7 @@ const FormLocalisation = ({onSubmitLocalisation}) => {
                     </Form.Group>
                     <p>* Champ obligatoire</p>
                     <div className="form-group">
-                        <Button id="btn-formLoc" block size="lg" type="submit" disabled={!validateForm()}>
+                        <Button id="btn-formFestival" block size="lg" type="submit" disabled={!validateForm()}>
                             Créer l'espace
                         </Button>
                     </div>
