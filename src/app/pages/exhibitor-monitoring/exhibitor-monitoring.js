@@ -25,6 +25,7 @@ const ExhibitorMonitoring = () => {
     const [soc_codePostal, setSoc_codePostal] = useState("");
     const [soc_pays, setSoc_pays] = useState("");
     const [detailSuivi, setDetailSuivi] = useState([]);
+    const [commentaire, setCommentaire] = useState("");
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
@@ -33,24 +34,23 @@ const ExhibitorMonitoring = () => {
             .then((res) => {
                 setContactList(res.data)
                 setName(res.data.soc_nom)
-
                 setSoc_rue(res.data.soc_rue)
                 setSoc_ville(res.data.soc_ville)
                 setSoc_codePostal(res.data.soc_codePostal)
                 setSoc_pays(res.data.soc_pays)
-                console.log(res.data)
+
 
             });
 
     }, []);
 
     useEffect(() => {
-        console.log(localStorage.getItem("currentFestival"))
-        //Récupérer les infos de suivi et de la réservation
-        Axios.get(`http://localhost:3000/server/reservations/${idExposant}/allInformations`, {
-            fes_id: localStorage.getItem("currentFestival")
-        }).then((res) => {
-            setDetailSuivi(res.data)
+        //Récupérerles infos de suivi et de la réservation
+        const fes_id = localStorage.getItem("currentFestival")
+
+        Axios.get(`http://localhost:3000/server/reservations/${idExposant}/${fes_id}/allInformations`).then((res) => {
+            setDetailSuivi(res.data[0])
+            setCommentaire(res.data[0].suivE_commentaire)
             console.log("SUIVI", res)
         })
     }, []);
@@ -71,6 +71,18 @@ const ExhibitorMonitoring = () => {
             name: name,
         }).then((res) => {
             setShow("true");
+        })
+    }
+
+    //update commentaire
+    const updateCommentaire = (event) => {
+        event.preventDefault()
+
+        Axios.post(`http://localhost:3000/server/suiviExposant/${idExposant}/update-commentaire`,{
+            fes_id: localStorage.getItem("currentFestival"),
+            suivE_commentaire: commentaire,
+        }).then((res) => {
+            console.log(res)
         })
     }
 
@@ -121,7 +133,17 @@ const ExhibitorMonitoring = () => {
 
 
                 <div className="flex-item">
-                    <textarea>Ici les commentaires de l'exposant</textarea>
+                    <Form onSubmit={updateCommentaire} >
+
+                    <textarea id="commentaireStickyNote" value=  {commentaire} onChange={ (e) => {
+                        setCommentaire(e.target.value)
+                    }}/>
+
+                    <Button type="submit" id="btnCheck">
+                        Mettre à jour la note
+                        <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle}/>
+                    </Button>
+                    </Form>
 
                 </div>
             </div>
@@ -141,25 +163,25 @@ const ExhibitorMonitoring = () => {
                                 <div id="cardContacts">
                                     <Form onSubmit={updateAdress}>
                                         <div>
-                                            <input id="expoAdress" value={soc_rue} onChange={(e) => {
+                                            <textarea id="expoAdress"  value={soc_rue} onChange={(e) => {
                                                 setSoc_rue(e.target.value);
                                                 setShowAdress(false)
                                             }}/>
 
                                         </div>
                                         <div>
-                                            <input id="expoAdress" value={soc_codePostal}
+                                            <textarea id="expoAdress" value={soc_codePostal}
                                                    onChange={(e) => setSoc_codePostal(e.target.value)}/>
 
                                         </div>
 
                                         <div>
-                                            <input id="expoAdress" value={soc_ville}
+                                            <textarea id="expoAdress" value={soc_ville}
                                                    onChange={(e) => setSoc_ville(e.target.value)}/>
 
                                         </div>
                                         <div>
-                                            <input id="expoAdress" value={soc_pays}
+                                            <textarea id="expoAdress" value={soc_pays}
                                                    onChange={(e) => setSoc_pays(e.target.value)}/>
 
                                         </div>
