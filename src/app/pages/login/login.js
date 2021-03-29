@@ -31,7 +31,7 @@ const Login = () => {
         });
 
         //appel au back
-        fetch("http://localhost:3000/server/login", {
+        fetch(`/server/login`, {
             method: "POST",
             body: dataToSend,
             headers: {

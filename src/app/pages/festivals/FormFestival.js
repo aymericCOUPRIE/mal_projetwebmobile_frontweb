@@ -31,7 +31,7 @@ const FormFestival = ({onSubmit}) => {
             fes_nbTables
         });
 
-        fetch("http://localhost:3000/server/festivals/add", {
+        fetch("/server/festivals/add", {
             method: "POST",
             body: dataToSend,
             headers: {

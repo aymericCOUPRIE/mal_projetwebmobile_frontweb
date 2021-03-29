@@ -25,7 +25,7 @@ export const FormJeu = ({ onSubmit }) => {
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer tous les types de jeux
-        Axios.get("http://localhost:3000/server/typeJeu/all")
+        Axios.get("/server/typeJeu/all")
             .then((res) => {
                setGameTypeList(res.data)
             })
@@ -33,7 +33,7 @@ export const FormJeu = ({ onSubmit }) => {
 
     useEffect(() => {
         //requetes tous les éditeurs
-        Axios.get("http://localhost:3000/server/societe/allEditeurs")
+        Axios.get("/server/societe/allEditeurs")
             .then((res) => {
                setEditeursList(res.data)
             })

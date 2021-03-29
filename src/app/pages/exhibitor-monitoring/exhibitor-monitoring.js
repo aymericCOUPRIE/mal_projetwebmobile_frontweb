@@ -30,7 +30,7 @@ const ExhibitorMonitoring = () => {
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer les infos des contacts
-        Axios.get(`http://localhost:3000/server/societe/${idExposant}/contacts`)
+        Axios.get(`/server/societe/${idExposant}/contacts`)
             .then((res) => {
                 setContactList(res.data)
                 setName(res.data.soc_nom)
@@ -48,7 +48,7 @@ const ExhibitorMonitoring = () => {
         //Récupérerles infos de suivi et de la réservation
         const fes_id = localStorage.getItem("currentFestival")
 
-        Axios.get(`http://localhost:3000/server/reservations/${idExposant}/${fes_id}/allInformations`).then((res) => {
+        Axios.get(`/server/reservations/${idExposant}/${fes_id}/allInformations`).then((res) => {
             setDetailSuivi(res.data[0])
             setCommentaire(res.data[0].suivE_commentaire)
             console.log("SUIVI", res)
@@ -67,7 +67,7 @@ const ExhibitorMonitoring = () => {
     const updateNom = (event) => {
         event.preventDefault()
 
-        Axios.post(`http://localhost:3000/server/societe/${idExposant}/update-name`, {
+        Axios.post(`/server/societe/${idExposant}/update-name`, {
             name: name,
         }).then((res) => {
             setShow("true");
@@ -78,7 +78,7 @@ const ExhibitorMonitoring = () => {
     const updateCommentaire = (event) => {
         event.preventDefault()
 
-        Axios.post(`http://localhost:3000/server/suiviExposant/${idExposant}/update-commentaire`,{
+        Axios.post(`/server/suiviExposant/${idExposant}/update-commentaire`,{
             fes_id: localStorage.getItem("currentFestival"),
             suivE_commentaire: commentaire,
         }).then((res) => {
@@ -90,7 +90,7 @@ const ExhibitorMonitoring = () => {
     const updateAdress = (event) => {
         event.preventDefault()
 
-        Axios.post(`http://localhost:3000/server/societe/${idExposant}/update-adress`, {
+        Axios.post(`/server/societe/${idExposant}/update-adress`, {
             soc_ville: soc_ville,
             soc_rue: soc_rue,
             soc_codePostal: soc_codePostal,
@@ -204,7 +204,18 @@ const ExhibitorMonitoring = () => {
                         Détails suivi
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="1">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                            1er contact: {detailSuivi.suivE_dateContact1}
+                            2eme contact: {detailSuivi.suivE_dateContact2}
+                            3eme contact: {detailSuivi.suivE_dateContact3}
+                            se déplace: {detailSuivi.suivE_deplacement}
+                            besoin de bénévoles: {detailSuivi.suivE_benevole}
+                            combien de bénévoles: {detailSuivi.suivE_nbBenevoles}
+                            il envoie ses jeux: {detailSuivi.res_envoiDebut}
+                            facturé ? {detailSuivi.res_facture}
+                            payé? {detailSuivi.res_paiemen}
+
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
 

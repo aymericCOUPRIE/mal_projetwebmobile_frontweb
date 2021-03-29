@@ -27,7 +27,7 @@ export const Jeux = () => {
         //Ne pas oublier cette ligne!!!
         event.preventDefault(event);
 
-        Axios.post("http://localhost:3000/server/jeux/add", {
+        Axios.post("/server/jeux/add", {
             //récupérer les valeurs du formulaire
             title: event.target.title.value,
             minAge : event.target.minAge.value,
@@ -49,7 +49,7 @@ export const Jeux = () => {
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer les infos de tous les jeux
-        Axios.get("http://localhost:3000/server/Jeux/allDetails")
+        Axios.get("/server/Jeux/allDetails")
             .then((res) => {
 
                 setListeJeux(res.data)
@@ -59,7 +59,7 @@ export const Jeux = () => {
 
     useEffect(() => {
         //Récupérer tous les types
-        Axios.get("http://localhost:3000/server/typeJeu/all")
+        Axios.get("/server/typeJeu/all")
             .then((res) => {
                 setGameTypeList(res.data)
             })
@@ -67,7 +67,7 @@ export const Jeux = () => {
 
     useEffect(() => {
         //récupérer tous les éditeurs
-        Axios.get("http://localhost:3000/server/societe/allEditeurs")
+        Axios.get("/server/societe/allEditeurs")
             .then((res) => {
                 setEditeursList(res.data)
             })
@@ -76,35 +76,35 @@ export const Jeux = () => {
 
     // update Editeur
     const updateEditeurId = (data, value) => {
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-editeurId`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-editeurId`, {
             editeurId: value,
         })
     }
     // updtate Type jeu
     const updateGameTypeId = (data, value) => {
         const j_id = data.j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-typeId`, {
+        Axios.post(`/server/Jeux/${j_id}/update-typeId`, {
             typeId: value,
         })
     }
     //update ageMin
     const updateageMin = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-ageMin`, {
+        Axios.post(`/server/Jeux/${j_id}/update-ageMin`, {
             ageMin: value,
         })
     }
     // update joueurs Min
     const updatenbjMin = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-nbjMin`, {
+        Axios.post(`/server/Jeux/${j_id}/update-nbjMin`, {
             nbjMin: value,
         })
     }
     // update joueurs Max
     const updatenbjMax = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-nbjMax`, {
+        Axios.post(`/server/Jeux/${j_id}/update-nbjMax`, {
             nbjMax: value,
         })
     }
@@ -112,7 +112,7 @@ export const Jeux = () => {
     // update DUREE
     const updateDuree = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-duree`, {
+        Axios.post(`/server/Jeux/${j_id}/update-duree`, {
             duree: value,
         })
     }
@@ -120,7 +120,7 @@ export const Jeux = () => {
     //  update NOTICE
     const updateNotice = (rowIndex, data, value) => {
         const j_id = data[rowIndex].j_id
-        Axios.post(`http://localhost:3000/server/Jeux/${j_id}/update-lienNotice`, {
+        Axios.post(`/server/Jeux/${j_id}/update-lienNotice`, {
             lienNotice: value,
         })
     }

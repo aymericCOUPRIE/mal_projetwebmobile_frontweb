@@ -19,7 +19,7 @@ export default function AfficherSocieteRole() {
      */
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Axios.get(`http://localhost:3000/server/festivals/affichageRole/${localStorage.getItem("currentFestival")}`);
+            const response = await Axios.get(`/server/festivals/affichageRole/${localStorage.getItem("currentFestival")}`);
             setListSociete(response.data[0].societes)
         };
         fetchData();
@@ -35,7 +35,7 @@ export default function AfficherSocieteRole() {
      */
     const updateStatusInactif = (data, value) => {
         console.log("RESULT", data, value)
-        Axios.put("http://localhost:3000/server/societe/updateStatusInactif", {
+        Axios.put("/server/societe/updateStatusInactif", {
             soc_id: data.soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             soc_estInactif: value //'true' or 'false'
         })
@@ -44,7 +44,7 @@ export default function AfficherSocieteRole() {
     const updateStatusEditeur = (data, value) => {
         console.log("RESULT", data, value)
 
-        Axios.put("http://localhost:3000/server/societe/updateStatusEditeur", {
+        Axios.put("/server/societe/updateStatusEditeur", {
             soc_id: data.soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             fes_id: localStorage.getItem("currentFestival"),
             rolF_estEditeur: value //'true' or 'false'
@@ -54,7 +54,7 @@ export default function AfficherSocieteRole() {
     const updateStatusExposant = (data, value) => {
         console.log("RESULT", data, value)
 
-        Axios.put("http://localhost:3000/server/societe/updateStatusExposant", {
+        Axios.put("/server/societe/updateStatusExposant", {
             soc_id: data.soc_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             fes_id: localStorage.getItem("currentFestival"),
             rolF_estExposant: value //'true' or 'false'

@@ -9,7 +9,7 @@ export default function Home() {
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
-        Axios.get("http://localhost:3000/server/festivals/closest")
+        Axios.get("/server/festivals/closest")
             .then((res) => {
                 localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
                 setdateProchainFestival(res.data.closestFestival[0].fes_date);

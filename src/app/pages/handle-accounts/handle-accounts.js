@@ -27,7 +27,7 @@ export default function HandleAccounts(){
         event.preventDefault(event);
 
 
-        Axios.post("http://localhost:3000/server/register", {
+        Axios.post("/server/register", {
             //récupérer les valeurs du formulaire
             email: event.target.email.value,
             password : event.target.password.value,
@@ -47,7 +47,7 @@ export default function HandleAccounts(){
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer les infos de tous les users
-        Axios.get("http://localhost:3000/server/allUsers")
+        Axios.get("/server/allUsers")
             .then((res) => {
                 setUserList(res.data);
             });
@@ -58,7 +58,7 @@ export default function HandleAccounts(){
 
     const deleteUser = (data) => {
 
-        Axios.delete(`http://localhost:3000/server/delete-profile/${data.user_email}`)
+        Axios.delete(`/server/delete-profile/${data.user_email}`)
             .then(
                 //userList.splice(userList.indexOf(data),1)
                 window.location.reload(false)

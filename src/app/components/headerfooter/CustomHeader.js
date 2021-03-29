@@ -38,7 +38,7 @@ const CustomHeader = () => {
 
         const fes_id = localStorage.getItem("currentFestival");
 
-        Axios.get(`http://localhost:3000/server/festivals/${fes_id}`)
+        Axios.get(`/server/festivals/${fes_id}`)
             .then((res) => {
                 setDateFestivalCourant(res.data.festival.fes_date)
             })

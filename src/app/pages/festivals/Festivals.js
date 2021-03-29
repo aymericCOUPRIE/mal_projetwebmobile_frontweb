@@ -23,7 +23,7 @@ const Festivals = () => {
      * to show all the festivals
      */
     useEffect(() => {
-        Axios.get("http://localhost:3000/server/Festivals/allDetails")
+        Axios.get("/server/festivals/allDetails")
             .then((res) => {
                 setListFestivals(res.data.allFestivals)
             });
@@ -36,7 +36,7 @@ const Festivals = () => {
     const onSubmit = (event) => {
         event.preventDefault(event);
         //get the information of the form
-        Axios.post("http://localhost:3000/server/festivals/add", {
+        Axios.post("/server/festivals/add", {
             fes_date: event.target.fes_date.value,
             fes_nbTables: event.target.fes_nbTables.value
         })
@@ -52,7 +52,7 @@ const Festivals = () => {
      * @param new_date : the new date of the festival
      */
     const updateDateFestival = async (fes_id, new_date) => {
-        const res = await Axios.put("http://localhost:3000/server/festivals/updateDate", {
+        const res = await Axios.put("/server/festivals/updateDate", {
             fes_id: fes_id,
             new_date: new_date
         })
@@ -64,7 +64,7 @@ const Festivals = () => {
      * @param new_number
      */
     const updateNbTables = (fes_id, new_nbTables) => {
-        Axios.put("http://localhost:3000/server/festivals/updateNbTables", {
+        Axios.put("/server/festivals/updateNbTables", {
             fes_id : fes_id,
             new_nbTables : new_nbTables
         })

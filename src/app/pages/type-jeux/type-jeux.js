@@ -16,7 +16,7 @@ const TypeJeu = () => {
 
     useEffect(() => {
         //Récupérer tous les types
-        Axios.get("http://localhost:3000/server/typeJeu/all")
+        Axios.get("/server/typeJeu/all")
             .then((res) => {
                 setGameTypeList(res.data)
             })
@@ -27,7 +27,7 @@ const TypeJeu = () => {
         //Ne pas oublier cette ligne!!!
         event.preventDefault(event);
 
-        Axios.post("http://localhost:3000/server/typeJeu/add", {
+        Axios.post("/server/typeJeu/add", {
             libelle: event.target.libelle.value
         }).then((res) => {
             //afficher alert succes
@@ -38,7 +38,7 @@ const TypeJeu = () => {
 
     const updateType = (rowIndex, data, value) => {
         const typJ_id = data[rowIndex].typJ_id
-        Axios.post(`http://localhost:3000/server/typeJeu/${typJ_id}/update`,{
+        Axios.post(`/server/typeJeu/${typJ_id}/update`,{
             libelle: value,
         })
     }

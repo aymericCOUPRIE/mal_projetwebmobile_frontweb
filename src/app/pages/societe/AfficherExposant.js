@@ -33,7 +33,7 @@ export default function AfficherExposant() {
 
 
     useEffect(() => {
-        Axios.get(`http://localhost:3000/server/festivals/affichageExposant/${localStorage.getItem("currentFestival")}`)
+        Axios.get(`/server/festivals/affichageExposant/${localStorage.getItem("currentFestival")}`)
             .then((response) => {
                 setListSociete(response.data[0].societes)
                 console.log(response.data[0].societes)
@@ -41,7 +41,7 @@ export default function AfficherExposant() {
     }, [])
 
     useEffect(() => {
-        Axios.get("http://localhost:3000/server/suiviExposant/getDiscussions")
+        Axios.get("/server/suiviExposant/getDiscussions")
             .then((response) => {
                 setOptionsDiscussion(response.data)
                 console.log("DISC", response.data)
@@ -52,7 +52,7 @@ export default function AfficherExposant() {
     const updateDateContact = (suivE_id, value, numeroRelance) => {
         console.log("DATA", suivE_id, numeroRelance)
 
-        Axios.put(`http://localhost:3000/server/suiviExposant/updateDateContact/${numeroRelance}`, {
+        Axios.put(`/server/suiviExposant/updateDateContact/${numeroRelance}`, {
             suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             suivE_dateContact: value //'true' or 'false'
         })
@@ -60,21 +60,21 @@ export default function AfficherExposant() {
 
     const updateStatusFacture = (data, value) => {
 
-        Axios.put("http://localhost:3000/server/reservations/updateReservationFacture", {
+        Axios.put("/server/reservations/updateReservationFacture", {
             res_id: data.res_id, //row id=0 <==> soc_id = 1 --> d'où le +1
             res_facture: value //'true' or 'false'
         })
     }
 
     const updateStatusBenevole = (data, value) => {
-        Axios.put("http://localhost:3000/server/suiviExposant/updateBenevole", {
+        Axios.put("/server/suiviExposant/updateBenevole", {
             suivE_id: data.suivE_id,
             suivE_benevole: value
         })
     }
 
     const updateStatusWorkflow = (data, value) => {
-        Axios.put("http://localhost:3000/server/suiviExposant/updateWorkflow", {
+        Axios.put("/server/suiviExposant/updateWorkflow", {
             suivE_id: data.suivE_id,
             suivD_id: value
         })
@@ -82,7 +82,7 @@ export default function AfficherExposant() {
     }
 
     const setAllAbsent = () => {
-        Axios.put("http://localhost:3000/server/suiviExposant/setAllAbsent").then(
+        Axios.put("/server/suiviExposant/setAllAbsent").then(
             (response) => {
                 console.log("NOMBRE CONSIDERE ABS", response)
             }
@@ -315,7 +315,7 @@ export default function AfficherExposant() {
             console.log("CONTACT", event)
 
 
-            Axios.post(`http://localhost:3000/server/contacts/add/${soc_id}`, {
+            Axios.post(`/server/contacts/add/${soc_id}`, {
                 co_nom: event.target.value.nom,
                 co_prenom: event.target.value.prenom,
                 co_telPortable: event.target.value.telPortable,
@@ -333,7 +333,7 @@ export default function AfficherExposant() {
 
         console.log("PAS LA stp")
 
-        Axios.post("http://localhost:3000/server/societe/add", {
+        Axios.post("/server/societe/add", {
             soc_nom: event.target.nom.value,
             soc_ville: event.target.ville.value,
             soc_rue: event.target.rue.value,

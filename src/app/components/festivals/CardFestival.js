@@ -20,7 +20,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
 
     useEffect(() => {
         // Get details for the festivals
-        Axios.get(`http://localhost:3000/server/localisation/allDetails/${fes.fes_id}`)
+        Axios.get(`/server/localisation/allDetails/${fes.fes_id}`)
             .then((res) => {
                 setLocalList(res.data)
             })
@@ -44,7 +44,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
         //get the information of the form
         console.log("front lib :", event.target.loc_libelle.value);
         console.log("front id : ", fes.fes_id);
-        Axios.post(`http://localhost:3000/server/localisation/add/${fes.fes_id}`, {
+        Axios.post(`/server/localisation/add/${fes.fes_id}`, {
             loc_libelle: event.target.loc_libelle.value,
             loc_prixTable: event.target.loc_prixTable.value,
             loc_prixM2: event.target.loc_prixM2.value
@@ -63,7 +63,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
      */
     function updatePriceTable(rowIndex, data, value) {
         const loc_id = data[rowIndex].loc_id;
-        Axios.put("http://localhost:3000/server/localisation/updatePriceTable/", {
+        Axios.put("/server/localisation/updatePriceTable/", {
             loc_id : loc_id,
             new_priceTable : value
         });
@@ -77,7 +77,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
      */
     function updatePriceM2(rowIndex, data, value) {
         const loc_id = data[rowIndex].loc_id;
-        Axios.put("http://localhost:3000/server/localisation/updatePriceM2/", {
+        Axios.put("/server/localisation/updatePriceM2/", {
             loc_id : loc_id,
             new_priceM2 : value
         });

@@ -24,7 +24,7 @@ const FestivalGames = () => {
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer les infos de tous les jeux
-        Axios.get(`http://localhost:3000/server/jeuxFestival/${localStorage.getItem("currentFestival")}/allDetails`)
+        Axios.get(`/server/jeuxFestival/${localStorage.getItem("currentFestival")}/allDetails`)
             .then((res) => {
                 setListeJeux(res.data)
                 console.log(res.data)
@@ -34,7 +34,7 @@ const FestivalGames = () => {
 
     useEffect(() => {
         //récupérer tous les éditeurs
-        Axios.get("http://localhost:3000/server/societe/allEditeurs")
+        Axios.get("/server/societe/allEditeurs")
             .then((res) => {
                 setEditeursList(res.data)
             })
@@ -42,14 +42,14 @@ const FestivalGames = () => {
 
     useEffect(() => {
         //Récupérer tous les types
-        Axios.get("http://localhost:3000/server/typeJeu/all")
+        Axios.get("/server/typeJeu/all")
             .then((res) => {
                 setGameTypeList(res.data)
             })
     }, [])
 
     useEffect(() => {
-        Axios.get(`http://localhost:3000/server/zones/all/${localStorage.getItem("currentFestival")}`)
+        Axios.get(`/server/zones/all/${localStorage.getItem("currentFestival")}`)
             .then((res) => {
                 setZoneList(res.data)
             })
@@ -67,7 +67,7 @@ const FestivalGames = () => {
 
     // update Editeur
     const updateEditeurId = (data, value) => {
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-editeurId`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-editeurId`, {
             editeurId: value,
         }).then((res) => {
             console.log(res)
@@ -76,7 +76,7 @@ const FestivalGames = () => {
 
     // updtate Type jeu
     const updateGameTypeId = (data, value) => {
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-typeId`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-typeId`, {
             typeId: value,
         }).then((res) => {
             console.log(res)
@@ -86,7 +86,7 @@ const FestivalGames = () => {
     //update prototype
     const updatePrototype = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/jeuxFestival/update-prototype/${data.suivJ_id}`, {
+        Axios.post(`/server/jeuxFestival/update-prototype/${data.suivJ_id}`, {
             suivJ_prototype: value,
         })
             .then((res) => {
@@ -96,7 +96,7 @@ const FestivalGames = () => {
 
     //update zone
     const updateZone = (data, value) => {
-        Axios.post(`http://localhost:3000/server/jeuxFestival/update-zone/${data.suivJ_id}`, {
+        Axios.post(`/server/jeuxFestival/update-zone/${data.suivJ_id}`, {
             zo_id: value,
         })
             .then((res) => {
@@ -105,7 +105,7 @@ const FestivalGames = () => {
     }
     //update place
     const updatePlace = (data, value) => {
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-place/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-place/${data.suivJ_id}`, {
             suivJ_place: value,
         })
             .then((res) => {
@@ -116,7 +116,7 @@ const FestivalGames = () => {
     //update tombola
     const updateTombola = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-tombola/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-tombola/${data.suivJ_id}`, {
             suivJ_tombola: value,
         })
             .then((res) => {
@@ -126,7 +126,7 @@ const FestivalGames = () => {
 
     //update dotation
     const updateDotation = (data, value) => {
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-dotation/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-dotation/${data.suivJ_id}`, {
             suivJ_dotation: value,
         })
             .then((res) => {
@@ -136,7 +136,7 @@ const FestivalGames = () => {
 
     //update nombre de jeux reçus
     const updateNbJeuxRecus = (data, value) => {
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-nbJeuxRecus/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-nbJeuxRecus/${data.suivJ_id}`, {
             suivJ_nbJeuxRecus: value,
         })
             .then((res) => {
@@ -146,7 +146,7 @@ const FestivalGames = () => {
 
     //update nombre de jeux exposés
     const updateNbJeuxExposes = (data, value) => {
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-nbJeuxExposes/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-nbJeuxExposes/${data.suivJ_id}`, {
             suivJ_nbJeuxExposes: value,
         })
             .then((res) => {
@@ -156,21 +156,21 @@ const FestivalGames = () => {
     //update ageMin
     const updateageMin = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-ageMin`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-ageMin`, {
             ageMin: value,
         })
     }
     // update joueurs Min
     const updatenbjMin = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-nbjMin`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-nbjMin`, {
             nbjMin: value,
         })
     }
     // update joueurs Max
     const updatenbjMax = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-nbjMax`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-nbjMax`, {
             nbjMax: value,
         })
     }
@@ -178,7 +178,7 @@ const FestivalGames = () => {
     // update DUREE
     const updateDuree = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-duree`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-duree`, {
             duree: value,
         })
     }
@@ -186,7 +186,7 @@ const FestivalGames = () => {
     //  update NOTICE
     const updateNotice = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/Jeux/${data.j_id}/update-lienNotice`, {
+        Axios.post(`/server/Jeux/${data.j_id}/update-lienNotice`, {
             lienNotice: value,
         })
     }
@@ -194,7 +194,7 @@ const FestivalGames = () => {
     //update recu
     const updateRecu = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-recu/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-recu/${data.suivJ_id}`, {
             suivJ_recu: value,
         })
     }
@@ -202,7 +202,7 @@ const FestivalGames = () => {
     //update a renvoyer
     const updateARenvoyer = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-aRenvoyer/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-aRenvoyer/${data.suivJ_id}`, {
             suivJ_aRenvoyer: value,
         })
             .then((res) => {
@@ -213,7 +213,7 @@ const FestivalGames = () => {
     //update renvoyé
     const updateRenvoye = (data, value) => {
 
-        Axios.post(`http://localhost:3000/server/JeuxFestival/update-renvoye/${data.suivJ_id}`, {
+        Axios.post(`/server/JeuxFestival/update-renvoye/${data.suivJ_id}`, {
             suivJ_renvoye: value,
         })
             .then((res) => {

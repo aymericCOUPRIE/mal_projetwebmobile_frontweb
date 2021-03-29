@@ -31,7 +31,7 @@ export default function UpdatePassword(){
                 olderPassword
             });
             //appel au back
-            fetch(`http://localhost:3000/server/update-password/${email()}`, {
+            fetch(`/server/update-password/${email()}`, {
                 method: "POST",
                 body: dataToSend,
                 headers: {
