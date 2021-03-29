@@ -24,10 +24,11 @@ const ExhibitorMonitoring = () => {
     const [soc_rue, setSoc_rue] = useState("");
     const [soc_codePostal, setSoc_codePostal] = useState("");
     const [soc_pays, setSoc_pays] = useState("");
+    const [detailSuivi, setDetailSuivi] = useState([]);
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
-        //Récupérer les infos de tous les jeux
+        //Récupérer les infos des contacts
         Axios.get(`http://localhost:3000/server/societe/${idExposant}/contacts`)
             .then((res) => {
                 setContactList(res.data)
@@ -41,6 +42,17 @@ const ExhibitorMonitoring = () => {
 
             });
 
+    }, []);
+
+    useEffect( () => {
+        console.log(localStorage.getItem("currentFestival"))
+        //Récupérer les infos de suivi et de la réservation
+        Axios.get(`http://localhost:3000/server/reservations/${idExposant}/allInformations` , {
+            fes_id: localStorage.getItem("currentFestival")
+        }).then((res) => {
+            setDetailSuivi(res.data)
+            console.log("SUIVI",res)
+        })
     }, []);
 
     function validateForm() {
