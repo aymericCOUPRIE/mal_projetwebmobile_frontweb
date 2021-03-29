@@ -16,10 +16,12 @@ import FestivalGames from "../pages/festival-games/festival-games";
 import ExhibitorMonitoring from "../pages/exhibitor-monitoring/exhibitor-monitoring";
 import AfficherSocieteRole from "../pages/societe/AfficherSocieteRole";
 import FormLocalisation from "../components/festivals/FormLocalisation";
+import Reservation from "../pages/reservation/Reservation";
+
 
 // DANS LE SWITCH
 //exact permet de dire que c'est la page par defaut
-//Private route = route accéccibles que quand login
+//Private route = route accessibe que quand login
 function Routes() {
     return (
         <div className="App">
@@ -28,6 +30,7 @@ function Routes() {
                 <Route exact path='/' component={Home}/>
                 <Route path='/login' component={Login}/>
                 <Route path='/festival-games' component={FestivalGames}/>
+                <Route path='/reservations' component={Reservation}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
                 <PrivateRoute path='/exposants' component={AfficherExposant}/>
                 <PrivateRoute path='/societes' component={AfficherSocieteRole}/>

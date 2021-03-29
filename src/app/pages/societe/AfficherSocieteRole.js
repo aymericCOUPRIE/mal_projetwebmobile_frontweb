@@ -61,13 +61,30 @@ export default function AfficherSocieteRole() {
         })
     }
 
+
+    const onSubmit = (event) => {
+        event.preventDefault(event);
+
+        const fes_id = localStorage.getItem("currentFestival")
+        Axios.post(`http://localhost:3000/server/societe/add/${fes_id}`, {
+            soc_nom: event.target.nom.value,
+            soc_ville: event.target.ville.value,
+            soc_rue: event.target.rue.value,
+            soc_codePostal: event.target.codePostal.value,
+            soc_pays: event.target.pays.value
+        }).then((response) => {
+            console.log(response)
+        })
+    }
     /**
      * This method is declaring all the columns for the table
      *
      * @type {[{Header: (function(): null), id: string, Cell: (function({row: *}))}, {Header: string, accessor: string}, {filter: string, Header: string, Filter: (function({column: {filterValue: *, setFilter: *, preFilteredRows: *, id?: *}}): *), accessor: (function(*): string), id: string, disableSortBy: boolean, Cell: (function(*))}]}
      */
     const columns = useMemo(() => [
+            /*
             {
+
                 //This column is used for displaying more/less details
                 Header: () => null,
                 id: 'expander', // 'id' is required
@@ -79,6 +96,7 @@ export default function AfficherSocieteRole() {
                     </span>
                 ),
             },
+*/
             {
                 Header: "Nom",
                 accessor: "soc_nom",
@@ -86,7 +104,7 @@ export default function AfficherSocieteRole() {
             {
                 id: "inactif",
                 Header: "Inactif",
-                accessor: d => d.soc_estInactif, //required cast from boolea to string
+                accessor: d => d.soc_estInactif == 1 ? 'oui' : 'non', //required cast from boolea to string
 
                 //Allows column to be sorted depending on all content type (true/false)
                 disableSortBy: true,
@@ -101,7 +119,7 @@ export default function AfficherSocieteRole() {
 
                             <input
                                 type="checkbox"
-                                defaultChecked={row.value}
+                                defaultChecked={row.value == 'oui' ? true : false}
                                 onChange={(event) => updateStatusInactif(row.row.original, event.target.checked ? 1 : 0)}/>
                         </div>
                     )
@@ -110,7 +128,7 @@ export default function AfficherSocieteRole() {
             {
                 id: "estExposant",
                 Header: "Exposant",
-                accessor: d => d.role_festival.rolF_estExposant, //required cast from boolean to string
+                accessor: d => d.role_festival.rolF_estExposant == 1 ? 'oui' : 'non', //required cast from boolean to string
 
                 //Allows column to be sorted depending on all content type (true/false)
                 disableSortBy: true,
@@ -126,7 +144,7 @@ export default function AfficherSocieteRole() {
                             }
                             <input
                                 type="checkbox"
-                                defaultChecked={row.value == 1 ? true : false}
+                                defaultChecked={row.value == 'oui' ? true : false}
                                 onChange={(event) => updateStatusExposant(row.row.original, event.target.checked)}
                             />
                         </div>
@@ -136,7 +154,7 @@ export default function AfficherSocieteRole() {
             {
                 id: "estEditeur",
                 Header: "Editeur",
-                accessor: d => d.role_festival.rolF_estEditeur, //required cast from boolean to string
+                accessor: d => d.role_festival.rolF_estEditeur == 1 ? 'oui' : 'non', //required cast from boolean to string
 
 
                 //Allows column to be sorted depending on all content type (true/false)
@@ -149,7 +167,7 @@ export default function AfficherSocieteRole() {
                         <div style={{'textAlign': 'center'}}>
                             <input
                                 type="checkbox"
-                                defaultChecked={row.value == 1 ? true : false}
+                                defaultChecked={row.value == 'oui' ? true : false}
                                 onChange={(event) => updateStatusEditeur(row.row.original, event.target.checked ? true : false)}
                             />
                         </div>
@@ -182,11 +200,10 @@ export default function AfficherSocieteRole() {
      */
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
-            {/*
-           <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsSociete}/>
+
+            <TableContainer columns={columns} data={societe} /*renderRowSubComponent={detailsSociete}*//>
 
             <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
-*/}
 
         </div>
     )
