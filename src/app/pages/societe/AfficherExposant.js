@@ -74,6 +74,7 @@ export default function AfficherExposant() {
     }
 
     const updateStatusSeDeplace = (data, value) => {
+        console.log(data.suivE_id)
         Axios.put("/server/suiviExposant/updateSeDeplace", {
             suivE_id: data.suivE_id,
             suivE_deplacement: value

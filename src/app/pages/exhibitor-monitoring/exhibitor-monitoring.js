@@ -147,13 +147,12 @@ const ExhibitorMonitoring = () => {
 
     //changer si il se déplace ou non
     const updateStatusSeDeplace = (value) => {
-        console.log("VALUE", value)
-        console.log("whoooo",  detailSuivi.suivE_id)
         Axios.put("/server/suiviExposant/updateSeDeplace", {
             suivE_id: detailSuivi.suivE_id,
             suivE_deplacement: value
-        })
+        }).then((res) => console.log(res))
     }
+    
 
 
     return (
@@ -254,10 +253,35 @@ const ExhibitorMonitoring = () => {
                                         </Button>
                                     </Form>
                                 </div>
+
                             </Card>
+
+                                {contactList.contacts ? contactList.contacts.map((value, index) => {
+                                    return (
+                                        <Card className="flex-item">
+                                            <Card.Header
+                                                style={{"background-color": value.co_principal ? "#E74C3C " : "default"}}>Contact</Card.Header>
+                                            <div id="cardContacts"
+                                                 style={{"background-color": value.co_principal ? "#EC7063" : "default"}}>
+                                                <div>{value.co_prenom}</div>
+                                                <div>{value.co_nom}</div>
+                                                <div>{value.co_mail}</div>
+                                                <div>{value.co_telFixe}</div>
+                                                <div>{value.co_telPortable}</div>
+                                                <div>{value.co_rue}</div>
+                                                <div> {value.co_codePostal}{value.co_ville}{value.co_pays}</div>
+
+                                            </div>
+                                        </Card>
+                                    )
+                                }
+                            ) : null}
+
+
 
 
                         </Card.Body>
+
                     </Accordion.Collapse>
                 </Card>
 
@@ -275,14 +299,14 @@ const ExhibitorMonitoring = () => {
                                 />
                             </div>
                             <div>
-                                <label >2eme contact: </label>
+                                <label >2ème contact: </label>
                                 <input id="labelNomExposant" type="date"
                                        defaultValue= {detailSuivi.suivE_dateContact2}
                                        onChange={(event) => updateDateContact(event.target.value,2)}
                                 />
                             </div>
                             <div>
-                                <label >3eme contact: </label>
+                                <label >3ème contact: </label>
                                 <input id="labelNomExposant" type="date"
                                        defaultValue=  {detailSuivi.suivE_dateContact3}
                                        onChange={(event) => updateDateContact(event.target.value,3)}
@@ -291,9 +315,10 @@ const ExhibitorMonitoring = () => {
 
                                 <div>
                                     <label >Se déplace: </label>
+
                                     <input
                                         type="checkbox"
-                                        defaultChecked={detailSuivi.suivE_deplacement}
+                                        defaultChecked={detailSuivi.suivE_deplacement === 1}
                                         onChange={(event) => updateStatusSeDeplace(event.target.checked ? 1 : 0)}
                                     />
                                 </div>

@@ -14,12 +14,14 @@ import {
     faTh,
     faShapes,
     faTheaterMasks,
-    faChessKnight
+    faChessKnight,
+    faUserTag
 } from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
 import React, {useEffect, useState} from "react";
 import Axios from "axios";
 import Moment from "moment";
+
 
 const CustomHeader = () => {
 
@@ -140,12 +142,12 @@ const CustomHeader = () => {
                                     </Nav.Link>
 
                                     <Nav.Link href='/societes' id="dropdownItem">
-                                        <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                        <FontAwesomeIcon className="faicon" icon={faUserTag}/>
                                         Rôles Societes
                                     </Nav.Link>
 
                                     <Nav.Link href='/editeurs' id="dropdownItem">
-                                        <FontAwesomeIcon className="faicon" icon={faTh}/>
+                                        <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
                                         Editeurs
                                     </Nav.Link>
                                 </NavDropdown>
