@@ -14,11 +14,14 @@ import {CardBody, CardText, CardTitle} from "reactstrap";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {useHistory} from "react-router-dom";
 
 export default function AfficherExposant() {
 
     const [societe, setListSociete] = useState([])
     const [optionsDiscussion, setOptionsDiscussion] = useState([])
+
+    const history = useHistory()
 
 
     const options = [
@@ -105,6 +108,13 @@ export default function AfficherExposant() {
 
     }
 
+    const goToExhibitorMonitoring = (soc_id) => {
+        history.push('/exhibitor-monitoring/' + soc_id);
+        window.location.reload(false)
+
+    }
+
+
     /**
      * This method is declaring all the columns for the table
      *
@@ -126,6 +136,12 @@ export default function AfficherExposant() {
             {
                 Header: "Nom",
                 accessor: "soc_nom",
+
+                Cell: row => {
+                    return (
+                        <a href="#" onClick={() => goToExhibitorMonitoring(row.row.original.soc_id)}>{row.value}</a>
+                    )
+                }
             },
             {
                 Header: "Commentaire",

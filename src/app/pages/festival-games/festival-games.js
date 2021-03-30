@@ -463,8 +463,6 @@ const FestivalGames = () => {
                         )
                     },
                 }
-
-
             )
         }
         return result
