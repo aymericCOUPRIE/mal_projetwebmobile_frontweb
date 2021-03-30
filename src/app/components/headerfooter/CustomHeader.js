@@ -58,83 +58,93 @@ const CustomHeader = () => {
                     <Container>
                         <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
                         <Navbar.Collapse id='responsive-navbar-nav'>
-                            {isLogin() ? (
-                                <Nav>
-                                    <NavDropdown title={email()} id="who">
-                                        <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de
-                                            passe</Nav.Link>
-                                        <Button variant="link" onClick={logout}>Se déconnecter</Button>
-                                    </NavDropdown>
-                                </Nav>
-                            ) : (
-
-                                <Nav>
-                                    <Nav.Link href='/login'>Se connecter</Nav.Link>
-                                </Nav>
-                            )}
-                            {isLogin() ? (
-                                <Nav>
-                                    <NavDropdown title="Paramètres">
-                                        <Nav.Link id="dropdownItem" href='/type-jeux'>
-                                            <FontAwesomeIcon className="faicon" icon={faShapes}/>
-                                            Types de jeux
-                                        </Nav.Link>
-                                        <Nav.Link id="dropdownItem" href='/jeux'>
-                                            <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
-                                            Jeux
-                                        </Nav.Link>
-
-                                        {isAdmin() ? (
-                                            <Nav.Link id="dropdownItem" href='/handle-accounts'>
-                                                <FontAwesomeIcon className="faicon" icon={faUser}/>
-                                                Gérer les comptes
-                                            </Nav.Link>
-
-                                        ) : null}
-
-                                    </NavDropdown>
+                            {
+                                isLogin() ? (
                                     <Nav>
-                                        <div id="fesC">
-                                            <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/> Festival
-                                            courant:
-                                        </div>
-
-                                        <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
-                                                     id="who">
-                                            <Nav.Link id="dropdownItem" href='/festivals'>
-                                                <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
-                                                Festivals
-                                            </Nav.Link>
+                                        <NavDropdown title={email()} id="who">
+                                            <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de
+                                                passe</Nav.Link>
+                                            <Button variant="link" onClick={logout}>Se déconnecter</Button>
                                         </NavDropdown>
-
-                                        <Nav.Link href='/'>
-                                            <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
-                                            Reservations
-                                        </Nav.Link>
-                                        {isAdmin() ? (
-                                            <Nav.Link href='/'>
-                                                <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
-                                                Facture
-                                            </Nav.Link>
-                                        ) : null}
                                     </Nav>
-                                </Nav>
-                            ) : null}
+                                ) : (
+
+                                    <Nav>
+                                        <Nav.Link href='/login'>Se connecter</Nav.Link>
+                                    </Nav>
+                                )
+                            }
+                            {
+                                isLogin() ? (
+                                    <Nav>
+                                        <NavDropdown title="Paramètres">
+                                            <Nav.Link id="dropdownItem" href='/type-jeux'>
+                                                <FontAwesomeIcon className="faicon" icon={faShapes}/>
+                                                Types de jeux
+                                            </Nav.Link>
+                                            <Nav.Link id="dropdownItem" href='/jeux'>
+                                                <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
+                                                Jeux
+                                            </Nav.Link>
+
+                                            {
+                                                isAdmin() ? (
+                                                    <Nav.Link id="dropdownItem" href='/handle-accounts'>
+                                                        <FontAwesomeIcon className="faicon" icon={faUser}/>
+                                                        Gérer les comptes
+                                                    </Nav.Link>
+
+                                                ) : null
+                                            }
+
+                                        </NavDropdown>
+                                        <Nav>
+                                            <div id="fesC">
+                                                <FontAwesomeIcon className="faicon" icon={faTheaterMasks}/> Festival
+                                                courant:
+                                            </div>
+
+                                            <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
+                                                         id="who">
+                                                <Nav.Link id="dropdownItem" href='/festivals'>
+                                                    <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
+                                                    Festivals
+                                                </Nav.Link>
+                                            </NavDropdown>
+
+                                            <Nav.Link href='/reservations'>
+                                                <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
+                                                Reservations
+                                            </Nav.Link>
+                                            {
+                                                isAdmin() ? (
+                                                    <Nav.Link href='/'>
+                                                        <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
+                                                        Facture
+                                                    </Nav.Link>
+                                                ) : null
+                                            }
+                                        </Nav>
+                                    </Nav>
+                                ) : null
+                            }
+
+
                             <Nav>
 
-                                <NavDropdown title={"Gestion sociétés"} id={"societes"}>
+                                <NavDropdown title={"Gestion sociétés"} id="who">
 
-                                    <Nav.Link href='/exposants'>
+                                    <Nav.Link href='/exposants' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
                                         Exposants
                                     </Nav.Link>
 
-                                    <Nav.Link href='/societes'>
+                                    <Nav.Link href='/societes' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faTh}/>
                                         Rôles Societes
                                     </Nav.Link>
 
-                                    <Nav.Link href='/editeurs'>
+                                    <Nav.Link href='/editeurs' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faTh}/>
                                         Editeurs
                                     </Nav.Link>

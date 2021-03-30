@@ -73,6 +73,21 @@ export default function AfficherExposant() {
         })
     }
 
+    const updateStatusSeDeplace = (data, value) => {
+        Axios.put("/server/suiviExposant/updateSeDeplace", {
+            suivE_id: data.suivE_id,
+            suivE_deplacement: value
+        })
+    }
+
+    const updateNbBenevoles = (data, value) => {
+        Axios.put("/server/suiviExposant/updateNbBenevole", {
+            suivE_id: data.suivE_id,
+            suivE_nbBenevoles: value
+        })
+    }
+
+
     const updateStatusWorkflow = (data, value) => {
         Axios.put("/server/suiviExposant/updateWorkflow", {
             suivE_id: data.suivE_id,
@@ -141,7 +156,7 @@ export default function AfficherExposant() {
                             }
                             <Form.Control as={"select"}
                                           onChange={(e) => updateStatusWorkflow(row.row.original.suivi_exposants[0], e.target.value)}
-                                          style={{backgroundColor: row.value ==  null ? 'default' : options.find(element => element.id === parseInt(row.value)).color}}>
+                                          style={{backgroundColor: row.value == null ? 'default' : options.find(element => element.id === parseInt(row.value)).color}}>
                                 {
                                     optionsDiscussion.map((option) =>
                                         <option value={option.suivD_id}
@@ -185,10 +200,50 @@ export default function AfficherExposant() {
                         </div>)
                 },
             },
+
+            {
+                Header: "Nb bénvoles",
+                accessor: d => d.suivi_exposants.length == 0 ? null : d.suivi_exposants[0].suivE_nbBenevoles,
+
+                Cell: row => {
+                    return (
+                        <div style={{'textAlign': 'center'}}>
+                            <input
+                                type="number"
+                                disabled={row.value == null}
+                                defaultValue={row.value}
+                                onChange={(event) => updateNbBenevoles(row.row.original.suivi_exposants[0], event.target.value)}
+                            />
+                        </div>)
+                },
+
+            },
+            {
+                Header: "Se deplace",
+                accessor: d => d.suivi_exposants.length == 0 ? null : d.suivi_exposants[0].suivE_deplacement.toString(),
+
+                disableSortBy: true,
+                Filter: SelectColumnFilter,
+                filter: 'equals',
+
+                Cell: row => {
+                    return (
+                        <div style={{'textAlign': 'center'}}>
+                            <input
+                                type="checkbox"
+                                disabled={row.value == null}
+                                defaultChecked={(row.value == null || row.value == 'false') ? false : true}
+                                onChange={(event) => updateStatusSeDeplace(row.row.original.suivi_exposants[0], event.target.checked ? 1 : 0)}
+                            />
+                        </div>)
+                },
+
+
+            },
             {
                 id: "facture",
                 Header: "Facture",
-                accessor: d => d.reservations.length == 0 ? null : d.reservations[0].res_facture.toString(), //required cast from boolean to string
+                accessor: d => d.reservations.length == 0 ? 'NULL' : d.reservations[0].res_facture.toString(), //required cast from boolean to string
 
 
                 //Allows column to be sorted depending on all content type (true/false)
