@@ -137,6 +137,25 @@ const ExhibitorMonitoring = () => {
         })
     }
 
+    //changer nombre de bénévols
+    const updateNbBenevoles = (value) => {
+        Axios.put("/server/suiviExposant/updateNbBenevole", {
+            suivE_id: detailSuivi.suivE_id,
+            suivE_nbBenevoles: value
+        })
+    }
+
+    //changer si il se déplace ou non
+    const updateStatusSeDeplace = (value) => {
+        console.log("VALUE", value)
+        console.log("whoooo",  detailSuivi.suivE_id)
+        Axios.put("/server/suiviExposant/updateSeDeplace", {
+            suivE_id: detailSuivi.suivE_id,
+            suivE_deplacement: value
+        })
+    }
+
+
     return (
         <div className="EspaceFooter">
             <div id="titlePageJeuxFestival">
@@ -270,14 +289,24 @@ const ExhibitorMonitoring = () => {
                                 />
                             </div>
 
+                                <div>
+                                    <label >Se déplace: </label>
+                                    <input
+                                        type="checkbox"
+                                        defaultChecked={detailSuivi.suivE_deplacement}
+                                        onChange={(event) => updateStatusSeDeplace(event.target.checked ? 1 : 0)}
+                                    />
+                                </div>
+                                besoin de bénévoles: {detailSuivi.suivE_benevole}
+
                             <div>
-                                <label >se déplace: </label>
-                                se déplace: {detailSuivi.suivE_deplacement}
+                                <label >Nombre de bénévols nécessaires: </label>
+                                <input
+                                    type="number"
+                                    defaultValue={detailSuivi.suivE_nbBenevoles}
+                                    onChange={(event) => updateNbBenevoles(event.target.value)}
+                                />
                             </div>
-
-
-                            besoin de bénévoles: {detailSuivi.suivE_benevole}
-                            combien de bénévoles: {detailSuivi.suivE_nbBenevoles}
                             il envoie ses jeux: {detailSuivi.res_envoiDebut}
                             facturé ? {detailSuivi.res_facture}
                             payé? {detailSuivi.res_paiemen}
