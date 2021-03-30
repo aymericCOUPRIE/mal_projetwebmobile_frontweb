@@ -151,9 +151,6 @@ export default function AfficherExposant() {
                 Cell: row => {
                     return (
                         <div>
-                            {
-                                console.log("ROW VALUE", row.value)
-                            }
                             <Form.Control as={"select"}
                                           onChange={(e) => updateStatusWorkflow(row.row.original.suivi_exposants[0], e.target.value)}
                                           style={{backgroundColor: row.value == null ? 'default' : options.find(element => element.id === parseInt(row.value)).color}}>

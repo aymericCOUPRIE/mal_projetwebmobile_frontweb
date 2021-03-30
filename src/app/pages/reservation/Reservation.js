@@ -2,6 +2,7 @@ import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
+import {Form} from "react-bootstrap";
 
 
 export default function Reservation() {
@@ -31,6 +32,53 @@ export default function Reservation() {
         })
     }, [])
 
+
+    const updateFacture = (data, value) => {
+        console.log("DATA", data)
+
+        Axios.put("/server/reservations/updateReservationFacture", {
+            res_id: data.res_id,
+            res_facture: value
+        })
+    }
+
+    const updatePaiement = (data, value) => {
+
+        console.log("DATA", data)
+        Axios.put("/server/reservations/updateReservationPaiement", {
+            res_id: data.res_id,
+            res_paiement: value
+        })
+    }
+
+    const updateEspaceReservation = (data, value) => {
+
+        console.log("DATA", data)
+        Axios.put("/server/reservations/updateReservationLocalisation", {
+            res_id: data.res_id,
+            loc_id: value
+        })
+    }
+
+    const updatePrixRetour = (data, value) => {
+
+        console.log("DATA", data)
+        Axios.put("/server/reservations/updateReservationPrixRetour", {
+            res_id: data.res_id,
+            res_prixRetour: value
+        })
+    }
+
+    const updatePrixNegocie = (data, value) => {
+
+        console.log("DATA", data, value)
+        Axios.put("/server/reservations/updateReservationPrixNegocie", {
+            res_id: data.res_id,
+            res_prixNegocie: value
+        })
+    }
+
+
     const columns = useMemo(() => [
         {
             Header: () => null,
@@ -43,7 +91,32 @@ export default function Reservation() {
         },
         {
             Header: "Zone",
-            accessor: "espace.localisation.loc_libelle"
+            accessor: "espace.localisation.loc_id",
+
+            disableSortBy: true,
+            Filter: SelectColumnFilter,
+            filter: 'equals',
+
+            Cell: row => {
+                return (
+                    <div>
+                        <Form.Control as={"select"}
+                                      onChange={(e) => updateEspaceReservation(row.row.original, e.target.value)}>
+                            {
+                                listLocalisation.length != 0 ?
+                                    listLocalisation.map((option) =>
+                                        <option value={option.loc_id}
+                                                selected={option.loc_id == parseInt(row.value)}
+                                                key={option.loc_id}>
+                                            {option.loc_libelle}
+                                        </option>
+                                    )
+                                    : null
+                            }
+                        </Form.Control>
+                    </div>
+                )
+            }
         },
         {
             Header: "Facture",
@@ -52,6 +125,19 @@ export default function Reservation() {
             disableSortBy: true,
             Filter: SelectColumnFilter,
             filter: 'equals',
+
+            Cell: row => {
+                return (
+                    <div style={{'textAlign': 'center'}}>
+                        <input
+                            type="checkbox"
+                            disabled={row.value == null}
+                            defaultChecked={(row.value == null || row.value == 'false') ? false : true}
+                            onChange={(event) => updateFacture(row.row.original, event.target.checked ? 1 : 0)}
+                        />
+                    </div>)
+            },
+
         },
         {
             Header: "Paiement",
@@ -60,13 +146,67 @@ export default function Reservation() {
             disableSortBy: true,
             Filter: SelectColumnFilter,
             filter: 'equals',
+
+            Cell: row => {
+                return (
+                    <div style={{'textAlign': 'center'}}>
+                        <input
+                            type="checkbox"
+                            disabled={row.value == null}
+                            defaultChecked={(row.value == null || row.value == 'false') ? false : true}
+                            onChange={(event) => updatePaiement(row.row.original, event.target.checked ? 1 : 0)}
+                        />
+                    </div>)
+            },
+
+
         },
+        {
+            Header: "Prix retour",
+            accessor: d => d.res_prixRetour,
+
+            Cell: row => {
+                return (
+                    <div style={{'textAlign': 'center'}}>
+                        {
+                            console.log("ROW", row.value)
+                        }
+                        <input
+                            type="number"
+                            step={".01"}
+                            disabled={row.value == null}
+                            defaultValue={row.value}
+                            onChange={(event) => updatePrixRetour(row.row.original, event.target.value)}
+                        />
+                    </div>)
+            },
+        },
+        {
+            Header: "Prix Negocie",
+            accessor: d => d.res_prixNegocie,
+
+            Cell: row => {
+                return (
+                    <div style={{'textAlign': 'center'}}>
+                        {
+                            console.log("ROW", row.value)
+                        }
+                        <input
+                            type="number"
+                            step={".01"}
+                            disabled={row.value == null}
+                            defaultValue={row.value}
+                            onChange={(event) => updatePrixNegocie(row.row.original, event.target.value)}
+                        />
+                    </div>)
+            },
+        }
 
     ])
 
     return (
         <div>
-            <div style={{marginTop: `50px`}}>
+            <div style={{marginTop: `50px`}} className="EspaceFooter">
                 <TableContainer columns={columns} data={listReservations}/>
             </div>
         </div>
