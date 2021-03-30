@@ -10,6 +10,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import CardContact from "../../components/contact/CardContact";
+import {Container} from "../../components/ModalForm/container";
+import FormContact from "../../components/contact/FormContact";
 
 const ExhibitorMonitoring = () => {
 
@@ -19,6 +21,7 @@ const ExhibitorMonitoring = () => {
     const [contactList, setContactList] = useState([]);
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
+    const [showNewContact,setShowNewContact] = useState(false);
     const [showAdress, setShowAdress] = useState(false);
     const [soc_ville, setSoc_ville] = useState("");
     const [soc_rue, setSoc_rue] = useState("");
@@ -38,8 +41,6 @@ const ExhibitorMonitoring = () => {
                 setSoc_ville(res.data.soc_ville)
                 setSoc_codePostal(res.data.soc_codePostal)
                 setSoc_pays(res.data.soc_pays)
-
-
             });
 
     }, []);
@@ -85,6 +86,33 @@ const ExhibitorMonitoring = () => {
             console.log(res)
         })
     }
+//ajouter un contact
+    const onSubmit = (event) => {
+
+        event.preventDefault(event);
+
+        console.log("EVENT", event)
+
+        Axios.post(`/server/contacts/add/${idExposant}"`, {
+            //récupérer les valeurs du formulaire
+            nom: event.target.nom.value,
+            prenom : event.target.prenom.value,
+            telPortable : event.target.telPortable.value,
+            telFixe : event.target.telFixe.value,
+            email: event.target.email.value,
+            rue : event.target.rue.value,
+            ville : event.target.ville.value,
+            codePostal : event.target.codePostal.value,
+            pays: event.target.pays.value,
+            fonction : event.target.fonction.value,
+            principal: event.target.principal.value,
+        }).then((res) => {
+            //afficher alert succes
+            setShowNewContact(true);
+
+
+        })
+    };
 
     //changer adresse exposant
     const updateAdress = (event) => {
@@ -97,6 +125,15 @@ const ExhibitorMonitoring = () => {
             soc_pays: soc_pays
         }).then((res) => {
             setShowAdress("true");
+        })
+    }
+
+    //changer date contact
+    const updateDateContact = (value, numeroRelance) => {
+
+        Axios.put(`/server/suiviExposant/updateDateContact/${numeroRelance}`, {
+            suivE_id: detailSuivi.suivE_id,
+            suivE_dateContact: value
         })
     }
 
@@ -128,6 +165,9 @@ const ExhibitorMonitoring = () => {
                     <Alert id="alertSucces" variant="success" show={showAdress}>
                         Adresse modifiée !
                     </Alert>
+                    <Alert id="alertSucces" variant="success" show={showNewContact}>
+                        Contact ajouté !
+                    </Alert>
 
                 </div>
 
@@ -157,8 +197,11 @@ const ExhibitorMonitoring = () => {
                     <Accordion.Collapse eventKey="0">
 
                         <Card.Body className="flex-container-Contacts">
-                            <Card className="flex-item">
+                            <div id="btnNewJeu">
+                                <Container triggerText="Ajouter un contact" onSubmit={onSubmit} component={FormContact}/>
+                            </div>
 
+                            <Card className="flex-item">
                                 <Card.Header>Adresse: {name}</Card.Header>
                                 <div id="cardContacts">
                                     <Form onSubmit={updateAdress}>
@@ -205,10 +248,34 @@ const ExhibitorMonitoring = () => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="1">
                         <Card.Body>
-                            1er contact: {detailSuivi.suivE_dateContact1}
-                            2eme contact: {detailSuivi.suivE_dateContact2}
-                            3eme contact: {detailSuivi.suivE_dateContact3}
-                            se déplace: {detailSuivi.suivE_deplacement}
+                            <div>
+                                <label >1er contact: </label>
+                                <input id="labelNomExposant" type="date"
+                                       defaultValue= {detailSuivi.suivE_dateContact1}
+                                       onChange={(event) => updateDateContact(event.target.value,1)}
+                                />
+                            </div>
+                            <div>
+                                <label >2eme contact: </label>
+                                <input id="labelNomExposant" type="date"
+                                       defaultValue= {detailSuivi.suivE_dateContact2}
+                                       onChange={(event) => updateDateContact(event.target.value,2)}
+                                />
+                            </div>
+                            <div>
+                                <label >3eme contact: </label>
+                                <input id="labelNomExposant" type="date"
+                                       defaultValue=  {detailSuivi.suivE_dateContact3}
+                                       onChange={(event) => updateDateContact(event.target.value,3)}
+                                />
+                            </div>
+
+                            <div>
+                                <label >se déplace: </label>
+                                se déplace: {detailSuivi.suivE_deplacement}
+                            </div>
+
+
                             besoin de bénévoles: {detailSuivi.suivE_benevole}
                             combien de bénévoles: {detailSuivi.suivE_nbBenevoles}
                             il envoie ses jeux: {detailSuivi.res_envoiDebut}

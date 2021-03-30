@@ -53,8 +53,8 @@ export default function AfficherExposant() {
         console.log("DATA", suivE_id, numeroRelance)
 
         Axios.put(`/server/suiviExposant/updateDateContact/${numeroRelance}`, {
-            suivE_id: suivE_id, //row id=0 <==> soc_id = 1 --> d'où le +1
-            suivE_dateContact: value //'true' or 'false'
+            suivE_id: suivE_id,
+            suivE_dateContact: value
         })
     }
 
