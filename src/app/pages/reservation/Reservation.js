@@ -3,6 +3,7 @@ import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {Form} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
 
 
 export default function Reservation() {
@@ -11,10 +12,9 @@ export default function Reservation() {
     const [listLocalisation, setListLocalisation] = useState([])
 
     const fes_id = localStorage.getItem("currentFestival")
+    const history = useHistory()
 
     useEffect(() => {
-
-
         Axios.get(`/server/reservations/afficherAllReservation/${fes_id}`).then((result) => {
                 setListReservations(result.data)
                 console.log(result.data)
@@ -78,6 +78,11 @@ export default function Reservation() {
         })
     }
 
+    const goToExhibitorMonitoring = (soc_id) => {
+        history.push('/exhibitor-monitoring/' + soc_id);
+        window.location.reload(false)
+
+    }
 
     const columns = useMemo(() => [
         {
@@ -87,7 +92,13 @@ export default function Reservation() {
         },
         {
             Header: "Exposant",
-            accessor: "societe.soc_nom"
+            accessor: "societe.soc_nom",
+
+            Cell: row => {
+                return (
+                    <a href="#" onClick={() => goToExhibitorMonitoring(row.row.original.societe.soc_id)}>{row.value}</a>
+                )
+            }
         },
         {
             Header: "Zone",
