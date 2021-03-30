@@ -28,6 +28,8 @@ const ExhibitorMonitoring = () => {
     const [soc_codePostal, setSoc_codePostal] = useState("");
     const [soc_pays, setSoc_pays] = useState("");
     const [detailSuivi, setDetailSuivi] = useState([]);
+    const [suivi, setSuivi] = useState([]);
+    const [reservation, setReservation] = useState([]);
     const [commentaire, setCommentaire] = useState("");
 
     //méthode qui s'appelle au chargement de la page
@@ -48,10 +50,20 @@ const ExhibitorMonitoring = () => {
     useEffect(() => {
         //Récupérerles infos de suivi et de la réservation
         const fes_id = localStorage.getItem("currentFestival")
+        Axios.get(`/server/reservations/festival/${fes_id}/societe/${idExposant}`).then((res) => {
+            if(res.data) {
+                setReservation(res.data)
+                setCommentaire(res.data.suivE_commentaire)
+            }
+            console.log("RESERVATION", res)
+        })
+    }, []);
 
-        Axios.get(`/server/reservations/${idExposant}/${fes_id}/allInformations`).then((res) => {
-            setDetailSuivi(res.data[0])
-            setCommentaire(res.data[0].suivE_commentaire)
+    useEffect(() => {
+        //Récupérerles infos de suivi et de la réservation
+        const fes_id = localStorage.getItem("currentFestival")
+        Axios.get(`/server/suiviExposant/festival/${fes_id}/societe/${idExposant}`).then((res) => {
+            setSuivi(res.data)
             console.log("SUIVI", res)
         })
     }, []);
@@ -132,7 +144,7 @@ const ExhibitorMonitoring = () => {
     const updateDateContact = (value, numeroRelance) => {
 
         Axios.put(`/server/suiviExposant/updateDateContact/${numeroRelance}`, {
-            suivE_id: detailSuivi.suivE_id,
+            suivE_id: suivi.suivE_id,
             suivE_dateContact: value
         })
     }
@@ -140,7 +152,7 @@ const ExhibitorMonitoring = () => {
     //changer nombre de bénévols
     const updateNbBenevoles = (value) => {
         Axios.put("/server/suiviExposant/updateNbBenevole", {
-            suivE_id: detailSuivi.suivE_id,
+            suivE_id: suivi.suivE_id,
             suivE_nbBenevoles: value
         })
     }
@@ -148,12 +160,26 @@ const ExhibitorMonitoring = () => {
     //changer si il se déplace ou non
     const updateStatusSeDeplace = (value) => {
         Axios.put("/server/suiviExposant/updateSeDeplace", {
-            suivE_id: detailSuivi.suivE_id,
+            suivE_id: suivi.suivE_id,
             suivE_deplacement: value
         }).then((res) => console.log(res))
     }
-    
 
+    const updateFacture = (value) => {
+
+        Axios.put("/server/reservations/updateReservationFacture", {
+            res_id: reservation.res_id,
+            res_facture: value
+        })
+    }
+
+    const updatePaiement = (value) => {
+
+        Axios.put("/server/reservations/updateReservationPaiement", {
+            res_id: reservation.res_id,
+            res_paiement: value
+        })
+    }
 
     return (
         <div className="EspaceFooter">
@@ -290,51 +316,76 @@ const ExhibitorMonitoring = () => {
                         Détails suivi
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="1">
-                        <Card.Body>
-                            <div>
-                                <label >1er contact: </label>
-                                <input id="labelNomExposant" type="date"
-                                       defaultValue= {detailSuivi.suivE_dateContact1}
-                                       onChange={(event) => updateDateContact(event.target.value,1)}
-                                />
-                            </div>
-                            <div>
-                                <label >2ème contact: </label>
-                                <input id="labelNomExposant" type="date"
-                                       defaultValue= {detailSuivi.suivE_dateContact2}
-                                       onChange={(event) => updateDateContact(event.target.value,2)}
-                                />
-                            </div>
-                            <div>
-                                <label >3ème contact: </label>
-                                <input id="labelNomExposant" type="date"
-                                       defaultValue=  {detailSuivi.suivE_dateContact3}
-                                       onChange={(event) => updateDateContact(event.target.value,3)}
-                                />
-                            </div>
-
+                        <Card.Body className="flex-container-Contacts">
+                            <div className="flex-item">
                                 <div>
-                                    <label >Se déplace: </label>
-
-                                    <input
-                                        type="checkbox"
-                                        defaultChecked={detailSuivi.suivE_deplacement === 1}
-                                        onChange={(event) => updateStatusSeDeplace(event.target.checked ? 1 : 0)}
+                                    <label >1er contact: </label>
+                                    <input id="labelNomExposant" type="date"
+                                           defaultValue= {suivi.suivE_dateContact1}
+                                           onChange={(event) => updateDateContact(event.target.value,1)}
                                     />
                                 </div>
-                                besoin de bénévoles: {detailSuivi.suivE_benevole}
-
-                            <div>
-                                <label >Nombre de bénévols nécessaires: </label>
-                                <input
-                                    type="number"
-                                    defaultValue={detailSuivi.suivE_nbBenevoles}
-                                    onChange={(event) => updateNbBenevoles(event.target.value)}
-                                />
+                                <div>
+                                    <label >2ème contact: </label>
+                                    <input id="labelNomExposant" type="date"
+                                           defaultValue= {suivi.suivE_dateContact2}
+                                           onChange={(event) => updateDateContact(event.target.value,2)}
+                                    />
+                                </div>
+                                <div>
+                                    <label >3ème contact: </label>
+                                    <input id="labelNomExposant" type="date"
+                                           defaultValue=  {suivi.suivE_dateContact3}
+                                           onChange={(event) => updateDateContact(event.target.value,3)}
+                                    />
+                                </div>
                             </div>
-                            il envoie ses jeux: {detailSuivi.res_envoiDebut}
-                            facturé ? {detailSuivi.res_facture}
-                            payé? {detailSuivi.res_paiemen}
+
+                            {
+                                reservation.length > 0 ?
+                                <div className="flex-item">
+                                    <div>
+                                        <label >Se déplace: </label>
+                                        {suivi.suivE_deplacement}
+
+                                    </div>
+                                    <div>
+                                        Besoin de bénévoles: {suivi.suivE_benevole}
+
+                                    </div>
+                                    <div>
+                                        <label >Nombre de bénévols nécessaires: </label>
+
+                                        <input
+                                            type="number"
+                                            defaultValue={suivi.suivE_nbBenevoles}
+                                            onChange={(event) => updateNbBenevoles(event.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        Il envoie ses jeux ? {reservation.res_envoiDebut}
+                                    </div>
+
+
+                                    <div>
+                                        <label>A été facturé?</label>
+
+                                        {reservation.res_facture}
+                                        {reservation.res_dateFacturation}
+
+                                    </div>
+                                    <div>
+                                        <label> A payé? </label>
+                                        {reservation.res_paiement}
+                                        {reservation.res_datePaiement}
+                                    </div>
+
+
+                                </div>
+                                    : null
+                            }
+
+
 
                         </Card.Body>
                     </Accordion.Collapse>
@@ -345,7 +396,16 @@ const ExhibitorMonitoring = () => {
                         Réservation
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="2">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                            {
+                                reservation.length > 0  ?
+                                    <div>Afficher la réservation et pouvoir la modifier</div>
+                                    :
+                                <div>
+                                bouton créer une réservation
+                                </div>
+                            }
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
 
