@@ -39,20 +39,24 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
      * Method called when the form is validated
      * @param event
      */
-    const onSubmitLocalisation = (event) => {
+    const onSubmit = (event) => {
+
         event.preventDefault(event);
         //get the information of the form
         console.log("front lib :", event.target.loc_libelle.value);
         console.log("front id : ", fes.fes_id);
+
+
         Axios.post(`/server/localisation/add/${fes.fes_id}`, {
             loc_libelle: event.target.loc_libelle.value,
             loc_prixTable: event.target.loc_prixTable.value,
             loc_prixM2: event.target.loc_prixM2.value
-        })
-            .then((res) => {
+        }).then((res) => {
                 // to show the success with an alert
                 setShow(true);
             })
+
+        window.location.reload(true)
     }
 
     /**
@@ -90,6 +94,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
         }, {
             Header: "Prix table",
             accessor: "loc_prixTable",
+
             Cell: row => {
                 return (
                     <Form.Control
@@ -104,6 +109,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
         }, {
             Header: "Prix m²",
             accessor: "loc_prixM2",
+
             Cell: row => {
                 return (
                     <Form.Control
@@ -150,10 +156,11 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
                     <div className="tableLocalisation">
                         <SimpleTableContainer columns={columns} data={localisationList}/>
                     </div>
-                    <Container triggerText="Créer un nouvel espace" onSubmit={onSubmitLocalisation}
+                    <Container triggerText="Créer un nouvel espace" onSubmit={onSubmit}
                                component={FormLocalisation}/>
                 </CardBody>
             </Card>
+
         </div>
     );
 }
