@@ -1,18 +1,49 @@
 import './App.css'
-import React from "react";
+import React, {createContext, useEffect, useState} from "react";
 
 //pour avoir la navbar sur toutes les pages on l'a mise dans un component
 import CustomHeader from "./app/components/headerfooter/CustomHeader";
 import Routes from "./app/routes/routes"
 import CustomFooter from "./app/components/headerfooter/CustomFooter"
+import Axios from "axios";
+
+
+export const FestivalContext = createContext({
+    selectedFestival: {
+        fes_id: 0,
+        fes_date: new Date(),
+        fes_nbTables: 0
+    },
+    setSelectedFestival: Function
+})
 
 function App() {
 
+    const [prochainFestival, setProchainFestival] = useState({
+        fes_id: 0,
+        fes_date: new Date(),
+        fes_nbTables: 0
+    });
+    const value = {selectedFestival: prochainFestival, setSelectedFestival: setProchainFestival}
+
+    //méthode qui s'appelle au chargement de la page
+    useEffect(() => {
+        Axios.get("/server/festivals/closest")
+            .then((res) => {
+                localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
+                setProchainFestival(res.data.closestFestival[0]);
+            })
+    });
+
     return (
         <div className="App">
+            {prochainFestival &&
+            <FestivalContext.Provider value={value}>
                 <CustomHeader/>
                 <Routes/>
                 <CustomFooter/>
+            </FestivalContext.Provider>
+            }
         </div>
     );
 

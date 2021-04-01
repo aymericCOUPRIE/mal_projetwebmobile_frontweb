@@ -3,6 +3,7 @@ import {email, isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+//import React, {Component} from "react";
 
 import {
     faUser,
@@ -18,15 +19,16 @@ import {
     faUserTag
 } from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Axios from "axios";
 import Moment from "moment";
+import {FestivalContext} from "../../../App";
 
 
 const CustomHeader = () => {
 
     const [dateFestivalCourant, setDateFestivalCourant] = useState(null);
-
+    const {selectedFestival, setSelectedFestival} = useContext(FestivalContext)
     const history = useHistory();
 
     function logout() {
@@ -34,6 +36,7 @@ const CustomHeader = () => {
         history.push("/")
         window.location.reload(false)
     }
+
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
@@ -45,9 +48,23 @@ const CustomHeader = () => {
                 setDateFestivalCourant(res.data.festival.fes_date)
             })
 
+        console.log("charge")
 
-    });
+        console.log("BONJOUR JSP ")
+    }, [dateFestivalCourant]);
 
+/*
+    componentDidUpdate() {
+
+        const fes_id = localStorage.getItem("currentFestival");
+
+        Axios.get(`/server/festivals/${fes_id}`)
+            .then((res) => {
+                setDateFestivalCourant(res.data.festival.fes_date)
+            });
+
+        console.log("BONJOUR JSP ");
+    }*/
 
     //mettre dans isAdmin les pages accecibles uniquement à l'admin
 //idem pour isLogin ---------------------------------- si on est connecté
@@ -106,7 +123,7 @@ const CustomHeader = () => {
                                                 courant:
                                             </div>
 
-                                            <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
+                                            <NavDropdown title={Moment(selectedFestival.fes_date).format('DD/MM/YYYY')}
                                                          id="who">
                                                 <Nav.Link id="dropdownItem" href='/festivals'>
                                                     <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>

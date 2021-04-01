@@ -15,7 +15,6 @@ const Festivals = () => {
 
     const [form, setForm] = useState(false)
     const [festivals, setListFestivals] = useState([]);
-
     const [show, setShow] = useState(false)
 
     /**

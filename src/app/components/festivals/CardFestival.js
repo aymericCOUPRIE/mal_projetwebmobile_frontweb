@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo} from "react";
+import React, {useEffect, useState, useMemo, useContext} from "react";
 import Card from "@material-ui/core/Card";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 import Axios from "axios";
@@ -10,6 +10,8 @@ import "./CardFestival.css";
 import Alert from "react-bootstrap/Alert";
 import SimpleTableContainer from "../../components/tables/SimpleTableContainer";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import {FestivalContext} from "../../../App";
 
 
 const CardFestival = ({fes, updateDate, updateNbTables}) => {
@@ -17,6 +19,7 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
     const [festivalDate, setDate] = useState(fes.fes_date)
     const [localisationList, setLocalList] = useState([])
     const [show, setShow] = useState(false) // for the form of the localisation
+    const {selectedFestival, setSelectedFestival} = useContext(FestivalContext)
 
     useEffect(() => {
         // Get details for the festivals
@@ -33,6 +36,16 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
 
     const changeNbTables = event => {
         updateNbTables(fes.fes_id, event.target.value)
+    }
+
+    const updateCurrentFestival = event => {
+        localStorage.setItem("currentFestival", fes.fes_id)
+
+        console.log("FES", fes)
+        // setSelectedFestival de currentFestival
+        setSelectedFestival(fes);
+
+        console.log("SELECTED", selectedFestival)
     }
 
     /**
@@ -131,20 +144,17 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
                         <strong>Festival du {Moment(festivalDate).format('DD/MM/YYYY')}</strong>
                     </CardTitle>
                     <CardText>
+                        <Button block size="lg" type="submit" onClick={updateCurrentFestival}>
+                            Définir en tant que festival courant
+                        </Button>
+                    </CardText>
+                    <CardText>
                         Date
                         <input type={'date'}
                                className="inputCss"
                                value={festivalDate}
                                onChange={changeDate}
 
-                        />
-                    </CardText>
-                    <CardText>
-                        Nombre de tables
-                        <NumberFormat
-                            className="inputCss"
-                            value={fes.fes_nbTables}
-                            onChange={changeNbTables}
                         />
                     </CardText>
                     <div className="tableLocalisation">
