@@ -36,8 +36,7 @@ const Festivals = () => {
         event.preventDefault(event);
         //get the information of the form
         Axios.post("/server/festivals/add", {
-            fes_date: event.target.fes_date.value,
-            fes_nbTables: event.target.fes_nbTables.value
+            fes_date: event.target.fes_date.value
         })
             .then((res) => {
                 // to show the success with an alert
@@ -57,17 +56,14 @@ const Festivals = () => {
         })
     }
 
-    /**
-     *
-     * @param fes_date
-     * @param new_number
-     */
-    const updateNbTables = (fes_id, new_nbTables) => {
-        Axios.put("/server/festivals/updateNbTables", {
-            fes_id : fes_id,
-            new_nbTables : new_nbTables
-        })
-    }
+    /*
+     const updateNbTables = (fes_id, new_nbTables) => {
+         Axios.put("/server/festivals/updateNbTables", {
+             fes_id : fes_id,
+             new_nbTables : new_nbTables
+         })
+     }
+   */
 
     //ATTENTION : faire if  isAdmin la page admin else la page organisateur
     return (
@@ -83,13 +79,16 @@ const Festivals = () => {
                 <Alert id="alertSucces" variant="success" show={show}>
                     Le festival a été créé !
                 </Alert>
-                <div id="btnNewFestival">
-                    <Container triggerText="Créer un nouveau festival" onSubmit={onSubmit} component={FormFestival}/>
-                </div>
+                {isAdmin() ?
+                    <div id="btnNewFestival">
+                        <Container triggerText="Créer un nouveau festival" onSubmit={onSubmit}
+                                   component={FormFestival}/>
+                    </div>
+                    : null}
                 <div className="flex-container">
                     {festivals.map((fest, i) =>
-                        <div id={fest} className="flex-item" >
-                            <CardFestival fes={fest} updateDate={updateDateFestival} updateNbTables={updateNbTables}/>
+                        <div id={fest} className="flex-item">
+                            <CardFestival fes={fest} updateDate={updateDateFestival}/>
                         </div>
                     )}
                 </div>

@@ -13,7 +13,6 @@ import Axios from "axios";
 const FormFestival = ({onSubmit}) => {
 
     const [fes_date, setDate] = useState("");
-    const [fes_nbTables, setNbTables] = useState(0);
     const [festival, setFestival] = useState();
     const [errortext, setErrortext] = useState("");
 
@@ -71,15 +70,6 @@ const FormFestival = ({onSubmit}) => {
                             type="date"
                             value={fes_date}
                             onChange={(e) => setDate(e.target.value)}
-                        />
-                    </Form.Group>
-                    <Form.Group size="lg" controlId="fes_nbTables">
-                        <Form.Label>Nombre de tables total </Form.Label>
-                        <Form.Control
-                            type="text"
-                            min="0"
-                            value={fes_nbTables}
-                            onChange={(e) => setNbTables(e.target.value)}
                         />
                     </Form.Group>
                     <p>* Champ obligatoire</p>

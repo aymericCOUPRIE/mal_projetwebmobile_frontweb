@@ -10,8 +10,7 @@ import Axios from "axios";
 export const FestivalContext = createContext({
     selectedFestival: {
         fes_id: 0,
-        fes_date: new Date(),
-        fes_nbTables: 0 //TODO: à supprimer qd bdd propre
+        fes_date: new Date()
     },
     setSelectedFestival: Function
 })
@@ -20,8 +19,7 @@ function App() {
 
     const [prochainFestival, setProchainFestival] = useState({
         fes_id: 0,
-        fes_date: new Date(),
-        fes_nbTables: 0
+        fes_date: new Date()
     });
     const [isWhatever, setIsWhatever] = useState(false); // used to update the date in the header instead of reloading the page
     const value = {selectedFestival: prochainFestival, setSelectedFestival: setProchainFestival}
