@@ -9,7 +9,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import FormText from "react-bootstrap/FormText";
 
-const FormLocalisation = ({onSubmitLocalisation}) => {
+const FormLocalisation = ({onSubmit}) => {
     const [loc_libelle, setLibelle] = useState("");
     const [loc_prixTable, setPrixTable] = useState(0);
     const [loc_prixM2, setPrixM2] = useState(0);
@@ -24,7 +24,7 @@ const FormLocalisation = ({onSubmitLocalisation}) => {
     return (
         <div>
             <div className="CreateFestival">
-                <Form onSubmit={onSubmitLocalisation}>
+                <Form onSubmit={onSubmit}>
                     {errortext !== "" ? (
                         <FormText id="errorLabel">{errortext}</FormText>
                     ) : null}

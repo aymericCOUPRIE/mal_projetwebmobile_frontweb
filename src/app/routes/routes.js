@@ -17,6 +17,7 @@ import ExhibitorMonitoring from "../pages/exhibitor-monitoring/exhibitor-monitor
 import AfficherSocieteRole from "../pages/societe/AfficherSocieteRole";
 import FormLocalisation from "../components/festivals/FormLocalisation";
 import Reservation from "../pages/reservation/Reservation";
+import AfficherEditeur from "../pages/societe/AfficherEditeurs";
 
 
 // DANS LE SWITCH
@@ -33,6 +34,7 @@ function Routes() {
                 <Route path='/reservations' component={Reservation}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
                 <PrivateRoute path='/exposants' component={AfficherExposant}/>
+                <PrivateRoute path='/editeurs' component={AfficherEditeur}/>
                 <PrivateRoute path='/societes' component={AfficherSocieteRole}/>
                 <PrivateRoute path='/handle-accounts' component={HandleAccounts}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>

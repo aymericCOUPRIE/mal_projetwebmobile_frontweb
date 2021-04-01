@@ -97,6 +97,15 @@ export default function AfficherExposant() {
             suivE_id: data.suivE_id,
             suivD_id: value
         })
+
+        // const newSocietes = [...societe];
+        //
+        // const index = newSocietes.findIndex(s => s.soc_id === data.soc_id)
+        //
+        // newSocietes[index].suivD_id = value
+        //
+        // setListSociete(newSocietes)
+
         window.location.reload()
     }
 
@@ -151,7 +160,7 @@ export default function AfficherExposant() {
                 Cell: row => {
                     return (
                         <Form.Control as={"textarea"}
-                                      value={row.value.suivi_exposants.length == 0 ? "" : row.value.suivi_exposants[0].suivE_commentaire}>
+                                      value={row.value.suivi_exposants.length === 0 ? "" : row.value.suivi_exposants[0].suivE_commentaire}>
                         </Form.Control>
                     )
                 }
@@ -159,7 +168,7 @@ export default function AfficherExposant() {
 
             {
                 Header: "WorkFlow",
-                accessor: d => d.suivi_exposants.length == 0 ? null : d.suivi_exposants[0].suivD_id.toString(), //required cast from boolean to string
+                accessor: d => d.suivi_exposants.length === 0 ? null : d.suivi_exposants[0].suivD_id.toString(), //required cast from boolean to string
 
                 disableSortBy: true,
                 Filter: SelectColumnFilter,
@@ -174,7 +183,7 @@ export default function AfficherExposant() {
                                 {
                                     optionsDiscussion.map((option) =>
                                         <option value={option.suivD_id}
-                                                selected={option.suivD_id == parseInt(row.value)}
+                                                selected={option.suivD_id === parseInt(row.value)}
                                                 key={option.suivD_id}
                                                 style={{backgroundColor: options.find(element => element.id === parseInt(option.suivD_id)).color}}>
                                             {option.suivD_libelle}
@@ -366,12 +375,6 @@ export default function AfficherExposant() {
                                 )
                             })
                         }
-
-                        {/*                        <div id="newContact">
-                            <Container triggerText="Créer un nouveau contact"
-                                       onSubmit={onSubmitContact}
-                                       component={FormContact}/>
-                        </div>*/}
                     </CardBody>
                 </Card>
             </div>
