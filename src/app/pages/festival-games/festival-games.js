@@ -265,7 +265,6 @@ const FestivalGames = () => {
                     )
                 }
             },
-
             {
                 Header: "Type",
                 accessor: "jeu.type_jeu.typJ_libelle",
@@ -318,7 +317,7 @@ const FestivalGames = () => {
                                     </Form.Control>
                                 </Form.Group>
                             </div>
-                            :  <p>{row.value}</p>
+                            : <p>{row.value}</p>
                     )
                 }
 
@@ -327,7 +326,7 @@ const FestivalGames = () => {
 
         ];
 
-        if(isLogin()) {
+        if (isLogin()) {
             result.push(
                 {
 
@@ -338,7 +337,8 @@ const FestivalGames = () => {
 
                         return (
 
-                            <a href="#" onClick={() => goToExhibitorMonitoring(row.row.original.reservation.societe.soc_id)}>{row.value}</a>
+                            <a href="#"
+                               onClick={() => goToExhibitorMonitoring(row.row.original.reservation.societe.soc_id)}>{row.value}</a>
 
                         )
                     }
@@ -388,12 +388,13 @@ const FestivalGames = () => {
 
                 {
                     Header: "Envoie ?",
-                    accessor: d => d.reservation.res_envoiDebut != null ? d.reservation.res_envoiDebut.toString() : null, //required cast from boolea to string
+                    accessor: d => d.reservation == null ? null : d.reservation.res_envoiDebut != null ? d.reservation.res_envoiDebut.toString() : null, //required cast from boolea to string
 
                     disableSortBy: true,
                     Filter: SelectColumnFilter,
                     filter: 'equals',
                 },
+
                 {
                     Header: "Reçu ?",
                     accessor: d => d.suivJ_recu != null ? d.suivJ_recu.toString() : null, //required cast from boolea to string
@@ -481,47 +482,47 @@ const FestivalGames = () => {
         return (
             <Card className="CardGames">
                 {isLogin() ?
-                <div className="flex-item">
-                    <CardTitle>
-                        <h5>Détails réservation </h5>
-                    </CardTitle>
-                    <CardText>
-                        <p>
-                            <label id="checboxCardGames">Tombola:</label>
-                            <input
-                                type="checkbox"
-                                defaultChecked={row.original.suivJ_tombola}
-                                onChange={(event) => updateTombola(row.original, event.target.checked)}/>
-                        </p>
-                        <p>
-                            <label id="checboxCardGames">Dotation:</label>
-                            <input
-                                type="checkbox"
-                                defaultChecked={row.original.suivJ_dotation}
-                                onChange={(event) => updateDotation(row.original, event.target.checked)}/>
+                    <div className="flex-item">
+                        <CardTitle>
+                            <h5>Détails réservation </h5>
+                        </CardTitle>
+                        <CardText>
+                            <p>
+                                <label id="checboxCardGames">Tombola:</label>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.original.suivJ_tombola}
+                                    onChange={(event) => updateTombola(row.original, event.target.checked)}/>
+                            </p>
+                            <p>
+                                <label id="checboxCardGames">Dotation:</label>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={row.original.suivJ_dotation}
+                                    onChange={(event) => updateDotation(row.original, event.target.checked)}/>
 
-                        </p>
-                        <p>
-                            <label id="checboxCardGames">Nombre de jeux reçus:</label>
-                            <input
-                                type="number"
-                                min="0"
-                                defaultValue={row.original.suivJ_nbJeuxRecus}
-                                onChange={(event) => updateNbJeuxRecus(row.original, event.target.value)}/>
+                            </p>
+                            <p>
+                                <label id="checboxCardGames">Nombre de jeux reçus:</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    defaultValue={row.original.suivJ_nbJeuxRecus}
+                                    onChange={(event) => updateNbJeuxRecus(row.original, event.target.value)}/>
 
-                        </p>
-                        <p>
-                            <label id="checboxCardGames">Nombre de jeux exposés:</label>
-                            <input
-                                type="number"
-                                min="0"
-                                defaultValue={row.original.suivJ_nbJeuxExposes}
-                                onChange={(event) => updateageMin(row.original, event.target.value)}/>
+                            </p>
+                            <p>
+                                <label id="checboxCardGames">Nombre de jeux exposés:</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    defaultValue={row.original.suivJ_nbJeuxExposes}
+                                    onChange={(event) => updateageMin(row.original, event.target.value)}/>
 
-                        </p>
-                    </CardText>
-                </div>
-                      : null}
+                            </p>
+                        </CardText>
+                    </div>
+                    : null}
                 <div className="flex-item">
                     <CardTitle>
                         <h5> Détails jeu </h5>
@@ -530,41 +531,41 @@ const FestivalGames = () => {
                         <p>
                             <label id="checboxCardGames">Age minimum:</label>
                             {isLogin() ?
-                            <input
-                                type="number"
-                                min="0"
-                                defaultValue={row.original.jeu.j_ageMin}
-                                onChange={(event) => updateNbJeuxExposes(row.original, event.target.value)}/>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    defaultValue={row.original.jeu.j_ageMin}
+                                    onChange={(event) => updateNbJeuxExposes(row.original, event.target.value)}/>
                                 : row.original.jeu.j_ageMin}
-                                an(s)
+                            an(s)
                         </p>
                         <p>
                             <label id="checboxCardGames">Nombre de joueurs minimum: </label>
                             {isLogin() ?
-                            <input
-                                type="number"
-                                min="0"
-                                defaultValue={row.original.jeu.j_nbMinJoueurs}
-                                onChange={(event) => updatenbjMin(row.original, event.target.value)}/>
-                                : row.original.jeu.j_nbMinJoueurs }
+                                <input
+                                    type="number"
+                                    min="0"
+                                    defaultValue={row.original.jeu.j_nbMinJoueurs}
+                                    onChange={(event) => updatenbjMin(row.original, event.target.value)}/>
+                                : row.original.jeu.j_nbMinJoueurs}
                         </p>
                         <p>
                             <label id="checboxCardGames"> Nombre de joueurs maximum: </label>
                             {isLogin() ?
-                            <input
-                                type="number"
-                                min={row.original.jeu.j_nbMinJoueurs}
-                                defaultValue={row.original.jeu.j_nbMaxJoueurs}
-                                onChange={(event) => updatenbjMax(row.original, event.target.value)}/>
+                                <input
+                                    type="number"
+                                    min={row.original.jeu.j_nbMinJoueurs}
+                                    defaultValue={row.original.jeu.j_nbMaxJoueurs}
+                                    onChange={(event) => updatenbjMax(row.original, event.target.value)}/>
                                 : row.original.jeu.j_nbMaxJoueurs}
                         </p>
                         <p>
                             <label id="checboxCardGames">Durée: </label>
                             {isLogin() ?
-                            <input
-                                type="time"
-                                defaultValue={row.original.jeu.j_duree}
-                                onChange={(event) => updateDuree(row.original, event.target.value)}/>
+                                <input
+                                    type="time"
+                                    defaultValue={row.original.jeu.j_duree}
+                                    onChange={(event) => updateDuree(row.original, event.target.value)}/>
                                 : row.original.jeu.j_duree}
                         </p>
                         <p>
@@ -575,11 +576,11 @@ const FestivalGames = () => {
                         </p>
                         {
                             isLogin() ? <p><label id="checboxCardGames"> Changer le lien des règles: </label>
-                            <input
-                            type="url"
-                            defaultValue={row.original.jeu.j_lienNotice}
-                            onChange={(event) => updateNotice(row.original, event.target.value)}/>
-                            </p>
+                                    <input
+                                        type="url"
+                                        defaultValue={row.original.jeu.j_lienNotice}
+                                        onChange={(event) => updateNotice(row.original, event.target.value)}/>
+                                </p>
                                 : null
                         }
 

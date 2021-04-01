@@ -3,7 +3,7 @@ import {email, isAdmin, isLogin} from "../../utils/utils";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-//import React, {Component} from "react";
+import {Link} from "react-router-dom"
 
 import {
     faUser,
@@ -19,16 +19,15 @@ import {
     faUserTag
 } from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Axios from "axios";
 import Moment from "moment";
-import {FestivalContext} from "../../../App";
 
 
 const CustomHeader = () => {
 
     const [dateFestivalCourant, setDateFestivalCourant] = useState(null);
-    const {selectedFestival, setSelectedFestival} = useContext(FestivalContext)
+
     const history = useHistory();
 
     function logout() {
@@ -36,7 +35,6 @@ const CustomHeader = () => {
         history.push("/")
         window.location.reload(false)
     }
-
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
@@ -48,23 +46,9 @@ const CustomHeader = () => {
                 setDateFestivalCourant(res.data.festival.fes_date)
             })
 
-        console.log("charge")
 
-        console.log("BONJOUR JSP ")
-    }, [dateFestivalCourant]);
+    });
 
-/*
-    componentDidUpdate() {
-
-        const fes_id = localStorage.getItem("currentFestival");
-
-        Axios.get(`/server/festivals/${fes_id}`)
-            .then((res) => {
-                setDateFestivalCourant(res.data.festival.fes_date)
-            });
-
-        console.log("BONJOUR JSP ");
-    }*/
 
     //mettre dans isAdmin les pages accecibles uniquement à l'admin
 //idem pour isLogin ---------------------------------- si on est connecté
@@ -81,15 +65,17 @@ const CustomHeader = () => {
                                 isLogin() ? (
                                     <Nav>
                                         <NavDropdown title={email()} id="who">
-                                            <Nav.Link id="dropdownItem" href='/update-password'>Changer de mot de
-                                                passe</Nav.Link>
+                                            <Link className="nav-link" id="dropdownItem" to='/update-password'>Changer
+                                                de mot de
+                                                passe
+                                            </Link>
                                             <Button variant="link" onClick={logout}>Se déconnecter</Button>
                                         </NavDropdown>
                                     </Nav>
                                 ) : (
 
                                     <Nav>
-                                        <Nav.Link href='/login'>Se connecter</Nav.Link>
+                                        <Link className="nav-link" to='/login'>Se connecter</Link>
                                     </Nav>
                                 )
                             }
@@ -97,21 +83,21 @@ const CustomHeader = () => {
                                 isLogin() ? (
                                     <Nav>
                                         <NavDropdown title="Paramètres">
-                                            <Nav.Link id="dropdownItem" href='/type-jeux'>
+                                            <Link  className="nav-link"id ="dropdownItem" to='/type-jeux'>
                                                 <FontAwesomeIcon className="faicon" icon={faShapes}/>
                                                 Types de jeux
-                                            </Nav.Link>
-                                            <Nav.Link id="dropdownItem" href='/jeux'>
+                                            </Link>
+                                            <Link  className="nav-link" id="dropdownItem" to='/jeux'>
                                                 <FontAwesomeIcon className="faicon" icon={faChessKnight}/>
                                                 Jeux
-                                            </Nav.Link>
+                                            </Link>
 
                                             {
                                                 isAdmin() ? (
-                                                    <Nav.Link id="dropdownItem" href='/handle-accounts'>
+                                                    <Link className="nav-link" id="dropdownItem" to='/handle-accounts'>
                                                         <FontAwesomeIcon className="faicon" icon={faUser}/>
                                                         Gérer les comptes
-                                                    </Nav.Link>
+                                                    </Link>
 
                                                 ) : null
                                             }
@@ -123,24 +109,24 @@ const CustomHeader = () => {
                                                 courant:
                                             </div>
 
-                                            <NavDropdown title={Moment(selectedFestival.fes_date).format('DD/MM/YYYY')}
+                                            <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
                                                          id="who">
-                                                <Nav.Link id="dropdownItem" href='/festivals'>
+                                                <Link  className="nav-link" id="dropdownItem" to='/festivals'>
                                                     <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>
                                                     Festivals
-                                                </Nav.Link>
+                                                </Link>
                                             </NavDropdown>
 
-                                            <Nav.Link href='/reservations'>
+                                            <Link className="nav-link" to='/reservations'>
                                                 <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
                                                 Reservations
-                                            </Nav.Link>
+                                            </Link>
                                             {
                                                 isAdmin() ? (
-                                                    <Nav.Link href='/'>
+                                                    <Link  className="nav-link" to='/'>
                                                         <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
                                                         Facture
-                                                    </Nav.Link>
+                                                    </Link>
                                                 ) : null
                                             }
                                         </Nav>
@@ -153,31 +139,31 @@ const CustomHeader = () => {
 
                                 <NavDropdown title={"Gestion sociétés"} id="who">
 
-                                    <Nav.Link href='/exposants' id="dropdownItem">
+                                    <Link className="nav-link" to='/exposants' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
                                         Exposants
-                                    </Nav.Link>
+                                    </Link>
 
-                                    <Nav.Link href='/societes' id="dropdownItem">
+                                    <Link className="nav-link" to='/societes' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faUserTag}/>
                                         Rôles Societes
-                                    </Nav.Link>
+                                    </Link>
 
-                                    <Nav.Link href='/editeurs' id="dropdownItem">
+                                    <Link className="nav-link" to='/editeurs' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
                                         Editeurs
-                                    </Nav.Link>
+                                    </Link>
                                 </NavDropdown>
 
 
-                                <Nav.Link href='/festival-games'>
+                                <Link className="nav-link" to='/festival-games'>
                                     <FontAwesomeIcon className="faicon" icon={faDice}/>
                                     Jeux festival
-                                </Nav.Link>
-                                <Nav.Link href='/'>
+                                </Link>
+                                <Link className="nav-link" to='/'>
                                     <FontAwesomeIcon className="faicon" icon={faTh}/>
                                     Zones festival
-                                </Nav.Link>
+                                </Link>
 
                             </Nav>
 
