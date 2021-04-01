@@ -1,4 +1,3 @@
-import './App.css'
 import React, {createContext, useEffect, useState} from "react";
 
 //pour avoir la navbar sur toutes les pages on l'a mise dans un component
