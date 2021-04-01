@@ -423,7 +423,13 @@ const ExhibitorMonitoring = () => {
                                         </div>
                                         <div>
                                             <label id="labelCheckbox"> A payé? </label>
-                                            {reservation.res_paiement}
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked=  {reservation.res_paiement}
+                                                onClick={(event) => updatePaiement(event.target.checked ? 1 : 0)}
+
+                                            />
+
                                             {reservation.res_datePaiement}
                                         </div>
 
