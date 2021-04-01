@@ -24,7 +24,7 @@ const ExhibitorMonitoring = () => {
     const [contactList, setContactList] = useState([]);
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
-    const [showNewContact,setShowNewContact] = useState(false);
+    const [showNewContact, setShowNewContact] = useState(false);
     const [showAdress, setShowAdress] = useState(false);
     const [soc_ville, setSoc_ville] = useState("");
     const [soc_rue, setSoc_rue] = useState("");
@@ -134,17 +134,17 @@ const ExhibitorMonitoring = () => {
 
         //Ne pas oublier cette ligne!!!
         event.preventDefault(event);
-/*
-        Axios.post("/server/", {
-            //récupérer les valeurs du formulaire
-            // title: event.target.title.value,
+        /*
+                Axios.post("/server/", {
+                    //récupérer les valeurs du formulaire
+                    // title: event.target.title.value,
 
-        }).then((res) => {
-            //afficher alert succes
-            //setShow(true);
+                }).then((res) => {
+                    //afficher alert succes
+                    //setShow(true);
 
 
-        })*/
+                })*/
     };
 
     //changer adresse exposant
@@ -213,6 +213,35 @@ const ExhibitorMonitoring = () => {
         })
     }
 
+    const updateDatePaiement = (value) => {
+        Axios.put("/server/reservations/updateDatePaiement", {
+            res_id: reservation.res_id,
+            res_datePaiement: value,
+        })
+    }
+
+
+    const updateDateFacturation = (value) => {
+        Axios.put("/server/reservations/updateDateFacturation", {
+            res_id: reservation.res_id,
+            res_dateFacturation: value,
+        })
+    }
+
+    const updateEnvoieDebut = (value) => {
+        Axios.put("/server/reservations/updateEnvoieJeuxDebut", {
+            res_id: reservation.res_id,
+            res_envoiDebut: value,
+        })
+    }
+
+    const updatePrixRetour = (value) => {
+        Axios.put("/server/reservations/updatePrixRetour", {
+            res_id: reservation.res_id,
+            res_prixRetour: value,
+        })
+    }
+
     return (
         <div className="EspaceFooter">
             <div id="titlePageJeuxFestival">
@@ -273,7 +302,8 @@ const ExhibitorMonitoring = () => {
                     <Accordion.Collapse eventKey="0">
                         <Card.Body className="flex-container-Contacts">
                             <div id="btnNewJeu">
-                                <Container triggerText="Ajouter un contact" onSubmit={onSubmit} component={FormContact}/>
+                                <Container triggerText="Ajouter un contact" onSubmit={onSubmit}
+                                           component={FormContact}/>
                             </div>
 
                             <Card className="flex-item">
@@ -281,7 +311,7 @@ const ExhibitorMonitoring = () => {
                                 <div id="cardContacts">
                                     <Form onSubmit={updateAdress}>
                                         <div>
-                                            <textarea id="expoAdress"  value={soc_rue} onChange={(e) => {
+                                            <textarea id="expoAdress" value={soc_rue} onChange={(e) => {
                                                 setSoc_rue(e.target.value);
                                                 setShowAdress(false)
                                             }}/>
@@ -335,8 +365,6 @@ const ExhibitorMonitoring = () => {
                             ) : null}
 
 
-
-
                         </Card.Body>
 
                     </Accordion.Collapse>
@@ -380,7 +408,7 @@ const ExhibitorMonitoring = () => {
 
                                             <input
                                                 type="checkbox"
-                                                defaultChecked= {suivi.suivE_deplacement}
+                                                defaultChecked={suivi.suivE_deplacement}
                                                 onClick={(e) => updateStatusSeDeplace(e.target.checked ? 1 : 0)}
                                             />
 
@@ -388,56 +416,85 @@ const ExhibitorMonitoring = () => {
                                         <div>
                                             <label id="labelCheckbox">Besoin de bénévoles: </label>
 
-                                             <input
-                                                 type="checkbox"
-                                                 defaultChecked= {suivi.suivE_benevole}
-                                                 onClick={(e) => updateStatusBenevole(e.target.checked ? 1 : 0)}
-                                             />
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked={suivi.suivE_benevole}
+                                                onClick={(e) => updateStatusBenevole(e.target.checked ? 1 : 0)}
+                                            />
 
                                         </div>
                                         <div>
-                                            <label>Nombre de bénévols nécessaires: </label>
+                                            <label id="labelCheckbox">Nombre de bénévols nécessaires: </label>
 
                                             <input
                                                 type="number"
+                                                min="0"
                                                 defaultValue={suivi.suivE_nbBenevoles}
                                                 onChange={(event) => updateNbBenevoles(event.target.value)}
                                             />
                                         </div>
                                         <div>
-                                            Il envoie ses jeux ? {reservation.res_envoiDebut}
-                                        </div>
 
+                                            <label id="labelCheckbox">Il envoie ses jeux ?  </label>
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked= {reservation.res_envoiDebut}
+                                                onClick={(e) => updateEnvoieDebut(e.target.checked ? 1 : 0)}
+                                            />
+
+                                        </div>
+                                        <label id="labelCheckbox">Prix retour: </label>
+
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            defaultValue={reservation.res_prixRetour}
+                                            onChange={(event) => updatePrixRetour(event.target.value)}
+                                        />
+                                        €
+                                        <div>
+
+                                        </div>
 
                                         <div>
                                             <label id="labelCheckbox">A été facturé?</label>
                                             <input
                                                 type="checkbox"
-                                                defaultChecked=  {reservation.res_facture}
+                                                defaultChecked={reservation.res_facture}
                                                 onClick={(event) => updateFacture(event.target.checked ? 1 : 0)}
                                             />
+                                            <label id="labelCheckbox">Date de facturation:</label>
 
 
-                                            {reservation.res_dateFacturation}
+                                            <input  type="date"
+                                                    defaultValue= {reservation.res_dateFacturation}
+                                                    onChange={(event) => updateDateFacturation(event.target.value)}
+                                            />
 
                                         </div>
                                         <div>
                                             <label id="labelCheckbox"> A payé? </label>
                                             <input
                                                 type="checkbox"
-                                                defaultChecked=  {reservation.res_paiement}
+                                                defaultChecked={reservation.res_paiement}
                                                 onClick={(event) => updatePaiement(event.target.checked ? 1 : 0)}
 
                                             />
 
-                                            {reservation.res_datePaiement}
+                                            <label id="labelCheckbox">Date de paiement:</label>
+
+                                            <input  type="date"
+                                                   defaultValue={reservation.res_datePaiement}
+                                                   onChange={(event) => updateDatePaiement(event.target.value)}
+                                            />
+
                                         </div>
 
 
                                     </div>
                                     :
 
-                                  null
+                                    null
 
                             }
 
