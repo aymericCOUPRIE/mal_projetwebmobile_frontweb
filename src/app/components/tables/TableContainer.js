@@ -55,7 +55,7 @@ const TableContainer = ({columns, data, renderRowSubComponent}) => {
 
     return (
         <Fragment>
-            <Table bordered hover {...getTableProps()} style={{width: '100%'}}>
+            <Table bordered hover {...getTableProps()} responsive>
 
                 {/* En-tete du tableau (avec les menu de recherches/tris)*/}
                 <thead>

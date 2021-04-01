@@ -13,13 +13,13 @@ import CardContact from "../../components/contact/CardContact";
 import {Container} from "../../components/ModalForm/container";
 import FormReservation from "./reservationForm";
 import FormContact from "../../components/contact/FormContact";
+import {isAdmin} from "../../utils/utils";
+import Table from "react-bootstrap/Table"
 
 
 const ExhibitorMonitoring = () => {
 
     const {idExposant} = useParams();
-
-    console.log(idExposant);
 
     const [contactList, setContactList] = useState([]);
     const [name, setName] = useState("");
@@ -34,6 +34,11 @@ const ExhibitorMonitoring = () => {
     const [suivi, setSuivi] = useState([]);
     const [reservation, setReservation] = useState([]);
     const [commentaire, setCommentaire] = useState("");
+    const [espaces, setEspaces] = useState([]);
+
+    const [resaExist, setResaExist] = useState(false);
+
+
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
@@ -57,6 +62,9 @@ const ExhibitorMonitoring = () => {
             if (res.data) {
                 setReservation(res.data)
                 setCommentaire(res.data.suivE_commentaire)
+                if(res.data.length !== 0) {
+                    setResaExist(true)
+                }
             }
             console.log("RESERVATION", res.data)
         })
@@ -65,11 +73,26 @@ const ExhibitorMonitoring = () => {
     useEffect(() => {
         //Récupérerles infos de suivi
         const fes_id = localStorage.getItem("currentFestival")
-        Axios.get(`/server/suiviExposant/festival/${fes_id}/societe/${idExposant}`).then((res) => {
+        Axios.get(`/server/suiviExposant/festival/${fes_id}/societe/${idExposant}`)
+            .then((res) => {
             setSuivi(res.data)
             console.log("SUIVI", res)
         })
     }, []);
+
+   useEffect(() => {
+       if(resaExist) {
+           const fes_id = localStorage.getItem("currentFestival")
+           const res_id = reservation.res_id
+
+           Axios.get(`http://localhost:3000/server/localisation/${fes_id}/allEspace/reservation/${res_id}`)
+               .then((res) => {
+                   setEspaces(res.data)
+                   console.log("ESPACES", res.data)
+               })
+       }
+
+   }, [resaExist]) //se declenche lorsque la valeur entre crochet cha   nfe
 
     function validateForm() {
         return name.length > 0;
@@ -240,6 +263,31 @@ const ExhibitorMonitoring = () => {
             res_id: reservation.res_id,
             res_prixRetour: value,
         })
+    }
+
+    const CalculerPrixTOT = () => {
+        let prix = 0
+        espaces.map((e,i) => {
+            console.log(e)
+            if(e.espaces[0].esp_enTables){
+                prix += e.loc_prixTable * e.espaces[0].esp_qte
+            }else{
+                prix += e.loc_prixM2 * e.espaces[0].esp_qte
+            }
+
+
+        })
+        return prix
+    }
+
+    const CalculerPrix = (e) => {
+
+            if(e.espaces[0].esp_enTables){
+                return e.loc_prixTable * e.espaces[0].esp_qte
+            }else{
+               return e.loc_prixM2 * e.espaces[0].esp_qte
+            }
+
     }
 
     return (
@@ -502,6 +550,8 @@ const ExhibitorMonitoring = () => {
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
+                {
+                    isAdmin() ?
 
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="2">
@@ -511,7 +561,43 @@ const ExhibitorMonitoring = () => {
                         <Card.Body>
                             {
                                 reservation.length != 0 ?
-                                    <div>Afficher la réservation et pouvoir la modifier</div>
+                                    <div>
+                                        <Table responsive >
+                                            <thead>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Prix calculé</td>
+                                            </thead>
+                                            <tbody>
+                                            {espaces.map((e,i) => {
+                                                    return(
+                                                    <tr>
+                                                        <td>{e.loc_libelle}</td>
+                                                        <td>{e.espaces[0].esp_qte}</td>
+                                                        {e.espaces[0].esp_enTables ? <td> tables </td> : <td>M²</td>}
+                                                        <td>{CalculerPrix(e)}</td>
+                                                    </tr>
+                                                    )
+                                                })
+                                            }
+                                            <hr/>
+                                            <tr>
+                                                <td>Prix TOTAL calculé</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{CalculerPrixTOT()} €</td>
+                                            </tr>
+                                            <tr id="prixNego">
+                                                <td>Prix TOTAL négocié</td>
+                                                <td>{reservation.res_prixNegocie}€</td>
+
+                                            </tr>
+                                            </tbody>
+                                        </Table>
+                                    </div>
+
+
                                     :
                                     <div>
                                         <div id="btnNewJeu">
@@ -523,7 +609,8 @@ const ExhibitorMonitoring = () => {
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
-
+                        : null
+                }
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="3">
                         Jeux de la réservation

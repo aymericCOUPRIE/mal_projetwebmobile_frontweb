@@ -38,9 +38,6 @@
 @import url(https://fonts.googleapis.com/css?family=Gloria+Hallelujah);
 
 
-
-body { background:url(https://subtlepatterns.com/patterns/little_pluses.png) #cacaca; margin:30px; }
-
 #commentaireStickyNote  {
     float:left;
     padding:25px 25px 40px;
@@ -81,4 +78,8 @@ body { background:url(https://subtlepatterns.com/patterns/little_pluses.png) #ca
 #labelCheckbox{
     margin-right: 0.5em;
     margin-left: 0.5em;
+}
+
+#prixNego{
+    color: red
 }
