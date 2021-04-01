@@ -19,14 +19,17 @@ import {
     faUserTag
 } from "@fortawesome/free-solid-svg-icons";
 import './CustomHeader.css'
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Axios from "axios";
 import Moment from "moment";
+import {FestivalContext} from "../../../App";
 
 
 const CustomHeader = () => {
 
     const [dateFestivalCourant, setDateFestivalCourant] = useState(null);
+
+    const {selectedFestival} = useContext(FestivalContext)
 
     const history = useHistory();
 
@@ -109,7 +112,7 @@ const CustomHeader = () => {
                                                 courant:
                                             </div>
 
-                                            <NavDropdown title={Moment(dateFestivalCourant).format('DD/MM/YYYY')}
+                                            <NavDropdown title={Moment(selectedFestival.fes_date).format('DD/MM/YYYY')}
                                                          id="who">
                                                 <Link  className="nav-link" id="dropdownItem" to='/festivals'>
                                                     <FontAwesomeIcon className="faicon" icon={faCalendarAlt}/>

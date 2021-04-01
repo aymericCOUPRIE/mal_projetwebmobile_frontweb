@@ -12,7 +12,7 @@ export const FestivalContext = createContext({
     selectedFestival: {
         fes_id: 0,
         fes_date: new Date(),
-        fes_nbTables: 0
+        fes_nbTables: 0 //TODO: à supprimer qd bdd propre
     },
     setSelectedFestival: Function
 })
@@ -24,16 +24,18 @@ function App() {
         fes_date: new Date(),
         fes_nbTables: 0
     });
+    const [isWhatever, setIsWhatever] = useState(false); // used to update the date in the header instead of reloading the page
     const value = {selectedFestival: prochainFestival, setSelectedFestival: setProchainFestival}
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
+        console.log("je recharge")
         Axios.get("/server/festivals/closest")
             .then((res) => {
                 localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
                 setProchainFestival(res.data.closestFestival[0]);
             })
-    });
+    }, [isWhatever]);
 
     return (
         <div className="App">

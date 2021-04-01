@@ -41,11 +41,9 @@ const CardFestival = ({fes, updateDate, updateNbTables}) => {
     const updateCurrentFestival = event => {
         localStorage.setItem("currentFestival", fes.fes_id)
 
-        console.log("FES", fes)
+        //console.log("FES", fes)
         // setSelectedFestival de currentFestival
         setSelectedFestival(fes);
-
-        console.log("SELECTED", selectedFestival)
     }
 
     /**
