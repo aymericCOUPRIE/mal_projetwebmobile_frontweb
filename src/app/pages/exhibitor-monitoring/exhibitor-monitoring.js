@@ -178,6 +178,14 @@ const ExhibitorMonitoring = () => {
         })
     }
 
+    //update besoin de benevoles
+    const updateStatusBenevole = (value) => {
+        Axios.put("/server/suiviExposant/updateBenevole", {
+            suivE_id: suivi.suivE_id,
+            suivE_benevole: value
+        })
+    }
+
     //changer si il se déplace ou non
     const updateStatusSeDeplace = (value) => {
 
@@ -368,11 +376,8 @@ const ExhibitorMonitoring = () => {
                                 reservation.length != 0 ?
                                     <div className="flex-item">
                                         <div>
-                                            <label>Se déplace: </label>
+                                            <label id="labelCheckbox">Se déplace: </label>
 
-                                            {
-                                                console.log("RESERVATION 2222", suivi.suivE_deplacement)
-                                            }
                                             <input
                                                 type="checkbox"
                                                 defaultChecked= {suivi.suivE_deplacement}
@@ -381,7 +386,13 @@ const ExhibitorMonitoring = () => {
 
                                         </div>
                                         <div>
-                                            Besoin de bénévoles: ${suivi.suivE_benevole}
+                                            <label id="labelCheckbox">Besoin de bénévoles: </label>
+
+                                             <input
+                                                 type="checkbox"
+                                                 defaultChecked= {suivi.suivE_benevole}
+                                                 onClick={(e) => updateStatusBenevole(e.target.checked ? 1 : 0)}
+                                             />
 
                                         </div>
                                         <div>
@@ -399,14 +410,19 @@ const ExhibitorMonitoring = () => {
 
 
                                         <div>
-                                            <label>A été facturé?</label>
+                                            <label id="labelCheckbox">A été facturé?</label>
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked=  {reservation.res_facture}
+                                                onClick={(event) => updateFacture(event.target.checked ? 1 : 0)}
+                                            />
 
-                                            {reservation.res_facture}
+
                                             {reservation.res_dateFacturation}
 
                                         </div>
                                         <div>
-                                            <label> A payé? </label>
+                                            <label id="labelCheckbox"> A payé? </label>
                                             {reservation.res_paiement}
                                             {reservation.res_datePaiement}
                                         </div>

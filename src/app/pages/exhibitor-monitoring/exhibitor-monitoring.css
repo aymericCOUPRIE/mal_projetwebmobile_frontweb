@@ -77,3 +77,7 @@ body { background:url(https://subtlepatterns.com/patterns/little_pluses.png) #ca
 }
 #commentaireStickyNote:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
 #commentaireStickyNote:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+
+#labelCheckbox{
+    margin-right: 0.5em;
+}
