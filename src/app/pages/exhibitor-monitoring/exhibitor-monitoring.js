@@ -157,6 +157,8 @@ const ExhibitorMonitoring = () => {
 
         //Ne pas oublier cette ligne!!!
         event.preventDefault(event);
+        console.log("EVENT RESA",event);
+        console.log("LOC",event.target.loc_id)
         /*
                 Axios.post("/server/", {
                     //récupérer les valeurs du formulaire
@@ -564,24 +566,24 @@ const ExhibitorMonitoring = () => {
                                     <div>
                                         <Table responsive >
                                             <thead>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Prix calculé</td>
+                                            <td className="tdUnderline"></td>
+                                            <td className="tdUnderline"></td>
+                                            <td className="tdUnderline"></td>
+                                            <td className="tdUnderline">Prix calculé</td>
                                             </thead>
                                             <tbody>
                                             {espaces.map((e,i) => {
                                                     return(
-                                                    <tr>
-                                                        <td>{e.loc_libelle}</td>
-                                                        <td>{e.espaces[0].esp_qte}</td>
-                                                        {e.espaces[0].esp_enTables ? <td> tables </td> : <td>M²</td>}
-                                                        <td>{CalculerPrix(e)}</td>
+                                                    <tr >
+                                                        <td className="tdUnderline">{e.loc_libelle}</td>
+                                                        <td className="tdUnderline">{e.espaces[0].esp_qte}</td>
+                                                        {e.espaces[0].esp_enTables ? <td className="tdUnderline"> tables </td> : <td className="tdUnderline">M²</td>}
+                                                        <td className="tdUnderline">{CalculerPrix(e)}</td>
                                                     </tr>
                                                     )
                                                 })
                                             }
-                                            <hr/>
+
                                             <tr>
                                                 <td>Prix TOTAL calculé</td>
                                                 <td></td>
@@ -591,6 +593,7 @@ const ExhibitorMonitoring = () => {
                                             <tr id="prixNego">
                                                 <td>Prix TOTAL négocié</td>
                                                 <td>{reservation.res_prixNegocie}€</td>
+
 
                                             </tr>
                                             </tbody>
@@ -602,7 +605,7 @@ const ExhibitorMonitoring = () => {
                                     <div>
                                         <div id="btnNewJeu">
                                             <Container triggerText="Créer une réservation"
-                                                       onSubmit={onSubmitReservation} component={FormReservation}/>
+                                                       onSubmitReservation={onSubmitReservation} component={FormReservation}/>
                                         </div>
                                     </div>
                             }
