@@ -11,13 +11,16 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import CardContact from "../../components/contact/CardContact";
 import {Container} from "../../components/ModalForm/container";
+import FormReservation from "./reservationForm";
 import FormContact from "../../components/contact/FormContact";
+
 
 const ExhibitorMonitoring = () => {
 
     const {idExposant} = useParams();
 
     console.log(idExposant);
+
     const [contactList, setContactList] = useState([]);
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
@@ -48,19 +51,19 @@ const ExhibitorMonitoring = () => {
     }, []);
 
     useEffect(() => {
-        //Récupérerles infos de suivi et de la réservation
+        //Récupérerles infos réservation
         const fes_id = localStorage.getItem("currentFestival")
         Axios.get(`/server/reservations/festival/${fes_id}/societe/${idExposant}`).then((res) => {
-            if(res.data) {
+            if (res.data) {
                 setReservation(res.data)
                 setCommentaire(res.data.suivE_commentaire)
             }
-            console.log("RESERVATION", res)
+            console.log("RESERVATION", res.data)
         })
     }, []);
 
     useEffect(() => {
-        //Récupérerles infos de suivi et de la réservation
+        //Récupérerles infos de suivi
         const fes_id = localStorage.getItem("currentFestival")
         Axios.get(`/server/suiviExposant/festival/${fes_id}/societe/${idExposant}`).then((res) => {
             setSuivi(res.data)
@@ -91,7 +94,7 @@ const ExhibitorMonitoring = () => {
     const updateCommentaire = (event) => {
         event.preventDefault()
 
-        Axios.post(`/server/suiviExposant/${idExposant}/update-commentaire`,{
+        Axios.post(`/server/suiviExposant/${idExposant}/update-commentaire`, {
             fes_id: localStorage.getItem("currentFestival"),
             suivE_commentaire: commentaire,
         }).then((res) => {
@@ -108,15 +111,15 @@ const ExhibitorMonitoring = () => {
         Axios.post(`/server/contacts/add/${idExposant}"`, {
             //récupérer les valeurs du formulaire
             nom: event.target.nom.value,
-            prenom : event.target.prenom.value,
-            telPortable : event.target.telPortable.value,
-            telFixe : event.target.telFixe.value,
+            prenom: event.target.prenom.value,
+            telPortable: event.target.telPortable.value,
+            telFixe: event.target.telFixe.value,
             email: event.target.email.value,
-            rue : event.target.rue.value,
-            ville : event.target.ville.value,
-            codePostal : event.target.codePostal.value,
+            rue: event.target.rue.value,
+            ville: event.target.ville.value,
+            codePostal: event.target.codePostal.value,
             pays: event.target.pays.value,
-            fonction : event.target.fonction.value,
+            fonction: event.target.fonction.value,
             principal: event.target.principal.value,
         }).then((res) => {
             //afficher alert succes
@@ -124,6 +127,24 @@ const ExhibitorMonitoring = () => {
 
 
         })
+    };
+
+    //créer une réservation
+    const onSubmitReservation = (event) => {
+
+        //Ne pas oublier cette ligne!!!
+        event.preventDefault(event);
+/*
+        Axios.post("/server/", {
+            //récupérer les valeurs du formulaire
+            // title: event.target.title.value,
+
+        }).then((res) => {
+            //afficher alert succes
+            //setShow(true);
+
+
+        })*/
     };
 
     //changer adresse exposant
@@ -159,10 +180,13 @@ const ExhibitorMonitoring = () => {
 
     //changer si il se déplace ou non
     const updateStatusSeDeplace = (value) => {
+
+        console.log("VALUES DEPLPPOEPZOE", value)
         Axios.put("/server/suiviExposant/updateSeDeplace", {
             suivE_id: suivi.suivE_id,
             suivE_deplacement: value
         }).then((res) => console.log(res))
+
     }
 
     const updateFacture = (value) => {
@@ -217,16 +241,16 @@ const ExhibitorMonitoring = () => {
 
 
                 <div className="flex-item">
-                    <Form onSubmit={updateCommentaire} >
+                    <Form onSubmit={updateCommentaire}>
 
-                    <textarea id="commentaireStickyNote" value=  {commentaire} onChange={ (e) => {
+                    <textarea id="commentaireStickyNote" value={commentaire} onChange={(e) => {
                         setCommentaire(e.target.value)
                     }}/>
 
-                    <Button type="submit" id="btnCheck">
-                        Mettre à jour la note
-                        <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle}/>
-                    </Button>
+                        <Button type="submit" id="btnCheck">
+                            Mettre à jour la note
+                            <FontAwesomeIcon className="faicon" id="validateButton" icon={faCheckCircle}/>
+                        </Button>
                     </Form>
 
                 </div>
@@ -239,7 +263,6 @@ const ExhibitorMonitoring = () => {
                         Contacts
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
-
                         <Card.Body className="flex-container-Contacts">
                             <div id="btnNewJeu">
                                 <Container triggerText="Ajouter un contact" onSubmit={onSubmit} component={FormContact}/>
@@ -258,18 +281,18 @@ const ExhibitorMonitoring = () => {
                                         </div>
                                         <div>
                                             <textarea id="expoAdress" value={soc_codePostal}
-                                                   onChange={(e) => setSoc_codePostal(e.target.value)}/>
+                                                      onChange={(e) => setSoc_codePostal(e.target.value)}/>
 
                                         </div>
 
                                         <div>
                                             <textarea id="expoAdress" value={soc_ville}
-                                                   onChange={(e) => setSoc_ville(e.target.value)}/>
+                                                      onChange={(e) => setSoc_ville(e.target.value)}/>
 
                                         </div>
                                         <div>
                                             <textarea id="expoAdress" value={soc_pays}
-                                                   onChange={(e) => setSoc_pays(e.target.value)}/>
+                                                      onChange={(e) => setSoc_pays(e.target.value)}/>
 
                                         </div>
 
@@ -282,7 +305,7 @@ const ExhibitorMonitoring = () => {
 
                             </Card>
 
-                                {contactList.contacts ? contactList.contacts.map((value, index) => {
+                            {contactList.contacts ? contactList.contacts.map((value, index) => {
                                     return (
                                         <Card className="flex-item">
                                             <Card.Header
@@ -319,72 +342,82 @@ const ExhibitorMonitoring = () => {
                         <Card.Body className="flex-container-Contacts">
                             <div className="flex-item">
                                 <div>
-                                    <label >1er contact: </label>
+                                    <label>1er contact: </label>
                                     <input id="labelNomExposant" type="date"
-                                           defaultValue= {suivi.suivE_dateContact1}
-                                           onChange={(event) => updateDateContact(event.target.value,1)}
+                                           defaultValue={suivi.suivE_dateContact1}
+                                           onChange={(event) => updateDateContact(event.target.value, 1)}
                                     />
                                 </div>
                                 <div>
-                                    <label >2ème contact: </label>
+                                    <label>2ème contact: </label>
                                     <input id="labelNomExposant" type="date"
-                                           defaultValue= {suivi.suivE_dateContact2}
-                                           onChange={(event) => updateDateContact(event.target.value,2)}
+                                           defaultValue={suivi.suivE_dateContact2}
+                                           onChange={(event) => updateDateContact(event.target.value, 2)}
                                     />
                                 </div>
                                 <div>
-                                    <label >3ème contact: </label>
+                                    <label>3ème contact: </label>
                                     <input id="labelNomExposant" type="date"
-                                           defaultValue=  {suivi.suivE_dateContact3}
-                                           onChange={(event) => updateDateContact(event.target.value,3)}
+                                           defaultValue={suivi.suivE_dateContact3}
+                                           onChange={(event) => updateDateContact(event.target.value, 3)}
                                     />
                                 </div>
                             </div>
 
                             {
-                                reservation.length > 0 ?
-                                <div className="flex-item">
-                                    <div>
-                                        <label >Se déplace: </label>
-                                        {suivi.suivE_deplacement}
+                                reservation.length != 0 ?
+                                    <div className="flex-item">
+                                        <div>
+                                            <label>Se déplace: </label>
+
+                                            {
+                                                console.log("RESERVATION 2222", suivi.suivE_deplacement)
+                                            }
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked= {suivi.suivE_deplacement}
+                                                onClick={(e) => updateStatusSeDeplace(e.target.checked ? 1 : 0)}
+                                            />
+
+                                        </div>
+                                        <div>
+                                            Besoin de bénévoles: ${suivi.suivE_benevole}
+
+                                        </div>
+                                        <div>
+                                            <label>Nombre de bénévols nécessaires: </label>
+
+                                            <input
+                                                type="number"
+                                                defaultValue={suivi.suivE_nbBenevoles}
+                                                onChange={(event) => updateNbBenevoles(event.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            Il envoie ses jeux ? {reservation.res_envoiDebut}
+                                        </div>
+
+
+                                        <div>
+                                            <label>A été facturé?</label>
+
+                                            {reservation.res_facture}
+                                            {reservation.res_dateFacturation}
+
+                                        </div>
+                                        <div>
+                                            <label> A payé? </label>
+                                            {reservation.res_paiement}
+                                            {reservation.res_datePaiement}
+                                        </div>
+
 
                                     </div>
-                                    <div>
-                                        Besoin de bénévoles: {suivi.suivE_benevole}
+                                    :
 
-                                    </div>
-                                    <div>
-                                        <label >Nombre de bénévols nécessaires: </label>
+                                  null
 
-                                        <input
-                                            type="number"
-                                            defaultValue={suivi.suivE_nbBenevoles}
-                                            onChange={(event) => updateNbBenevoles(event.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        Il envoie ses jeux ? {reservation.res_envoiDebut}
-                                    </div>
-
-
-                                    <div>
-                                        <label>A été facturé?</label>
-
-                                        {reservation.res_facture}
-                                        {reservation.res_dateFacturation}
-
-                                    </div>
-                                    <div>
-                                        <label> A payé? </label>
-                                        {reservation.res_paiement}
-                                        {reservation.res_datePaiement}
-                                    </div>
-
-
-                                </div>
-                                    : null
                             }
-
 
 
                         </Card.Body>
@@ -398,12 +431,15 @@ const ExhibitorMonitoring = () => {
                     <Accordion.Collapse eventKey="2">
                         <Card.Body>
                             {
-                                reservation.length > 0  ?
+                                reservation.length != 0 ?
                                     <div>Afficher la réservation et pouvoir la modifier</div>
                                     :
-                                <div>
-                                bouton créer une réservation
-                                </div>
+                                    <div>
+                                        <div id="btnNewJeu">
+                                            <Container triggerText="Créer une réservation"
+                                                       onSubmit={onSubmitReservation} component={FormReservation}/>
+                                        </div>
+                                    </div>
                             }
                         </Card.Body>
                     </Accordion.Collapse>
