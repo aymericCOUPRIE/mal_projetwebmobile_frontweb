@@ -94,9 +94,12 @@ export default function AfficherExposant() {
 
 
     const updateStatusWorkflow = (data, value) => {
+
         Axios.put("/server/suiviExposant/updateWorkflow", {
             suivE_id: data.suivE_id,
             suivD_id: value
+        }).then((res) => {
+            window.location.reload()
         })
 
         // const newSocietes = [...societe];
@@ -107,7 +110,6 @@ export default function AfficherExposant() {
         //
         // setListSociete(newSocietes)
 
-        window.location.reload()
     }
 
     const setAllAbsent = () => {
@@ -197,11 +199,14 @@ export default function AfficherExposant() {
                 }
 
             },
-            {
-                id: "espaceQte",
-                Header: "Tables",
-                accessor: d => d.reservations.length == 0 ? "NULL" : String(`${d.reservations[0].espace.esp_qte}` + ' ' + `${d.reservations[0].espace.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
-            },
+            /*
+                {
+                    id: "espaceQte",
+                    Header: "Tables",
+                    accessor: d => d.reservations.length == 0 ? "NULL" : String(`${d.reservations[0].espace.esp_qte}` + ' ' + `${d.reservations[0].espace.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
+                },
+                */
+
             {
                 id: "benevoles",
                 Header: "Bénévoles",
