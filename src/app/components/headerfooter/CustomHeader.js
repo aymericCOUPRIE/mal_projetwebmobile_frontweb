@@ -126,7 +126,7 @@ const CustomHeader = () => {
                                             </Link>
                                             {
                                                 isAdmin() ? (
-                                                    <Link  className="nav-link" to='/'>
+                                                    <Link  className="nav-link" to='/facturation'>
                                                         <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
                                                         Facture
                                                     </Link>
@@ -163,7 +163,7 @@ const CustomHeader = () => {
                                     <FontAwesomeIcon className="faicon" icon={faDice}/>
                                     Jeux festival
                                 </Link>
-                                <Link className="nav-link" to='/'>
+                                <Link className="nav-link" to='/festival-zones'>
                                     <FontAwesomeIcon className="faicon" icon={faTh}/>
                                     Zones festival
                                 </Link>

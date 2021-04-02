@@ -11,6 +11,7 @@ export default function Home() {
     useEffect(() => {
         Axios.get("/server/festivals/closest")
             .then((res) => {
+                console.log("BONJOUR FESTIVAL", res)
                 localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
                 setdateProchainFestival(res.data.closestFestival[0].fes_date);
             })

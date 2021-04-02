@@ -18,6 +18,8 @@ import AfficherSocieteRole from "../pages/societe/AfficherSocieteRole";
 import FormLocalisation from "../components/festivals/FormLocalisation";
 import Reservation from "../pages/reservation/Reservation";
 import AfficherEditeur from "../pages/societe/AfficherEditeurs";
+import ZonesFestivals from "../pages/zone-festival/AffichageZone";
+import Facturation from "../pages/reservation/Facturation";
 
 
 // DANS LE SWITCH
@@ -32,6 +34,8 @@ function Routes() {
                 <Route path='/login' component={Login}/>
                 <Route path='/festival-games' component={FestivalGames}/>
                 <Route path='/reservations' component={Reservation}/>
+                <Route path='/festival-zones' component={ZonesFestivals}/>
+                <Route path='/facturation' component={Facturation}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
                 <PrivateRoute path='/exposants' component={AfficherExposant}/>
                 <Route path='/editeurs' component={AfficherEditeur}/>
