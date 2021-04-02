@@ -42,6 +42,7 @@ const Festivals = () => {
                 // to show the success with an alert
                 setShow(true);
             })
+        // The undefined zone, the list of suivi_exposant and the list of role_festival are created in the back
     };
 
     /**
