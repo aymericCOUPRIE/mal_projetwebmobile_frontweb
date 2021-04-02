@@ -100,7 +100,7 @@ export default function Reservation() {
                 )
             }
         },
-        {
+        /*{
             Header: "Zone",
             accessor: "espace.localisation.loc_id",
 
@@ -128,7 +128,7 @@ export default function Reservation() {
                     </div>
                 )
             }
-        },
+        },*/
         {
             Header: "Facture",
             accessor: d => d.res_facture ? 'true' : 'false',
