@@ -3,15 +3,17 @@ import Axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-export const FormGameReservation = ({onSubmit}) => {
+export const FormGameReservation = ({onSubmit, res}) => {
     const [gameList, setGameList] = useState([]);
     const [j_id, setJ_id] = useState("");
     const [validateForm,setValidateForm] = useState("false");
 
+    console.log("res_id du component",res)
+
     useEffect(() => {
         //Récupérerles les jeux qui existent déjà
 
-        Axios.get("/server/jeux/allTitres")
+        Axios.get(`/server/jeux/allTitres/${res.res_id}`)
             .then((res) => {
                 console.log("GameList du component", res.data)
                 if (res.data) {

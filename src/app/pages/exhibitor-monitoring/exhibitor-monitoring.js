@@ -38,7 +38,22 @@ const ExhibitorMonitoring = () => {
     const [espaces, setEspaces] = useState([]);
 
     const [resaExist, setResaExist] = useState(false);
+    const [res_id, setRes_id] = useState(reservation)
+    const [reservationGames, setReservationGames] = useState([])
 
+    const onSubmitGame = (event) => {
+
+        //Ne pas oublier cette ligne!!!
+        event.preventDefault(event);
+
+        Axios.post("/server/jeuxFestival/add/game/${event.target.j_id.value}/reservation/${res_id}", {
+            fes_id: localStorage.getItem("currentFestival")
+        }).then((res) => {
+            console.log(res)
+        })
+
+
+    };
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
@@ -61,7 +76,6 @@ const ExhibitorMonitoring = () => {
         Axios.get(`/server/reservations/festival/${fes_id}/societe/${idExposant}`).then((res) => {
             if (res.data) {
                 setReservation(res.data)
-                setCommentaire(res.data.suivE_commentaire)
                 if (res.data.length !== 0) {
                     setResaExist(true)
                 }
@@ -76,7 +90,7 @@ const ExhibitorMonitoring = () => {
         Axios.get(`/server/suiviExposant/festival/${fes_id}/societe/${idExposant}`)
             .then((res) => {
                 setSuivi(res.data)
-                console.log("SUIVI", res)
+                setCommentaire(res.data.suivE_commentaire)
             })
     }, []);
 
@@ -116,7 +130,7 @@ const ExhibitorMonitoring = () => {
     //update commentaire
     const updateCommentaire = (event) => {
         event.preventDefault()
-        
+
         Axios.post(`/server/suiviExposant/${idExposant}/update-commentaire`, {
             fes_id: localStorage.getItem("currentFestival"),
             suivE_commentaire: commentaire,
