@@ -6,7 +6,7 @@ import './reservationForm.css'
 import Table from "react-bootstrap/Table"
 
 
-export const FormReservation = ({onSubmitReservation}) => {
+export const FormReservation = ({onSubmit}) => {
     const [localisations, setLocalisations] = useState([]);
 
 //récupérer toutes les localisations
@@ -22,7 +22,7 @@ export const FormReservation = ({onSubmitReservation}) => {
 
 
     return (
-        <Form onSubmit={onSubmitReservation}>
+        <Form onSubmit={onSubmit}>
 
             <div className="form-group">
                 <h4 id="titleGameForm">Nouvelle réservation</h4>
@@ -32,13 +32,12 @@ export const FormReservation = ({onSubmitReservation}) => {
                         localisations.map((value, index) => {
                             return (
                                 <div id="loc">
-
-
                                     <Table>
                                         <tr>
                                             <td>
-                                                <Form.Group size="lg"  controlId="loc_id" value={value.loc_id}>
-                                                {value.loc_libelle}
+                                                <Form.Group size="lg"  controlId="loc_id" >
+                                                    <text value={value.loc_id}>{value.loc_libelle}</text>
+
                                                 </Form.Group>
                                             </td>
                                             <td>
@@ -78,4 +77,4 @@ export const FormReservation = ({onSubmitReservation}) => {
     );
 };
 
-export default FormReservation;
+export default FormReservation
