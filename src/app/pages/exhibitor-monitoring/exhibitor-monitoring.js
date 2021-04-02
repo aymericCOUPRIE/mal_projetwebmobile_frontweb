@@ -334,6 +334,7 @@ const ExhibitorMonitoring = () => {
             soc_id: idExposant,
             fes_id: localStorage.getItem("currentFestival")
         })
+        window.location.reload(true)
     }
 
     return (

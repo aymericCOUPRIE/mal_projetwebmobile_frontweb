@@ -26,10 +26,9 @@ function App() {
 
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
-        console.log("je recharge")
         Axios.get("/server/festivals/closest")
             .then((res) => {
-                localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
+                //localStorage.setItem("currentFestival", res.data.closestFestival[0].fes_id);
                 setProchainFestival(res.data.closestFestival[0]);
             })
     }, [isWhatever]);

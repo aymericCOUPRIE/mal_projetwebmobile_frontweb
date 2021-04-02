@@ -269,7 +269,7 @@ export default function AfficherExposant() {
             {
                 id: "facture",
                 Header: "Facture",
-                accessor: d => d.reservations.length == 0 ? 'NULL' : d.reservations[0].res_facture.toString(), //required cast from boolean to string
+                accessor: d => d.reservations.length == 0 ? null : d.reservations[0].res_facture, //required cast from boolean to string
 
 
                 //Allows column to be sorted depending on all content type (true/false)
@@ -281,9 +281,9 @@ export default function AfficherExposant() {
                     return (
                         <div style={{'textAlign': 'center'}}>
                             <input
-                                disabled={row.value == null ? true : false}
+                                disabled={row.value == null ? false : row.value ? true : false}
                                 type="checkbox"
-                                defaultChecked={(row.value == null || row.value == 'false') ? false : true}
+                                defaultChecked={(row.value == null || row.value == false) ? false : true}
                                 onChange={(event) => updateStatusFacture(row.row.original.reservations[0], event.target.checked ? 1 : 0)}
                             />
                         </div>)

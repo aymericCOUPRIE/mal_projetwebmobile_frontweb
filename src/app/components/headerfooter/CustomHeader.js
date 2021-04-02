@@ -154,10 +154,6 @@ const CustomHeader = () => {
                                                 <FontAwesomeIcon className="faicon" icon={faUserTag}/>
                                                 Rôles Societes
                                             </Link>
-                                            <Link className="nav-link" to='/editeurs' id="dropdownItem">
-                                                <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
-                                                Editeurs
-                                            </Link>
                                         </NavDropdown>
                                     ) : null
                                 }

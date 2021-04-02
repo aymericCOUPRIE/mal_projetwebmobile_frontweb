@@ -207,10 +207,10 @@ export default function AfficherSocieteRole() {
                     Exposants
                 </h1>
             </div>
+            <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
 
             <TableContainer columns={columns} data={societe} /*renderRowSubComponent={detailsSociete}*//>
 
-            <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
 
         </div>
     )
