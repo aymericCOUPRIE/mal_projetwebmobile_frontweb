@@ -140,23 +140,32 @@ const CustomHeader = () => {
 
                             <Nav>
 
-                                <NavDropdown title={"Gestion sociétés"} id="who">
+                                {
+                                    isAdmin() ? (
 
-                                    <Link className="nav-link" to='/exposants' id="dropdownItem">
-                                        <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
-                                        Exposants
-                                    </Link>
+                                        <NavDropdown title={"Gestion sociétés"} id="who">
 
-                                    <Link className="nav-link" to='/societes' id="dropdownItem">
-                                        <FontAwesomeIcon className="faicon" icon={faUserTag}/>
-                                        Rôles Societes
-                                    </Link>
+                                            <Link className="nav-link" to='/exposants' id="dropdownItem">
+                                                <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                                                Exposants
+                                            </Link>
 
-                                    <Link className="nav-link" to='/editeurs' id="dropdownItem">
+                                            <Link className="nav-link" to='/societes' id="dropdownItem">
+                                                <FontAwesomeIcon className="faicon" icon={faUserTag}/>
+                                                Rôles Societes
+                                            </Link>
+                                            <Link className="nav-link" to='/editeurs' id="dropdownItem">
+                                                <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                                                Editeurs
+                                            </Link>
+                                        </NavDropdown>
+                                    ) :  <Link className="nav-link" to='/editeurs' id="dropdownItem">
                                         <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
                                         Editeurs
                                     </Link>
-                                </NavDropdown>
+                                }
+
+
 
 
                                 <Link className="nav-link" to='/festival-games'>

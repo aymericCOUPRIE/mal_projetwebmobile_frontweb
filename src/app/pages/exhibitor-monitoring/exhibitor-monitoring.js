@@ -39,7 +39,6 @@ const ExhibitorMonitoring = () => {
     const [resaExist, setResaExist] = useState(false);
 
 
-
     //méthode qui s'appelle au chargement de la page
     useEffect(() => {
         //Récupérer les infos des contacts
@@ -62,7 +61,7 @@ const ExhibitorMonitoring = () => {
             if (res.data) {
                 setReservation(res.data)
                 setCommentaire(res.data.suivE_commentaire)
-                if(res.data.length !== 0) {
+                if (res.data.length !== 0) {
                     setResaExist(true)
                 }
             }
@@ -75,24 +74,24 @@ const ExhibitorMonitoring = () => {
         const fes_id = localStorage.getItem("currentFestival")
         Axios.get(`/server/suiviExposant/festival/${fes_id}/societe/${idExposant}`)
             .then((res) => {
-            setSuivi(res.data)
-            console.log("SUIVI", res)
-        })
+                setSuivi(res.data)
+                console.log("SUIVI", res)
+            })
     }, []);
 
-   useEffect(() => {
-       if(resaExist) {
-           const fes_id = localStorage.getItem("currentFestival")
-           const res_id = reservation.res_id
+    useEffect(() => {
+        if (resaExist) {
+            const fes_id = localStorage.getItem("currentFestival")
+            const res_id = reservation.res_id
 
-           Axios.get(`http://localhost:3000/server/localisation/${fes_id}/allEspace/reservation/${res_id}`)
-               .then((res) => {
-                   setEspaces(res.data)
-                   console.log("ESPACES", res.data)
-               })
-       }
+            Axios.get(`http://localhost:3000/server/localisation/${fes_id}/allEspace/reservation/${res_id}`)
+                .then((res) => {
+                    setEspaces(res.data)
+                    console.log("ESPACES", res.data)
+                })
+        }
 
-   }, [resaExist]) //se declenche lorsque la valeur entre crochet cha   nfe
+    }, [resaExist]) //se declenche lorsque la valeur entre crochet cha   nfe
 
     function validateForm() {
         return name.length > 0;
@@ -152,25 +151,24 @@ const ExhibitorMonitoring = () => {
         })
     };
 
-    //créer une réservation
-    const onSubmitReservation = (event) => {
+    /*
+     //créer une réservation
+     const onSubmitReservation = (event) => {
 
-        //Ne pas oublier cette ligne!!!
-        event.preventDefault(event);
-        console.log("EVENT RESA",event);
-        console.log("LOC",event.target.loc_id)
-        /*
-                Axios.post("/server/", {
-                    //récupérer les valeurs du formulaire
-                    // title: event.target.title.value,
+         //Ne pas oublier cette ligne!!!
+         event.preventDefault();
+         console.log("EVENT RESA",event);
+         console.log("LOC",event.target.length)
+         console.log("LOC",event.target[1].value)
+         console.log("LOC",event.target[2].value)
+         console.log("LOC",event.target[3].value)
+     };
+     */
 
-                }).then((res) => {
-                    //afficher alert succes
-                    //setShow(true);
-
-
-                })*/
-    };
+    //créer une réservation v2 sans form
+    //const createReservation = () {
+    //Axios.post()
+    //}
 
     //changer adresse exposant
     const updateAdress = (event) => {
@@ -261,7 +259,7 @@ const ExhibitorMonitoring = () => {
     }
 
     const updatePrixRetour = (value) => {
-        Axios.put("/server/reservations/updatePrixRetour", {
+        Axios.put("/server/reservations/updateReservationPrixRetour", {
             res_id: reservation.res_id,
             res_prixRetour: value,
         })
@@ -269,11 +267,11 @@ const ExhibitorMonitoring = () => {
 
     const CalculerPrixTOT = () => {
         let prix = 0
-        espaces.map((e,i) => {
+        espaces.map((e, i) => {
             console.log(e)
-            if(e.espaces[0].esp_enTables){
+            if (e.espaces[0].esp_enTables) {
                 prix += e.loc_prixTable * e.espaces[0].esp_qte
-            }else{
+            } else {
                 prix += e.loc_prixM2 * e.espaces[0].esp_qte
             }
 
@@ -284,15 +282,41 @@ const ExhibitorMonitoring = () => {
 
     const CalculerPrix = (e) => {
 
-            if(e.espaces[0].esp_enTables){
-                return e.loc_prixTable * e.espaces[0].esp_qte
-            }else{
-               return e.loc_prixM2 * e.espaces[0].esp_qte
-            }
+        if (e.espaces[0].esp_enTables) {
+            return e.loc_prixTable * e.espaces[0].esp_qte
+        } else {
+            return e.loc_prixM2 * e.espaces[0].esp_qte
+        }
 
     }
 
-    return (
+    const updatePrixNegocie = (value) => {
+
+        Axios.put("/server/reservations/updateReservationPrixNegocie", {
+            res_id: reservation.res_id,
+            res_prixNegocie: value
+        })
+    }
+    //(e.esp_id,event.target.value)}
+    const updateQteEspace = (id,qte) => {
+      Axios.put("/server/espace/updateQte", {
+          esp_id: id,
+          esp_qte: qte
+      })
+
+    }
+
+    const updateEnTables = (id, value) => {
+        console.log("ID",id)
+        console.log("VALUUE",value)
+        Axios.put("/server/espace/updateEnTables", {
+            esp_id: id,
+            esp_enTables: value
+        })
+    }
+
+
+return (
         <div className="EspaceFooter">
             <div id="titlePageJeuxFestival">
                 <h1>
@@ -485,10 +509,10 @@ const ExhibitorMonitoring = () => {
                                         </div>
                                         <div>
 
-                                            <label id="labelCheckbox">Il envoie ses jeux ?  </label>
+                                            <label id="labelCheckbox">Il envoie ses jeux ? </label>
                                             <input
                                                 type="checkbox"
-                                                defaultChecked= {reservation.res_envoiDebut}
+                                                defaultChecked={reservation.res_envoiDebut}
                                                 onClick={(e) => updateEnvoieDebut(e.target.checked ? 1 : 0)}
                                             />
 
@@ -516,9 +540,9 @@ const ExhibitorMonitoring = () => {
                                             <label id="labelCheckbox">Date de facturation:</label>
 
 
-                                            <input  type="date"
-                                                    defaultValue= {reservation.res_dateFacturation}
-                                                    onChange={(event) => updateDateFacturation(event.target.value)}
+                                            <input type="date"
+                                                   defaultValue={reservation.res_dateFacturation}
+                                                   onChange={(event) => updateDateFacturation(event.target.value)}
                                             />
 
                                         </div>
@@ -533,7 +557,7 @@ const ExhibitorMonitoring = () => {
 
                                             <label id="labelCheckbox">Date de paiement:</label>
 
-                                            <input  type="date"
+                                            <input type="date"
                                                    defaultValue={reservation.res_datePaiement}
                                                    onChange={(event) => updateDatePaiement(event.target.value)}
                                             />
@@ -555,63 +579,96 @@ const ExhibitorMonitoring = () => {
                 {
                     isAdmin() ?
 
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="2">
-                        Réservation
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="2">
-                        <Card.Body>
-                            {
-                                reservation.length != 0 ?
-                                    <div>
-                                        <Table responsive >
-                                            <thead>
-                                            <td className="tdUnderline"></td>
-                                            <td className="tdUnderline"></td>
-                                            <td className="tdUnderline"></td>
-                                            <td className="tdUnderline">Prix calculé</td>
-                                            </thead>
-                                            <tbody>
-                                            {espaces.map((e,i) => {
-                                                    return(
-                                                    <tr >
-                                                        <td className="tdUnderline">{e.loc_libelle}</td>
-                                                        <td className="tdUnderline">{e.espaces[0].esp_qte}</td>
-                                                        {e.espaces[0].esp_enTables ? <td className="tdUnderline"> tables </td> : <td className="tdUnderline">M²</td>}
-                                                        <td className="tdUnderline">{CalculerPrix(e)}</td>
+                        <Card>
+                            <Accordion.Toggle as={Card.Header} eventKey="2">
+                                Réservation
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey="2">
+                                <Card.Body>
+                                    {
+                                        reservation.length != 0 ?
+                                            <div>
+                                                <Table responsive>
+                                                    <thead>
+                                                    <td className="tdUnderline"></td>
+                                                    <td className="tdUnderline"></td>
+                                                    <td className="tdUnderline"></td>
+                                                    <td className="tdUnderline">Prix calculé</td>
+                                                    </thead>
+                                                    <tbody>
+                                                    {espaces.map((e, i) => {
+                                                        return (
+                                                            <tr>
+                                                                <td className="tdUnderline">{e.loc_libelle}</td>
+                                                                <td className="tdUnderline">
+
+                                                                    <input
+                                                                        type="number"
+                                                                        defaultValue={e.espaces[0].esp_qte}
+                                                                        style={{width: 'auto'}}
+                                                                        onChange={(event) => updateQteEspace(e.espaces[0].esp_id,event.target.value)}
+                                                                    />
+
+                                                                </td>
+                                                                <td className="tdUnderline">
+                                                                    <Form.Control
+                                                                    style={{width: 'auto'}}
+                                                                    as="select"
+                                                                    onChange={(event) => updateEnTables(e.espaces[0].esp_id, event.target.value ? 1 : 0)}>
+
+                                                                        {console.log("[00000]",e.espaces[0])}
+                                                                    <option selected={e.espaces[0].esp_enTables} value={true}
+                                                                            key={e.espaces[0].esp_enTables}>tables</option>
+                                                                    <option selected={e.espaces[0].esp_enTables} value={false}
+                                                                            key={e.espaces[0].esp_enTables}>M²</option>
+                                                                    </Form.Control>
+                                                                </td>
+                                                                <td className="tdUnderline">{CalculerPrix(e)}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                    }
+
+                                                    <tr>
+                                                        <td>Prix TOTAL calculé</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>{CalculerPrixTOT()} €</td>
                                                     </tr>
-                                                    )
-                                                })
-                                            }
-
-                                            <tr>
-                                                <td>Prix TOTAL calculé</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>{CalculerPrixTOT()} €</td>
-                                            </tr>
-                                            <tr id="prixNego">
-                                                <td>Prix TOTAL négocié</td>
-                                                <td>{reservation.res_prixNegocie}€</td>
+                                                    <tr id="prixNego">
+                                                        <td>Prix TOTAL négocié</td>
+                                                        <td>
+                                                            <input
+                                                                id="prixNego"
+                                                                type="number"
+                                                                step={".01"}
+                                                                defaultValue={reservation.res_prixNegocie}
+                                                                onChange={(event) => updatePrixNegocie(event.target.value)}
+                                                            />€
+                                                        </td>
 
 
-                                            </tr>
-                                            </tbody>
-                                        </Table>
-                                    </div>
+                                                    </tr>
+                                                    </tbody>
+                                                </Table>
+                                            </div>
 
 
-                                    :
-                                    <div>
-                                        <div id="btnNewJeu">
+                                            :
+                                            <div>
+                                                <div id="btnNewJeu">
+                                                    {/*
                                             <Container triggerText="Créer une réservation"
-                                                       onSubmitReservation={onSubmitReservation} component={FormReservation}/>
-                                        </div>
-                                    </div>
-                            }
-                        </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
+                                                       onSubmit={onSubmitReservation} component={FormReservation}/>
+
+                                            <Button onClick={createReservation}>Créer une réservation </Button>
+*/}
+                                                </div>
+                                            </div>
+                                    }
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
                         : null
                 }
                 <Card>
