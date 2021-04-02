@@ -9,7 +9,7 @@ import Axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTheaterMasks} from "@fortawesome/free-solid-svg-icons";
 import Alert from "react-bootstrap/Alert";
-//const CardFestival = require('')
+//const CardFestival = require('../../components/festivals/CardFestival');
 
 const Festivals = () => {
 
@@ -24,6 +24,7 @@ const Festivals = () => {
     useEffect(() => {
         Axios.get("/server/festivals/allDetails")
             .then((res) => {
+                console.log("consolllle", res.data.allFestivals);
                 setListFestivals(res.data.allFestivals)
             });
     }, []);
@@ -57,14 +58,6 @@ const Festivals = () => {
         })
     }
 
-    /*
-     const updateNbTables = (fes_id, new_nbTables) => {
-         Axios.put("/server/festivals/updateNbTables", {
-             fes_id : fes_id,
-             new_nbTables : new_nbTables
-         })
-     }
-   */
 
     //ATTENTION : faire if  isAdmin la page admin else la page organisateur
     return (
@@ -89,7 +82,7 @@ const Festivals = () => {
                 <div className="flex-container">
                     {festivals.map((fest, i) =>
                         <div id={fest} className="flex-item">
-                            <CardFestival fes={fest} updateDate={updateDateFestival}/>
+                                <CardFestival fes={fest} updateDate={updateDateFestival}/>
                         </div>
                     )}
                 </div>

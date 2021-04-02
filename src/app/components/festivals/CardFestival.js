@@ -12,6 +12,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {FestivalContext} from "../../../App";
 import {isAdmin, isLogin} from "../../utils/utils";
+import Table from "react-bootstrap/Table";
 
 
 const CardFestival = ({fes, updateDate}) => {
@@ -21,11 +22,21 @@ const CardFestival = ({fes, updateDate}) => {
     const [show, setShow] = useState(false) // for the form of the localisation
     const {selectedFestival, setSelectedFestival} = useContext(FestivalContext)
 
+    const [espaces, setEspaces] = useState([]);
+
     useEffect(() => {
         // Get details for the festivals
         Axios.get(`/server/localisation/allDetails/${fes.fes_id}`)
             .then((res) => {
                 setLocalList(res.data)
+            })
+    }, []);
+
+    useEffect(() => {
+        // Get all the espaces with a fes_id (need reservation table)
+        Axios.get(`/server/espaces/getAll/${fes.fes_id}/`)
+            .then((res) => {
+                setEspaces(res.data)
             })
     }, []);
 
@@ -97,6 +108,50 @@ const CardFestival = ({fes, updateDate}) => {
         });
     }
 
+
+    //(e.esp_id,event.target.value)}
+    const updateQteEspace = (id, qte) => {
+        Axios.put("/server/espace/updateQte", {
+            esp_id: id,
+            esp_qte: qte
+        })
+
+    }
+
+    const updateEnTables = (id, value) => {
+        console.log("ID", id)
+        console.log("VALUUE", value)
+        Axios.put("/server/espace/updateEnTables", {
+            esp_id: id,
+            esp_enTables: value
+        })
+    }
+
+    const CalculerPrix = (e) => {
+
+        if (e.esp_enTables) {
+            return e.loc_prixTable * e.esp_qte
+        } else {
+            return e.loc_prixM2 * e.esp_qte
+        }
+
+    }
+
+    const CalculerPrixTOT = () => {
+        let prix = 0
+        espaces.map((e, i) => {
+            console.log(e)
+            if (e.esp_enTables) {
+                prix += e.loc_prixTable * e.esp_qte
+            } else {
+                prix += e.loc_prixM2 * e.esp_qte
+            }
+
+
+        })
+        return prix
+    }
+
     const columns = useMemo(() => [
         {
             Header: "Nom",
@@ -161,14 +216,90 @@ const CardFestival = ({fes, updateDate}) => {
                         </CardText>
                         : null}
                     {isAdmin() ?
-                    <div className="tableLocalisation">
-                        <SimpleTableContainer columns={columns} data={localisationList}/>
-                    </div>
-                        : null}
+
+                        /*
+                        <Card.Body>
+                            <div>
+                                <Table responsive>
+                                    <thead>
+                                    <td className="tdUnderline"></td>
+                                    <td className="tdUnderline"></td>
+                                    <td className="tdUnderline"></td>
+                                    <td className="tdUnderline">Prix calculé</td>
+                                    </thead>
+                                    <tbody>
+                                    {espaces.map((e, i) => {
+                                        return (
+                                            <tr>
+                                                <td className="tdUnderline">{e.localisation.loc_libelle}</td>
+                                                <td className="tdUnderline">
+
+                                                    <input
+                                                        type="number"
+                                                        defaultValue={e.esp_qte}
+                                                        style={{width: 'auto'}}
+                                                        onChange={(event) => updateQteEspace(e.esp_id, event.target.value)}
+                                                    />
+
+                                                </td>
+                                                <td className="tdUnderline">
+                                                    <Form.Control
+                                                        style={{width: 'auto'}}
+                                                        as="select"
+                                                        onChange={(event) => updateEnTables(e.esp_id, event.target.value ? 1 : 0)}>
+
+                                                        {console.log("[00000]", e)}
+                                                        <option selected={e.esp_enTables} value={true}
+                                                                key={e.esp_enTables}>tables
+                                                        </option>
+                                                        <option selected={e.esp_enTables} value={false}
+                                                                key={e.esp_enTables}>M²
+                                                        </option>
+                                                    </Form.Control>
+                                                </td>
+                                                <td className="tdUnderline">{CalculerPrix(e)}</td>
+                                            </tr>
+                                        )
+                                    })
+                                    }
+
+                                    <tr>
+                                        <td>Prix TOTAL calculé</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{CalculerPrixTOT()} €</td>
+                                    </tr>
+                                    {/*<tr id="prixNego">
+                                        <td>Prix TOTAL négocié</td>
+                                        <td>
+                                            <input
+                                                id="prixNego"
+                                                type="number"
+                                                step={".01"}
+                                                defaultValue={reservation.res_prixNegocie}
+                                                onChange={(event) => updatePrixNegocie(event.target.value)}
+                                            />€
+                                        </td>
+
+
+                                    </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
+                        </Card.Body>*/
+
+
+
+                        <div className="tableLocalisation">
+                            <SimpleTableContainer columns={columns} data={localisationList}/>
+                        </div>
+
+                        :null}
+
                     {isAdmin() ?
-                    <Container triggerText="Créer un nouvel espace" onSubmit={onSubmit}
-                               component={FormLocalisation}/>
-                    : null}
+                        <Container triggerText="Créer un nouvel espace" onSubmit={onSubmit}
+                                   component={FormLocalisation}/>
+                        : null}
                 </CardBody>
             </Card>
 
