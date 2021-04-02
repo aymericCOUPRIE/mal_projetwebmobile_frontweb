@@ -5,7 +5,7 @@ import {SelectColumnFilter} from "../../components/tables/Filters";
 
 import './AfficherSociete.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {faAddressBook, faEyeSlash, faInfoCircle, faUserTag} from "@fortawesome/free-solid-svg-icons";
 import {Container} from "../../components/ModalForm/container";
 import FormSociete from "./formSociete";
 
@@ -200,6 +200,13 @@ export default function AfficherSocieteRole() {
      */
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
+
+            <div id="titlePageJeux">
+                <h1>
+                    <FontAwesomeIcon className="faicon" icon={faUserTag}/>
+                    Exposants
+                </h1>
+            </div>
 
             <TableContainer columns={columns} data={societe} /*renderRowSubComponent={detailsSociete}*//>
 

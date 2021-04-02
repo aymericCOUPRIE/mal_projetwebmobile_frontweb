@@ -279,7 +279,8 @@ const FestivalGames = () => {
                             <div>
                                 <Form.Group>
                                     <Form.Control style={{width: 'auto'}} as="select"
-                                                  onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}>
+                                                  onChange={(e) => updateGameTypeId(row.row.original, e.target.value)}
+                                                  >
                                         {gameTypeList.map((object, i) =>
                                             <option selected={row.value === object.typJ_libelle}
                                                     value={object.typJ_id}

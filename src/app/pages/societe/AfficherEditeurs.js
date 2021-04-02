@@ -1,11 +1,12 @@
 import React, {useEffect, useState, useMemo} from "react";
 import Axios from "axios"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {faAddressBook, faEyeSlash, faInfoCircle, faShapes} from "@fortawesome/free-solid-svg-icons";
 import TableContainer from "../../components/tables/TableContainer";
 import {CardBody, CardTitle} from "reactstrap";
 import CardContact from "../../components/contact/CardContact";
 import {Card} from "react-bootstrap";
+import GameCard from "../../components/game/GameCard";
 
 export default function AfficherEditeur() {
 
@@ -36,6 +37,15 @@ export default function AfficherEditeur() {
                 Header: "Nom",
                 accessor: "soc_nom",
             },
+            {
+                Header: "Addresse",
+                accessor: d => `${d.soc_rue} - ${d.soc_ville} ${d.soc_codePostal}`,
+            },
+            {
+                Header: "Nombre de jeux",
+                accessor: d => d.jeus.length,
+            },
+
         ]
     )
 
@@ -44,35 +54,27 @@ export default function AfficherEditeur() {
         const games = row.original.jeus
 
         return (
-            <div>
-
+            <div style={{columnCount: 2, display: 'flex', padding: '1rem'}}>
                 {
-                    console.log("ORIGINAL", row.original)
+                    games.map((game) => {
+                        return (
+                            <GameCard props={game}/>
+                        )
+                    })
                 }
-
-                <Card style={{width: '50%', margin: '0 auto'}}>
-                    <CardBody>
-                        <CardTitle>
-                            <strong> Games </strong>
-                        </CardTitle>
-                        {
-                            games.map((game) => {
-                                return (
-                                    //<CardContact props={contact}/>
-                                    <span>
-                                    {game.j_titre}
-                                    </span>
-                                )
-                            })
-                        }
-                    </CardBody>
-                </Card>
             </div>
         )
     }
 
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
+            <div id="titlePageJeux">
+                <h1>
+                    <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                    Editeurs
+                </h1>
+            </div>
+
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsEditeur}/>
         </div>
     )

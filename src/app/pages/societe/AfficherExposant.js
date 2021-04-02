@@ -13,8 +13,9 @@ import {Card, Form, Button} from "react-bootstrap";
 import {CardBody, CardText, CardTitle} from "reactstrap";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {faAddressBook, faEyeSlash, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
+import {isLogin} from "../../utils/utils";
 
 export default function AfficherExposant() {
 
@@ -102,14 +103,6 @@ export default function AfficherExposant() {
             window.location.reload()
         })
 
-        // const newSocietes = [...societe];
-        //
-        // const index = newSocietes.findIndex(s => s.soc_id === data.soc_id)
-        //
-        // newSocietes[index].suivD_id = value
-        //
-        // setListSociete(newSocietes)
-
     }
 
     const setAllAbsent = () => {
@@ -162,9 +155,14 @@ export default function AfficherExposant() {
 
                 Cell: row => {
                     return (
-                        <Form.Control as={"textarea"}
-                                      value={row.value.suivi_exposants.length === 0 ? "" : row.value.suivi_exposants[0].suivE_commentaire}>
-                        </Form.Control>
+                        <Form onSubmit={(e) => onSubmit(e, row.value)}>
+                            <input type={"textarea"}
+                                   id={"commentaire"}
+                                   defaultValue={row.value.suivi_exposants.length === 0 ? "" : row.value.suivi_exposants[0].suivE_commentaire}
+                                   disabled={!isLogin()}>
+                            </input>
+                            <Button id={"btn-commentaire"} type={"submit"}> Valider </Button>
+                        </Form>
                     )
                 }
             },
@@ -206,7 +204,6 @@ export default function AfficherExposant() {
                     accessor: d => d.reservations.length == 0 ? "NULL" : String(`${d.reservations[0].espace.esp_qte}` + ' ' + `${d.reservations[0].espace.esp_enTables == 0 ? "m²" : "Tables"}`), //required cast from boolea to string
                 },
                 */
-
             {
                 id: "benevoles",
                 Header: "Bénévoles",
@@ -387,40 +384,14 @@ export default function AfficherExposant() {
         );
     };
 
-    /*    const onSubmitContact = (event) => {
-            event.preventDefault(event);
-
-            console.log("CONTACT", event)
-
-
-            Axios.post(`/server/contacts/add/${soc_id}`, {
-                co_nom: event.target.value.nom,
-                co_prenom: event.target.value.prenom,
-                co_telPortable: event.target.value.telPortable,
-                co_telFixe: event.target.value.telFixe,
-                co_rue: event.target.value.ville,
-                co_codePostal: event.target.value.codePostal,
-                co_fonction: event.target.value.fonction
-            }).then((response) => {
-                console.log("RESPONSE", response)
-            })
-        }*/
-
-    const onSubmit = (event) => {
-        event.preventDefault(event);
-
-        console.log("PAS LA stp")
-
-        Axios.post("/server/societe/add", {
-            soc_nom: event.target.nom.value,
-            soc_ville: event.target.ville.value,
-            soc_rue: event.target.rue.value,
-            soc_codePostal: event.target.codePostal.value,
-            soc_pays: event.target.pays.value
-        }).then((response) => {
-            console.log(response)
+    const onSubmit = (event, value) => {
+        event.preventDefault(true)
+        Axios.post(`/server/suiviExposant/${value.suivi_exposants[0].soc_id}/update-commentaire`, {
+            suivE_commentaire: event.target.commentaire.value,
+            fes_id: localStorage.getItem("currentFestival")
         })
     }
+
 
     /**
      * Display the table
@@ -433,6 +404,14 @@ export default function AfficherExposant() {
      */
     return (
         <div style={{marginTop: `50px`}} className="EspaceFooter">
+
+            <div id="titlePageJeux">
+                <h1>
+                    <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                    Exposants
+                </h1>
+            </div>
+
             <Button onClick={setAllAbsent}> Mettre tous les exposant absent </Button>
             <TableContainer columns={columns} data={societe} renderRowSubComponent={detailsExposant}/>
         </div>
