@@ -14,7 +14,8 @@ import {Container} from "../../components/ModalForm/container";
 import FormReservation from "./reservationForm";
 import FormContact from "../../components/contact/FormContact";
 import {isAdmin} from "../../utils/utils";
-import Table from "react-bootstrap/Table"
+import Table from "react-bootstrap/Table";
+import GameExhibitor from "../../components/game/game-exhibitor-monitoring";
 
 
 const ExhibitorMonitoring = () => {
@@ -115,7 +116,7 @@ const ExhibitorMonitoring = () => {
     //update commentaire
     const updateCommentaire = (event) => {
         event.preventDefault()
-
+        
         Axios.post(`/server/suiviExposant/${idExposant}/update-commentaire`, {
             fes_id: localStorage.getItem("currentFestival"),
             suivE_commentaire: commentaire,
@@ -297,26 +298,31 @@ const ExhibitorMonitoring = () => {
             res_prixNegocie: value
         })
     }
-    //(e.esp_id,event.target.value)}
-    const updateQteEspace = (id,qte) => {
-      Axios.put("/server/espace/updateQte", {
-          esp_id: id,
-          esp_qte: qte
-      })
+
+    const updateQteEspace = (id, qte) => {
+        Axios.put("/server/espace/updateQte", {
+            esp_id: id,
+            esp_qte: qte
+        })
 
     }
 
     const updateEnTables = (id, value) => {
-        console.log("ID",id)
-        console.log("VALUUE",value)
+
         Axios.put("/server/espace/updateEnTables", {
             esp_id: id,
             esp_enTables: value
         })
     }
 
+    const createReservation = () => {
+        Axios.post("/server/reservations/add", {
+            soc_id: idExposant,
+            fes_id: localStorage.getItem("currentFestival")
+        })
+    }
 
-return (
+    return (
         <div className="EspaceFooter">
             <div id="titlePageJeuxFestival">
                 <h1>
@@ -606,21 +612,24 @@ return (
                                                                         type="number"
                                                                         defaultValue={e.espaces[0].esp_qte}
                                                                         style={{width: 'auto'}}
-                                                                        onChange={(event) => updateQteEspace(e.espaces[0].esp_id,event.target.value)}
+                                                                        onChange={(event) => updateQteEspace(e.espaces[0].esp_id, event.target.value)}
                                                                     />
 
                                                                 </td>
                                                                 <td className="tdUnderline">
                                                                     <Form.Control
-                                                                    style={{width: 'auto'}}
-                                                                    as="select"
-                                                                    onChange={(event) => updateEnTables(e.espaces[0].esp_id, event.target.value ? 1 : 0)}>
+                                                                        style={{width: 'auto'}}
+                                                                        as="select"
+                                                                        onChange={(event) => updateEnTables(e.espaces[0].esp_id, event.target.value ? 1 : 0)}>
 
-                                                                        {console.log("[00000]",e.espaces[0])}
-                                                                    <option selected={e.espaces[0].esp_enTables} value={true}
-                                                                            key={e.espaces[0].esp_enTables}>tables</option>
-                                                                    <option selected={e.espaces[0].esp_enTables} value={false}
-                                                                            key={e.espaces[0].esp_enTables}>M²</option>
+                                                                        <option selected={e.espaces[0].esp_enTables}
+                                                                                value={true}
+                                                                                key={e.espaces[0].esp_enTables}>tables
+                                                                        </option>
+                                                                        <option selected={e.espaces[0].esp_enTables}
+                                                                                value={false}
+                                                                                key={e.espaces[0].esp_enTables}>M²
+                                                                        </option>
                                                                     </Form.Control>
                                                                 </td>
                                                                 <td className="tdUnderline">{CalculerPrix(e)}</td>
@@ -660,9 +669,9 @@ return (
                                                     {/*
                                             <Container triggerText="Créer une réservation"
                                                        onSubmit={onSubmitReservation} component={FormReservation}/>
-
-                                            <Button onClick={createReservation}>Créer une réservation </Button>
 */}
+                                            <Button onClick={createReservation}>Créer une réservation </Button>
+
                                                 </div>
                                             </div>
                                     }
@@ -676,7 +685,9 @@ return (
                         Jeux de la réservation
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="3">
-                        <Card.Body>Hello! I'm another body</Card.Body>
+                        <Card.Body>
+                            <GameExhibitor reservation={reservation.res_id}/>
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
