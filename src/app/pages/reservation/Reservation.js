@@ -3,7 +3,9 @@ import Axios from "axios"
 import TableContainer from "../../components/tables/TableContainer";
 import {SelectColumnFilter} from "../../components/tables/Filters";
 import {Form} from "react-bootstrap";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faClipboardList, faFileInvoiceDollar} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Reservation() {
@@ -217,6 +219,12 @@ export default function Reservation() {
 
     return (
         <div>
+            <div id="titlePageJeux">
+                <h1>
+                    <FontAwesomeIcon className="faicon" icon={faClipboardList}/>
+                  Réservations
+                </h1>
+            </div>
             <div style={{marginTop: `50px`}} className="EspaceFooter">
                 <TableContainer columns={columns} data={listReservations}/>
             </div>

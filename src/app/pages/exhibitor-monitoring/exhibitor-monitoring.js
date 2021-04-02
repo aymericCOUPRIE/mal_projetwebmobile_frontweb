@@ -25,6 +25,7 @@ const ExhibitorMonitoring = () => {
     const [contactList, setContactList] = useState([]);
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
+    const [showCom,setShowCom] = useState(false)
     const [showNewContact, setShowNewContact] = useState(false);
     const [showAdress, setShowAdress] = useState(false);
     const [soc_ville, setSoc_ville] = useState("");
@@ -123,7 +124,7 @@ const ExhibitorMonitoring = () => {
         Axios.post(`/server/societe/${idExposant}/update-name`, {
             name: name,
         }).then((res) => {
-            setShow("true");
+            setShow(true);
         })
     }
 
@@ -135,7 +136,7 @@ const ExhibitorMonitoring = () => {
             fes_id: localStorage.getItem("currentFestival"),
             suivE_commentaire: commentaire,
         }).then((res) => {
-            console.log(res)
+            setShowCom(true);
         })
     }
 //ajouter un contact
@@ -361,6 +362,7 @@ const ExhibitorMonitoring = () => {
                         <Alert id="alertSucces" variant="success" show={show}>
                             Nom modifié !
                         </Alert>
+                        <Alert id="alerSucess" variant="success" show={showCom}>Commentaire modifié</Alert>
                     </Form>
                     <Alert id="alertSucces" variant="success" show={showAdress}>
                         Adresse modifiée !

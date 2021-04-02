@@ -204,10 +204,13 @@ export default function AfficherSocieteRole() {
             <div id="titlePageJeux">
                 <h1>
                     <FontAwesomeIcon className="faicon" icon={faUserTag}/>
-                    Exposants
+                    Gérer les sociétés
                 </h1>
             </div>
-            <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
+            <div id="btnNewJeu">
+                <Container triggerText="Créer une societe" onSubmit={(e) => onSubmit(e)} component={FormSociete}/>
+
+            </div>
 
             <TableContainer columns={columns} data={societe} /*renderRowSubComponent={detailsSociete}*//>
 

@@ -128,7 +128,7 @@ const CustomHeader = () => {
                                                 isAdmin() ? (
                                                     <Link  className="nav-link" to='/facturation'>
                                                         <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
-                                                        Facture
+                                                        Factures
                                                     </Link>
                                                 ) : null
                                             }

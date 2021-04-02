@@ -10,7 +10,7 @@ export default function Facturation() {
             <div id="titlePageJeux">
                 <h1>
                     <FontAwesomeIcon className="faicon" icon={faFileInvoiceDollar}/>
-                    Facture
+                    Factures
                 </h1>
             </div>
 
