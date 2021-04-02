@@ -32,6 +32,7 @@ export default function AfficherExposant() {
         {id: 5, libelle: "Considéré absent", color: "rgb(255, 165, 0)"},
         {id: 6, libelle: "Présent via distributeur", color: "rgb(57,171,57)"},
         {id: 7, libelle: "Présent (liste jeux reçus)", color: "rgb(57,171,57)"},
+        {id: 8, libelle: "Non contacté", color: "rgb(212,226,234)"}
     ]
 
 

@@ -83,3 +83,7 @@
 #prixNego{
     color: red
 }
+
+.tdUnderline{
+    border-bottom: 1pt solid #002065;
+}
