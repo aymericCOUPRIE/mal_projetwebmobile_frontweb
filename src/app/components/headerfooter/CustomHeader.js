@@ -159,13 +159,8 @@ const CustomHeader = () => {
                                                 Editeurs
                                             </Link>
                                         </NavDropdown>
-                                    ) :  <Link className="nav-link" to='/editeurs' id="dropdownItem">
-                                        <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
-                                        Editeurs
-                                    </Link>
+                                    ) : null
                                 }
-
-
 
 
                                 <Link className="nav-link" to='/festival-games'>
@@ -176,7 +171,10 @@ const CustomHeader = () => {
                                     <FontAwesomeIcon className="faicon" icon={faTh}/>
                                     Zones festival
                                 </Link>
-
+                                <Link className="nav-link" to='/editeurs'>
+                                    <FontAwesomeIcon className="faicon" icon={faAddressBook}/>
+                                    Editeurs
+                                </Link>
                             </Nav>
 
                         </Navbar.Collapse>

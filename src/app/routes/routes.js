@@ -34,7 +34,7 @@ function Routes() {
                 <Route path='/reservations' component={Reservation}/>
                 <PrivateRoute path='/update-password' component={UpdatePassword}/>
                 <PrivateRoute path='/exposants' component={AfficherExposant}/>
-                <PrivateRoute path='/editeurs' component={AfficherEditeur}/>
+                <Route path='/editeurs' component={AfficherEditeur}/>
                 <PrivateRoute path='/societes' component={AfficherSocieteRole}/>
                 <PrivateRoute path='/handle-accounts' component={HandleAccounts}/>
                 <PrivateRoute path='/festivals' component={Festivals}/>

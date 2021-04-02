@@ -38,7 +38,7 @@ export default function AfficherEditeur() {
                 accessor: "soc_nom",
             },
             {
-                Header: "Addresse",
+                Header: "Adresse",
                 accessor: d => `${d.soc_rue} - ${d.soc_ville} ${d.soc_codePostal}`,
             },
             {
