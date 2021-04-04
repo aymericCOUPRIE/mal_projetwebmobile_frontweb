@@ -1,3 +1,8 @@
+## Accéder au site déployé 
+Open https://mal-festival.herokuapp.com/
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
